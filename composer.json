@@ -1,0 +1,19 @@
+{
+    "name": "root/prestashop_eiinstallmodulescli",
+    "authors": [
+        {
+            "name": "hhennes",
+            "email": "contact@h-hennes.fr"
+        }
+    ],
+    "require": {
+        "symfony/console": "^3.0",
+        "psr/log": "^1.0",
+        "symfony/yaml": "^3.0"
+    },
+    "autoload": {
+        "psr-0" : {
+            "Hhennes": "src"
+        }
+    }
+}

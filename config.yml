@@ -1,0 +1,13 @@
+application:
+    name: 'PrestashopConsole'
+    version: '0.1.0'
+    author: 'hhennes <contact@h-hennes.fr>'
+commands:
+    - Hhennes\PrestashopConsole\Command\Module\EnableCommand
+    - Hhennes\PrestashopConsole\Command\Module\DisableCommand
+    - Hhennes\PrestashopConsole\Command\Module\ListCommand
+    - Hhennes\PrestashopConsole\Command\Cache\ClearCommand
+    - Hhennes\PrestashopConsole\Command\Configuration\GetCommand
+    - Hhennes\PrestashopConsole\Command\Configuration\SetCommand
+    - Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand
+
