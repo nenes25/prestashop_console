@@ -24,7 +24,8 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-namespace Hhennes\PrestashopConsole\Command\Configuration;
+
+namespace Hhennes\PrestashopConsole\Command\Cache\Smarty;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -33,16 +34,28 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet de définir une valeur de configuration
+ * Commande qui permet de configurer le cache Smarty
  *
  */
-class SetCommand extends Command
+class ConfigureCommand extends Command
 {
-     protected function configure()
+
+    /**
+     * Limitation des donnés à saisir
+     * @var type
+     */
+    protected $_allowedNames = array(
+        'compile' => array('config_value' => 'PS_SMARTY_FORCE_COMPILE', 'allowed_values' => array('0', '1', '2')),
+        'cache' => array('config_value' => 'PS_SMARTY_CACHE', 'allowed_values' => array('0', '1')),
+        'cacheType' => array('config_value' => 'PS_SMARTY_CACHING_TYPE', 'allowed_values' => array('filesystem', 'mysql')),
+        'clearCache' => array('config_value' => 'PS_SMARTY_CLEAR_CACHE', 'allowed_values' => array('never', 'everytime'))
+    );
+
+    protected function configure()
     {
         $this
-                ->setName('configuration:set')
-                ->setDescription('set configuration value')
+                ->setName('cache:smarty:configure')
+                ->setDescription('Configure Smarty cache')
                 ->addArgument('name', InputArgument::REQUIRED, 'configuration name')
                 ->addArgument('value', InputArgument::REQUIRED, 'configuration value');
     }
@@ -51,8 +64,18 @@ class SetCommand extends Command
     {
         $name = $input->getArgument('name');
         $value = $input->getArgument('value');
-        \Configuration::updateValue($name,$value);
-        $output->writeln("Update configuration ".$name." with ".$value);
+
+        if (!array_key_exists($name, $this->_allowedNames)) {
+            $output->writeln("Name not allowed");
+        } else {
+            //Vérification de la valeur
+            if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
+                $output->writeln("Value not allowed for configuration " . $name);
+            } else {
+                \Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
+                $output->writeln("Update configuration " . $name . " with " . $value);
+            }
+        }
     }
 
 }

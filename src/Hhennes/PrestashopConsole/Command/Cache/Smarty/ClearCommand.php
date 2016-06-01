@@ -24,7 +24,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-namespace Hhennes\PrestashopConsole\Command\Configuration;
+namespace Hhennes\PrestashopConsole\Command\Cache\Smarty;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -33,26 +33,39 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet de définir une valeur de configuration
- *
+ * Commande qui permet de supprimer tout le cache smarty
+ * (Fichiers compilés + cache)
+ * Pour l'instant nécessite la function exec
+ * @todo Optmimiser pour ne pas supprimer le fichier index.php + gérer le mode SQL
  */
-class SetCommand extends Command
+class ClearCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
-                ->setName('configuration:set')
-                ->setDescription('set configuration value')
-                ->addArgument('name', InputArgument::REQUIRED, 'configuration name')
-                ->addArgument('value', InputArgument::REQUIRED, 'configuration value');
+                ->setName('cache:smarty:clear')
+                ->setDescription('Clear smarty cache');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
-        $value = $input->getArgument('value');
-        \Configuration::updateValue($name,$value);
-        $output->writeln("Update configuration ".$name." with ".$value);
-    }
+        if ( function_exists('exec') ) {
 
+            $smartyCompileDir = _PS_CACHE_DIR_.'smarty/compile';
+            $smartyCacheDir = _PS_CACHE_DIR_.'smarty/cache';
+
+            if ( is_dir($smartyCompileDir)) {
+                exec("rm -rf $smartyCompileDir/*");
+                $output->writeln('Smarty Compile dir cleaned');
+            }
+
+            if ( is_dir($smartyCacheDir)) {
+                exec("rm -rf $smartyCacheDir/*");
+                $output->writeln('Smarty Cache dir cleaned');
+            }
+        }
+        else {
+            $output->writeln('Unable to clear smarty cache, exec function is disabled');
+        }
+    }
 }

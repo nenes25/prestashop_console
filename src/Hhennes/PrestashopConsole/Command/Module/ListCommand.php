@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Commande qui permet de récupérer la liste des modules installé
  *
- * @author hhennes <contact@h-hennes.fr>
  */
 class ListCommand extends Command
 {

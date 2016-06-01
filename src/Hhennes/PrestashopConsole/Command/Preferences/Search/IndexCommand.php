@@ -24,7 +24,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-namespace Hhennes\PrestashopConsole\Command\Configuration;
+namespace Hhennes\PrestashopConsole\Command\Preferences\Search;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -33,26 +33,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet de définir une valeur de configuration
+ * Commande qui permet de reindexer les produits prestashop
  *
  */
-class SetCommand extends Command
+class IndexCommand extends Command
 {
-     protected function configure()
-    {
-        $this
-                ->setName('configuration:set')
-                ->setDescription('set configuration value')
-                ->addArgument('name', InputArgument::REQUIRED, 'configuration name')
-                ->addArgument('value', InputArgument::REQUIRED, 'configuration value');
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $name = $input->getArgument('name');
-        $value = $input->getArgument('value');
-        \Configuration::updateValue($name,$value);
-        $output->writeln("Update configuration ".$name." with ".$value);
-    }
-
+    //put your code here
 }
