@@ -55,11 +55,11 @@ class ResetCommand extends Command
                         case 'hard':
                             if ($module->uninstall()) {
                                 if (!$module->install()) {
-                                    $output->writeln('Cannot install module: ' . $name);
+                                    $output->writeln("<error>Cannot install module: '$name'</error>");
                                     return;
                                 }
                             } else {
-                                $output->writeln('Cannot uninstall module: ' . $name);
+                                $output->writeln("<error>Cannot uninstall module: '$name'</error>");
                                 return;
                             }
                             break;
@@ -67,27 +67,26 @@ class ResetCommand extends Command
                         default:
                             if (method_exists($module, 'reset')) {
                                 if (!$module->reset()) {
-                                    $output->writeln('Cannot reset module: ' . $name);
+                                    $output->writeln("<error>Cannot reset module: '$name'</error>");
                                     return;
                                 }
                             } else {
-                                $output->writeln('Error : Module ' . $name . ' doesnt support soft reset');
+                                $output->writeln("<error>Module '$name' doesnt support soft reset</error>");
                                 return;
                             }
                             break;
                     }
 
                 } catch (\PrestashopException $e) {
-                    $output->writeln('Error : module ' . $name . ' ' . $e->getMesage());
+                    $output->writeln("<error>Module: '$name' $e->getMesage()</error>");
                     return;
                 }
-                $outputString = 'Module ' . $name . ' reset ' . $type . ' with success';
+                $output->writeln("<info>Module '$name' reset with success</info>");
             } else {
-                $outputString = 'Error : module ' . $name . ' is uninstalled';
+                $output->writeln("<comment>Module '$name' is uninstalled</comment>");
             }
         } else {
-            $outputString = 'Error : Unknow module name ' . $name;
+            $output->writeln("<error>Unknow module name '$name' </error>");
         }
-        $output->writeln($outputString);
     }
 }

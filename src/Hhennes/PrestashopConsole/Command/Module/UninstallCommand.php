@@ -49,23 +49,22 @@ class UninstallCommand extends Command
 
             if (\Module::isInstalled($module->name)) {
 
-                // Exécution de l'action du module
                 try {
                     if (!$module->uninstall()) {
-                        $output->writeln('Error : cannot uninstall module' . $name);
+                        $output->writeln("<error>Cannot uninstall module: '$name'</error>");
                         return;
                     }
                 } catch (\PrestashopException $e) {
-                    $output->writeln('Error : module ' . $name . ' ' . $e->getMesage());
+                    $output->writeln("<error>Module: '$name' $e->getMesage()</error>");
                     return;
                 }
-                $outputString = 'Module ' . $name . ' uninstalled with sucess' . "\n";
+                $output->writeln("<info>Module '$name' uninstalled with success</info>");
             } else {
-                $outputString = 'Error : module ' . $name . ' is uninstalled' . "\n";
+                $output->writeln("<comment>Module '$name' is uninstalled</comment>");
             }
+            
         } else {
-            $outputString = 'Error : Unknow module name ' . $name . "\n";
+            $output->writeln("<error>Unknow module name '$name' </error>");
         }
-        $output->writeln($outputString);
     }
 }

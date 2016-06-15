@@ -49,23 +49,22 @@ class InstallCommand extends Command
 
             if (!\Module::isInstalled($module->name)) {
 
-                // Exécution de l'action du module
                 try {
                     if (!$module->install()) {
-                        $output->writeln('Error : cannot install module' . $name);
+                        $output->writeln("<error>Cannot install module: '$name'</error>");
                         return;
                     }
                 } catch (\PrestashopException $e) {
-                    $output->writeln('Error : module ' . $name . ' ' . $e->getMesage());
+                    $output->writeln("<error>Module: '$name' $e->getMesage()</error>");
                     return;
                 }
-                $outputString = 'Module ' . $name . ' installed with sucess' . "\n";
+                $output->writeln("<info>Module '$name' installed with success</info>");
             } else {
-                $outputString = 'Error : module ' . $name . ' is installed' . "\n";
+                $output->writeln("<comment>Module '$name' is installed</comment>");
             }
+            
         } else {
-            $outputString = 'Error : Unknow module name ' . $name . "\n";
+            $output->writeln("<error>Unknow module name '$name' </error>");
         }
-        $output->writeln($outputString);
     }
 }
