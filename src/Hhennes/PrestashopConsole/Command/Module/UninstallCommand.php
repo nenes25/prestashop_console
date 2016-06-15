@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 2007-2016 PrestaShop
  *
@@ -19,12 +18,56 @@
  * versions in the future. If you wish to customize PrestaShop for your
  * needs please refer to http://www.prestashop.com for more information.
  *
- *  @author    Hennes Hervé <contact@h-hennes.fr>
- *  @copyright 2013-2016 Hennes Hervé
- *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- *  http://www.h-hennes.fr/blog/
+ * @author    Mariusz Mielnik <mariusz@ecbox.pl>
+ * @copyright 2013-2016 Mariusz Mielnik
+ * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *  http://www.ecbox.pl
  */
-class UninstallCommand
+
+namespace Hhennes\PrestashopConsole\Command\Module;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class UninstallCommand extends Command
 {
-    //put your code here
+    protected function configure()
+    {
+        $this->setName('module:uninstall')
+            ->setDescription('Uninstall module')
+            ->addArgument(
+                'name', InputArgument::OPTIONAL, 'module name'
+            );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+
+        $name = $input->getArgument('name');
+
+        if ($module = \Module::getInstanceByName($name)) {
+
+            if (\Module::isInstalled($module->name)) {
+
+                // Exécution de l'action du module
+                try {
+                    if (!$module->uninstall()) {
+                        $output->writeln('Error : cannot uninstall module' . $name);
+                        return;
+                    }
+                } catch (\PrestashopException $e) {
+                    $output->writeln('Error : module ' . $name . ' ' . $e->getMesage());
+                    return;
+                }
+                $outputString = 'Module ' . $name . ' uninstalled with sucess' . "\n";
+            } else {
+                $outputString = 'Error : module ' . $name . ' is uninstalled' . "\n";
+            }
+        } else {
+            $outputString = 'Error : Unknow module name ' . $name . "\n";
+        }
+        $output->writeln($outputString);
+    }
 }

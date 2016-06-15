@@ -6,6 +6,8 @@ commands:
     - Hhennes\PrestashopConsole\Command\Module\EnableCommand
     - Hhennes\PrestashopConsole\Command\Module\DisableCommand
     - Hhennes\PrestashopConsole\Command\Module\ListCommand
+    - Hhennes\PrestashopConsole\Command\Module\InstallCommand
+    - Hhennes\PrestashopConsole\Command\Module\UninstallCommand
     - Hhennes\PrestashopConsole\Command\Cache\ClearCommand
     - Hhennes\PrestashopConsole\Command\Cache\Smarty\ClearCommand
     - Hhennes\PrestashopConsole\Command\Cache\Smarty\ConfigureCommand
