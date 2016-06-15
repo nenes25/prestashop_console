@@ -57,19 +57,19 @@ class IndexCommand extends Command
 
         switch ($type) {
             case 'add':
-                $output->writeln('Adding missing products to the index... ');
+                $output->writeln('<comment>Adding missing products to the index...</comment>');
                 \Search::indexation();
                 break;
             case 'rebuild':
             default:
-                $output->writeln('Re-building the entire ... ');
+                $output->writeln('<comment>Re-building the entire ...</comment>');
                 \Search::indexation(1);
                 break;
         }
 
         list($total, $indexed) = \Db::getInstance()->getRow('SELECT COUNT(*) as "0", SUM(product_shop.indexed) as "1" FROM ' . _DB_PREFIX_ . 'product p ' . \Shop::addSqlAssociation('product', 'p') . ' WHERE product_shop.`visibility` IN ("both", "search") AND product_shop.`active` = 1');
 
-        $output->writeln('Currently indexed products: ' . (int)$indexed . ' / ' . (int)$total);
+        $output->writeln('<info>Currently indexed products: ' . (int)$indexed . ' / ' . (int)$total . '</info>');
     }
 
 }

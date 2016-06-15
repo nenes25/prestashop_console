@@ -52,12 +52,12 @@ class MaintenanceCommand extends Command
 
         switch ($type) {
             case 'enable':
-                $output->writeln('Shop is enabled');
+                $output->writeln("<info>Shop is enabled</info>");
                 \Configuration::updateValue('PS_SHOP_ENABLE', 1);
                 break;
             case 'disable':
             default:
-                $output->writeln('Shop is disabled');
+                $output->writeln("<info>Shop is disabled</info>");
                 \Configuration::updateValue('PS_SHOP_ENABLE', 0);
                 break;
         }
