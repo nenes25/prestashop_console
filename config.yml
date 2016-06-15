@@ -12,4 +12,5 @@ commands:
     - Hhennes\PrestashopConsole\Command\Configuration\GetCommand
     - Hhennes\PrestashopConsole\Command\Configuration\SetCommand
     - Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand
 
