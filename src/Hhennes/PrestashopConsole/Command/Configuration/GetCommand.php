@@ -44,7 +44,7 @@ class GetCommand extends Command
                 ->setName('configuration:get')
                 ->setDescription('get configuration value')
                 ->addArgument(
-                        'name', InputArgument::doesn't, 'configuration name'
+                        'name', InputArgument::REQUIRED, 'configuration name'
                 );
     }
 
