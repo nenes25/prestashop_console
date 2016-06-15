@@ -37,9 +37,7 @@ class InstallCommand extends Command
     {
         $this->setName('module:install')
             ->setDescription('Install module')
-            ->addArgument(
-                'name', InputArgument::OPTIONAL, 'module name'
-            );
+            ->addArgument('name', InputArgument::REQUIRED, 'module name');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

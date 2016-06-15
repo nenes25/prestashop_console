@@ -31,40 +31,62 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UninstallCommand extends Command
+class ResetCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('module:uninstall')
-            ->setDescription('Uninstall module')
-            ->addArgument('name', InputArgument::REQUIRED, 'module name');
+        $this->setName('module:reset')
+            ->setDescription('Reset module: hard = remove data and reinstall, soft(default) = keep data and reinstall')
+            ->addArgument('name', InputArgument::REQUIRED, 'module name')
+            ->addArgument('type', InputArgument::OPTIONAL, 'hard|soft(default)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $name = $input->getArgument('name');
+        $type = $input->getArgument('type');
 
         if ($module = \Module::getInstanceByName($name)) {
-
             if (\Module::isInstalled($module->name)) {
-
-                // Exécution de l'action du module
                 try {
-                    if (!$module->uninstall()) {
-                        $output->writeln('Error : cannot uninstall module' . $name);
-                        return;
+
+                    switch ($type) {
+                        case 'hard':
+                            if ($module->uninstall()) {
+                                if (!$module->install()) {
+                                    $output->writeln('Cannot install module: ' . $name);
+                                    return;
+                                }
+                            } else {
+                                $output->writeln('Cannot uninstall module: ' . $name);
+                                return;
+                            }
+                            break;
+                        case 'soft':
+                        default:
+                            if (method_exists($module, 'reset')) {
+                                if (!$module->reset()) {
+                                    $output->writeln('Cannot reset module: ' . $name);
+                                    return;
+                                }
+                            } else {
+                                $output->writeln('Error : Module ' . $name . ' doesnt support soft reset');
+                                return;
+                            }
+                            break;
                     }
+
                 } catch (\PrestashopException $e) {
                     $output->writeln('Error : module ' . $name . ' ' . $e->getMesage());
                     return;
                 }
-                $outputString = 'Module ' . $name . ' uninstalled with sucess' . "\n";
+                $outputString = 'Module ' . $name . ' reset ' . $type . ' with success';
             } else {
-                $outputString = 'Error : module ' . $name . ' is uninstalled' . "\n";
+                $outputString = 'Error : module ' . $name . ' is uninstalled';
             }
         } else {
-            $outputString = 'Error : Unknow module name ' . $name . "\n";
+            $outputString = 'Error : Unknow module name ' . $name;
         }
         $output->writeln($outputString);
     }
