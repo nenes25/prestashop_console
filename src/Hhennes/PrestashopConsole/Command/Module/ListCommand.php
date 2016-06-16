@@ -72,7 +72,7 @@ class ListCommand extends Command
 
 
         foreach ($modules as $module) {
-            $outputString .= $module['name'] . ' ' . $module['version'] . "\n";
+            $outputString .= $module['name'] . ' v' . $module['version'] . "\n";
         }
 
         $output->writeln($outputString);

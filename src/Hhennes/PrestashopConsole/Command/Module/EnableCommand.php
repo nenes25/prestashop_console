@@ -19,9 +19,9 @@
  * versions in the future. If you wish to customize PrestaShop for your
  * needs please refer to http://www.prestashop.com for more information.
  *
- *  @author    Hennes Hervé <contact@h-hennes.fr>
- *  @copyright 2013-2016 Hennes Hervé
- *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author    Hennes Hervé <contact@h-hennes.fr>
+ * @copyright 2013-2016 Hennes Hervé
+ * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
 namespace Hhennes\PrestashopConsole\Command\Module;
@@ -38,14 +38,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EnableCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
-        $this
-                ->setName('module:enable')
-                ->setDescription('Enable module')
-                ->addArgument(
-                        'name', InputArgument::OPTIONAL, 'module name'
-                );
+        $this->setName('module:enable')
+            ->setDescription('Enable module')
+            ->addArgument('name', InputArgument::OPTIONAL, 'module name');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -65,12 +62,12 @@ class EnableCommand extends Command
                     $output->writeln($outputString);
                     return;
                 }
-                $outputString = 'Module '.$name.' enable with sucess'."\n";
+                $outputString = 'Module ' . $name . ' enable with sucess' . "\n";
             } else {
                 $outputString = 'Error : module ' . $name . ' is not installed' . "\n";
             }
         } else {
-            $outputString = 'Error : Unknow module name '.$name."\n";
+            $outputString = 'Error : Unknow module name ' . $name . "\n";
         }
         $output->writeln($outputString);
     }
