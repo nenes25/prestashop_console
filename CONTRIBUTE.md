@@ -7,8 +7,6 @@ You can use the folowing code as an example:
 
 <pre>
 
-<?php
-
 namespace Hhennes\PrestashopConsole\Command\; //Complete the path here
 
 use Symfony\Component\Console\Command\Command;
