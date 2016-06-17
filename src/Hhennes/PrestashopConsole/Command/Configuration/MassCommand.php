@@ -50,33 +50,33 @@ class MassCommand extends Command
     {
         $this
             ->setName('configuration:mass')
-            ->setDescription('Mass operation defined in yaml file')
-            ->addOption('yaml', null, InputOption::VALUE_REQUIRED, 'Yaml definition file');
+            ->setDescription('Mass operation configured in yaml file')
+            ->addOption('config', null, InputOption::VALUE_REQUIRED, 'Yaml definition file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $yamlFile = $input->getOption('yaml');
+        $yamlFile = $input->getOption('config');
 
         //check if file exist
         if (file_exists($yamlFile)) {
             //parse yaml file
             $definitions = Yaml::parse(file_get_contents($yamlFile));
             //Get the call object name;
-            $callObj = key($definitions);
+            $callObjName = key($definitions);
 
             //check if object is allowed to call
-            if (in_array($callObj, array_keys($this->allowedCalls))) {
+            if (in_array($callObjName, array_keys($this->allowedCalls))) {
                 //create instance
-                $configurationObject = new $callObj();
+                $callObject = new $callObjName();
 
-                foreach ($definitions[$callObj] as $method => $params) {
+                foreach ($definitions[$callObjName] as $method => $params) {
 
                     //check if method of object is allowed to call
-                    if (in_array($method, array_values($this->allowedCalls[$callObj]))) {
+                    if (in_array($method, array_values($this->allowedCalls[$callObjName]))) {
 
                         //check if configured method exist
-                        if (method_exists($configurationObject, $method)) {
+                        if (method_exists($callObject, $method)) {
 
                             //if single params for one method convert to indexed array
                             if (isset($params['key'])) {
@@ -87,19 +87,19 @@ class MassCommand extends Command
                             foreach ($params as $callParams) {
                                 $firstValue = reset($callParams);
                                 $firstKey = key($callParams);
-                                $output->writeln("<comment>Calling $callObj.$method($firstKey => $firstValue [...])</comment>");
-                                call_user_func_array(array($configurationObject, $method), array_values($callParams));
+                                $output->writeln("<comment>Calling $callObjName.$method($firstKey => $firstValue [...])</comment>");
+                                call_user_func_array(array($callObject, $method), array_values($callParams));
                             }
 
                         } else {
-                            $output->writeln("<error>Method '$callObj.$method' doesnt exist</error>");
+                            $output->writeln("<error>Method '$callObjName.$method' doesnt exist</error>");
                         }
                     } else {
-                        $output->writeln("<error>Method '$callObj.$method' is not allowed</error>");
+                        $output->writeln("<error>Method '$callObjName.$method' is not allowed</error>");
                     }
                 }
             } else {
-                $output->writeln("<error>Object '$callObj' is not allowed</error>");
+                $output->writeln("<error>Object '$callObjName' is not allowed</error>");
             }
         } else {
             $output->writeln("<error>Yaml definition file: '$yamlFile' doesnt exist!</error>");
