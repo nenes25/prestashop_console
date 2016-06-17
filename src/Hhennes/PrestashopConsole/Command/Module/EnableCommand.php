@@ -58,16 +58,16 @@ class EnableCommand extends Command
                 try {
                     $module->enable();
                 } catch (PrestashopException $e) {
-                    $outputString = 'Error : module ' . $name . ' ' . $e->getMesage() . "\n";
+                    $outputString = '<error>module ' . $name . ' ' . $e->getMesage() . "</error>";
                     $output->writeln($outputString);
                     return;
                 }
-                $outputString = 'Module ' . $name . ' enable with sucess' . "\n";
+                $outputString = '<info>Module ' . $name . ' enable with sucess' . "</info>";
             } else {
-                $outputString = 'Error : module ' . $name . ' is not installed' . "\n";
+                $outputString = '<error>module ' . $name . ' is not installed' . "<error>";
             }
         } else {
-            $outputString = 'Error : Unknow module name ' . $name . "\n";
+            $outputString = '<error>Unknow module name ' . $name . "<error>";
         }
         $output->writeln($outputString);
     }

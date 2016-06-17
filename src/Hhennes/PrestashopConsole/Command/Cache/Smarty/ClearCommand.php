@@ -56,16 +56,16 @@ class ClearCommand extends Command
 
             if ( is_dir($smartyCompileDir)) {
                 exec("rm -rf $smartyCompileDir/*");
-                $output->writeln('Smarty Compile dir cleaned');
+                $output->writeln('<info>Smarty Compile dir cleaned</info>');
             }
 
             if ( is_dir($smartyCacheDir)) {
                 exec("rm -rf $smartyCacheDir/*");
-                $output->writeln('Smarty Cache dir cleaned');
+                $output->writeln('<info>Smarty Cache dir cleaned</info>');
             }
         }
         else {
-            $output->writeln('Unable to clear smarty cache, exec function is disabled');
+            $output->writeln('<error>Unable to clear smarty cache, exec function is disabled</error>');
         }
     }
 }

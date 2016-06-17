@@ -52,7 +52,7 @@ class SetCommand extends Command
         $name = $input->getArgument('name');
         $value = $input->getArgument('value');
         \Configuration::updateValue($name,$value);
-        $output->writeln("Update configuration ".$name." with ".$value);
+        $output->writeln("<info>Update configuration ".$name." with ".$value."</info>");
     }
 
 }

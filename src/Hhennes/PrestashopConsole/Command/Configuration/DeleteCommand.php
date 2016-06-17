@@ -52,7 +52,7 @@ class DeleteCommand extends Command
     {
         $name = $input->getArgument('name');
         $value = \Configuration::deleteByName($name);
-        $output->writeln($value);
+        $output->writeln('<info>'.$value.'</info>');
     }
 
 }

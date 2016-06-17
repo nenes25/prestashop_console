@@ -52,7 +52,7 @@ class GetCommand extends Command
     {
         $name = $input->getArgument('name');
         $value = \Configuration::get($name);
-        $output->writeln($value);
+        $output->writeln('<info>'.$value.'</info>');
     }
 
 }
