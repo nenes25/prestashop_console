@@ -15,6 +15,7 @@ commands:
     - Hhennes\PrestashopConsole\Command\Configuration\GetCommand
     - Hhennes\PrestashopConsole\Command\Configuration\SetCommand
     - Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand
+    - Hhennes\PrestashopConsole\Command\Configuration\MassCommand
     - Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand
     - Hhennes\PrestashopConsole\Command\Preferences\MaintenanceCommand
 

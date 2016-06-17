@@ -1,0 +1,16 @@
+Configuration:
+    updateValue: #params the same as in oryginal method: key, values, html = false, id_shop_group = null, id_shop = null
+        - key: 'CONFIG_PARAM_NAME_WITH_LANG'
+          value:
+            1: 'polish txt with proper id_lang as key <i>dd</i>'
+            2: 'english txt with proper id_lang as key <i>dd</i>'
+          html: true
+        - key: 'CONFIG_PARAM_NAME2'
+          value: value for param
+        - key: 'CONFIG_PARAM_NAME3'
+          value: 'value for param CONFIG_PARAM_NAME3 with <b>html</b>'
+          html: true
+    deleteByName: #params the same as in oryginal method: key
+        - key: 'CONFIG_PARAM_NAME_WITH_LANG'
+        - key: 'CONFIG_PARAM_NAME2'
+        - key: 'CONFIG_PARAM_NAME3'
