@@ -1,8 +1,9 @@
 This branch is showing you how to contribute to the projet.
 
-If you want to add new functionnalities it's quite simple :
-Create your new command in the path :
-src/Hhennes/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php
+If you want to add new functionnalities it's quite simple :  
+
+Create your new command in the path :  
+src/Hhennes/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php  
 You can use the folowing code as an example:
 
 <pre>
