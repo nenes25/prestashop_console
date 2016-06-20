@@ -57,6 +57,7 @@ class MassCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $yamlFile = $input->getOption('config');
+        
 
         //check if file exist
         if (file_exists($yamlFile)) {
