@@ -59,16 +59,16 @@ class DisableCommand extends Command
                 try {
                     $module->disable();
                 } catch (PrestashopException $e) {
-                    $outputString = 'Error : module ' . $name . ' ' . $e->getMesage() . "\n";
+                    $outputString = '<error>Error : module ' . $name . ' ' . $e->getMesage() . "<error>";
                     $output->writeln($outputString);
                     return;
                 }
-                $outputString = 'Module '.$name.' disable with sucess'."\n";
+                $outputString = '<info>Module '.$name.' disable with sucess'."</info>";
             } else {
-                $outputString = 'Error : module ' . $name . ' is not installed' . "\n";
+                $outputString = '<error>Error : module ' . $name . ' is not installed' . "<error>";
             }
         } else {
-            $outputString = 'Error : Unknow module name '.$name."\n";
+            $outputString = '<error>Error : Unknow module name '.$name."</error>";
         }
         $output->writeln($outputString);
     }

@@ -66,14 +66,14 @@ class ConfigureCommand extends Command
         $value = $input->getArgument('value');
 
         if (!array_key_exists($name, $this->_allowedNames)) {
-            $output->writeln("Name not allowed");
+            $output->writeln("<error>Name not allowed</error>");
         } else {
             //Vérification de la valeur
             if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
-                $output->writeln("Value not allowed for configuration " . $name);
+                $output->writeln("<error>Value not allowed for configuration " . $name."</error>");
             } else {
                 \Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
-                $output->writeln("Update configuration " . $name . " with " . $value);
+                $output->writeln("<info>Update configuration " . $name . " with " . $value."</info>");
             }
         }
     }

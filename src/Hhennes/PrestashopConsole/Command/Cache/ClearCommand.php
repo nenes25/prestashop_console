@@ -30,7 +30,7 @@ class ClearCommand extends Command
 
         \Cache::clean('*');
 
-        $output->writeln('Cache cleaned');
+        $output->writeln('<info>Cache cleaned</info>');
     }
 
 }

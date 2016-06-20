@@ -75,7 +75,7 @@ class ListCommand extends Command
             $outputString .= $module['name'] . ' v' . $module['version'] . "\n";
         }
 
-        $output->writeln($outputString);
+        $output->writeln('<info>'.$outputString.'</info>');
     }
 
 }
