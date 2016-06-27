@@ -62,7 +62,7 @@ class IndexCommand extends Command
                 break;
             case 'rebuild':
             default:
-                $output->writeln('<comment>Re-building the entire ...</comment>');
+                $output->writeln('<comment>Re-building the entire index...</comment>');
                 \Search::indexation(1);
                 break;
         }
