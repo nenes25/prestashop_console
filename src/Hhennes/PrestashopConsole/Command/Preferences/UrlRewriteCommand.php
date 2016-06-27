@@ -33,10 +33,37 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet de reindexer les produits prestashop
+ * Commande qui permet d'activer / desactiver la réécriture d'url
  *
  */
 class UrlRewriteCommand extends Command
 {
-    //put your code here
+     protected function configure()
+    {
+        $this
+            ->setName('preferences:urlrewrite')
+            ->setDescription('Disable or enable Url Rewrite')
+            ->addArgument(
+                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
+            );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $type = $input->getArgument('type');
+
+        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
+
+        switch ($type) {
+            case 'enable':
+                $output->writeln("<info>Url rewrite is enabled</info>");
+                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
+                break;
+            case 'disable':
+            default:
+                $output->writeln("<info>Url rewrite is disabled</info>");
+                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
+                break;
+        }
+    }
 }
