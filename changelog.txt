@@ -24,3 +24,4 @@
 */
 
 2016-05-19 : Version initiale
+2016-06- : New commands
