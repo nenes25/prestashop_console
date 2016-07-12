@@ -46,7 +46,7 @@ class CmsCategoryCommand extends Command
             ->addArgument(
                 'id', InputArgument::REQUIRED, 'cms category id'
             )
-            ->addArgument('action', InputArgument::OPTIONAL, 'enable|disable(default'
+            ->addArgument('action', InputArgument::OPTIONAL, 'enable|disable(default)'
             );
     }
 
