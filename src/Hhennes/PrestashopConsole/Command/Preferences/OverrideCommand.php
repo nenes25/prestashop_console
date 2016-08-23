@@ -44,7 +44,7 @@ class OverrideCommand extends Command
             ->setName('preferences:override')
             ->setDescription('Disable or enable Override')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable(default)|disable'
+                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
             );
     }
 
