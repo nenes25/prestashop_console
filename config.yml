@@ -17,4 +17,5 @@ commands:
     - Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand
     - Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand
     - Hhennes\PrestashopConsole\Command\Preferences\MaintenanceCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand
 
