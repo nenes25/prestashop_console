@@ -16,5 +16,9 @@ commands:
     - Hhennes\PrestashopConsole\Command\Configuration\SetCommand
     - Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand
     - Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\CmsCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\CmsCategoryCommand
     - Hhennes\PrestashopConsole\Command\Preferences\MaintenanceCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\UrlRewriteCommand
 

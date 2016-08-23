@@ -18,8 +18,8 @@
  * versions in the future. If you wish to customize PrestaShop for your
  * needs please refer to http://www.prestashop.com for more information.
  *
- *  @author    Hennes Herv√© <contact@h-hennes.fr>
- *  @copyright 2013-2016 Hennes Herv√©
+ *  @author    Hennes HervÈ <contact@h-hennes.fr>
+ *  @copyright 2013-2016 Hennes HervÈ
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
@@ -33,18 +33,18 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet d'activer / desactiver la r√©√©criture d'url
+ * Commande qui permet d'activer / desactiver la rÈÈcriture d'url
  *
  */
-class UrlRewriteCommand extends Command
+class OverrideCommand extends Command
 {
      protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
+            ->setName('preferences:override')
+            ->setDescription('Disable or enable Override')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
+                'type', InputArgument::OPTIONAL, 'enable(default)|disable'
             );
     }
 
@@ -56,13 +56,17 @@ class UrlRewriteCommand extends Command
 
         switch ($type) {
             case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
+                $output->writeln("<info>All override are enabled</info>");
+                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
+                break;
+            case 1:
+                $output->writeln("<info>All override are enabled</info>");
+                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
                 break;
             case 'disable':
             default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
+                $output->writeln("<info>All override are disabled</info>");
+                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 1);
                 break;
         }
     }

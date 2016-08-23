@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -23,7 +24,6 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-
 namespace Hhennes\PrestashopConsole\Command\Preferences;
 
 use Symfony\Component\Console\Command\Command;
@@ -33,37 +33,53 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet d'activer / desactiver la réécriture d'url
+ * This commands allow to enable/disable cms categories
  *
  */
-class UrlRewriteCommand extends Command
+class CmsCategoryCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
+            ->setName('preferences:cmscategory')
+            ->setDescription('Disable or enable a specific cms category')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
+                'id', InputArgument::REQUIRED, 'cms category id'
+            )
+            ->addArgument('action', InputArgument::OPTIONAL, 'enable|disable(default)'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $type = $input->getArgument('type');
+        $id_cms = $input->getArgument('id');
+        $action = $input->getArgument('action');
 
         \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
 
-        switch ($type) {
+        $cmsCategory = new \CMSCategory($id_cms);
+
+        if ( $cmsCategory->id == NULL ){
+            $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>",$id_cms));
+            return;
+        }
+
+        switch ( $action ) {
             case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
+                $cmsCategory->active = 1;
+                $output->writeln(sprintf("<info>Enable cms category %d</info>",$id_cms));
                 break;
             case 'disable':
             default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
+                $output->writeln(sprintf("<info>Disable cms category %d</info>",$id_cms));
+                $cmsCategory->active = 0;
                 break;
+        }
+
+        try {
+            $cmsCategory->save();
+        } catch (Exception $e) {
+            $output->writeln('<error>'.$e->getMessage().'</error>');
         }
     }
 }
