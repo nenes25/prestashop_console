@@ -20,4 +20,5 @@ commands:
     - Hhennes\PrestashopConsole\Command\Preferences\CmsCategoryCommand
     - Hhennes\PrestashopConsole\Command\Preferences\MaintenanceCommand
     - Hhennes\PrestashopConsole\Command\Preferences\UrlRewriteCommand
+    - Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand
 
