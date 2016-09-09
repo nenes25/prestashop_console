@@ -67,3 +67,7 @@ Enable or disable Url Rewrite
 ```bash
  php console.php preferences:maintenance [enable|disable(default)]
  ```
+##### Override
+```bash
+ php console.php preferences:override [enable|disable(default)]
+ ```
