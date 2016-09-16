@@ -68,6 +68,13 @@ Enable or disable Url Rewrite
  php console.php preferences:maintenance [enable|disable(default)]
  ```
 ##### Override
+Enable or disable classes override
 ```bash
  php console.php preferences:override [enable|disable(default)]
+ ```
+
+##### Dev
+List overrides of classes and controllers in the project
+```bash
+ php console.php dev:list-overrides
  ```
