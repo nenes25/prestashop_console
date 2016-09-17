@@ -3,11 +3,32 @@
 Prestashop cli tools based on Symphony2 Console
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
 
-#Requires
+#Phar version
+
+download the file from github in your prestashop root directory  
+  wget https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar
+ ```bash
+wget https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar
+ ```
+
+Add execution mode  
+  ```bash
+chmod +x prestashopConsole.phar
+ ```
+ 
+
+Run the console  
+ ```bash
+./prestashopConsole.phar
+ ```
+
+#Php Version
+
+##Requires
 Composer
 Git
 
-#How to install it
+##How to install it
 Login to your hosting with ssh and go the root directory of your prestashop
 
 Clone the github repository in the directory console

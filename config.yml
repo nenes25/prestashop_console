@@ -1,6 +1,6 @@
 application:
     name: 'PrestashopConsole'
-    version: '0.1.0'
+    version: '0.2.0'
     author: 'hhennes <contact@h-hennes.fr>'
 commands:
     - Hhennes\PrestashopConsole\Command\Module\EnableCommand
