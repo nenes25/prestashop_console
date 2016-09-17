@@ -6,7 +6,6 @@ You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-pres
 #Phar version
 
 download the file from github in your prestashop root directory  
-  wget https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar
  ```bash
 wget https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar
  ```
