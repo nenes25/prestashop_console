@@ -25,3 +25,4 @@
 
 2016-05-19 : Version initiale
 2016-06- : New commands
+2016-09-17 V 0.2.0 : New phar archive

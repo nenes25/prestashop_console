@@ -1,0 +1,16 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "src"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["Tests"],
+            "in": "vendor"
+        }
+    ],
+    "main": "bin/phar/consolePhar.php",
+    "output": "bin/prestashopConsole.phar",
+    "stub": true
+}
