@@ -8,6 +8,10 @@
             "name": "*.php",
             "exclude": ["Tests"],
             "in": "vendor"
+        },
+        {
+            "name": "config.php",
+            "in":"."
         }
     ],
     "main": "bin/phar/consolePhar.php",

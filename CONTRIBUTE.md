@@ -1,9 +1,9 @@
 This branch is showing you how to contribute to the projet.
 
-If you want to add new functionnalities it's quite simple :  
+If you want to add new functionnalities it's quite simple :
 
-Create your new command in the path :  
-src/Hhennes/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php  
+Create your new command in the path :
+src/Hhennes/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php
 You can use the folowing code as an example:
 
 <pre>
@@ -42,7 +42,7 @@ class ClearCommand extends Command
 For example if your command deals with modules you can create it in :
 src/Hhennes/Prestashop/Command/Module/SampleCommand.php
 
-To make your command works you have to register it in the file config.yml above the existing ones.
+To make your command works you have to register it in the file config.php above the existing ones.
 Simply by adding its namespace.
 
 Then everything should works

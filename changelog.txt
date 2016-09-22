@@ -25,4 +25,5 @@
 
 2016-05-19 : Version initiale
 2016-06- : New commands
-2016-09-17 V 0.2.0 : New phar archive
+2016-09-17 - V 0.2.0 : New phar archive
+2016-09-22 - V 0.2.1 : Replace configuration file in yml by file in php to optimize phar generation

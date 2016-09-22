@@ -1,47 +1,48 @@
 #!/usr/bin/env php
 <?php
+/**
+ * 2007-2016 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ *  @author    Hennes Hervé <contact@h-hennes.fr>
+ *  @copyright 2013-2016 Hennes Hervé
+ *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *  http://www.h-hennes.fr/blog/
+ */
+
+use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
+
 //Autoload Composer
 require_once 'vendor/autoload.php';
 
 //Autoload Prestashop
 require_once 'config/config.inc.php';
 
-use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
-use Symfony\Component\Yaml\Yaml;
-/**
- * @ToDO : Make configuration working in phar
- */
-$app = new PrestashopConsoleApplication('PrestashopConsole', '0.2.0');
+//Console Application
+require_once 'config.php';
+$app = new PrestashopConsoleApplication($configuration['application']['name'], $configuration['application']['version']);
 
 //Add commands from config file
-$configCommands = array(
-     'Hhennes\PrestashopConsole\Command\Module\EnableCommand',
-     'Hhennes\PrestashopConsole\Command\Module\DisableCommand',
-     'Hhennes\PrestashopConsole\Command\Module\ListCommand',
-     'Hhennes\PrestashopConsole\Command\Module\InstallCommand',
-     'Hhennes\PrestashopConsole\Command\Module\UninstallCommand',
-     'Hhennes\PrestashopConsole\Command\Module\ResetCommand',
-     'Hhennes\PrestashopConsole\Command\Cache\ClearCommand',
-     'Hhennes\PrestashopConsole\Command\Cache\Smarty\ClearCommand',
-     'Hhennes\PrestashopConsole\Command\Cache\Smarty\ConfigureCommand',
-     'Hhennes\PrestashopConsole\Command\Configuration\GetCommand',
-     'Hhennes\PrestashopConsole\Command\Configuration\SetCommand',
-     'Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand',
-     'Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand',
-     'Hhennes\PrestashopConsole\Command\Preferences\CmsCommand',
-     'Hhennes\PrestashopConsole\Command\Preferences\CmsCategoryCommand',
-     'Hhennes\PrestashopConsole\Command\Preferences\MaintenanceCommand',
-     'Hhennes\PrestashopConsole\Command\Preferences\UrlRewriteCommand',
-     'Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand',
-     'Hhennes\PrestashopConsole\Command\Dev\ListOverridesCommand',
-    );
-
 $customCommands = array();
-
-foreach ($configCommands as $command) {
-    $customCommand[] = new $command();
+foreach ($configuration['commands'] as $command) {
+    $customCommands[] = new $command();
 }
-$app->addCommands($customCommand);
+$app->addCommands($customCommands);
 
 //Application run
 $app->run();

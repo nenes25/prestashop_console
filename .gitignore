@@ -1,3 +1,4 @@
 config.xml
 /vendor/
 composer.lock
+/nbproject/
