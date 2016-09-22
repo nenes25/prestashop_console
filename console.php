@@ -31,7 +31,7 @@ use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
 require_once 'vendor/autoload.php';
 
 //Autoload Prestashop
-require_once '../www/prestashop_1.6.1.7/config/config.inc.php';
+require_once '../config/config.inc.php';
 
 //Console Application
 require_once 'config.php';
