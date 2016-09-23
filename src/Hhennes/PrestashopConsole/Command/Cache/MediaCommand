@@ -9,25 +9,33 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Clear media cache
+ * Flush prestashop cache
  *
  * @author hhennes <contact@h-hennes.fr>
- *
  */
-class ClearMediaCommand extends Command
+class MediaCommand extends Command
 {
 
     protected function configure()
     {
         $this
-                ->setName('cache:media:clear')
-                ->setDescription('Clear media cache');
+                ->setName('cache:media')
+                ->setDescription('Clean media cache directory');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        \Media::clearCache();
-        $output->writeln('<info>Media cache cleared</info>');
+
+        $cache =  \Cache::getInstance();
+        $cache->flush();
+
+        //Specific cacheFS
+        if (get_class($cache) == 'cacheFs'){
+            $cache::deleteCacheDirectory();
+            $cache::createCacheDirectories();
+        }
+
+        $output->writeln('<info>Cache flushed</info>');
     }
 
 }
