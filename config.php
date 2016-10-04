@@ -32,7 +32,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Module\ResetCommand',
      'Hhennes\PrestashopConsole\Command\Cache\CleanCommand',
      'Hhennes\PrestashopConsole\Command\Cache\FlushCommand',
-     'Hhennes\PrestashopConsole\Command\Cache\ClearMediaCommand',
+    // 'Hhennes\PrestashopConsole\Command\Cache\ClearMediaCommand',
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ClearCommand',
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ConfigureCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\GetCommand',
@@ -45,5 +45,6 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Preferences\UrlRewriteCommand',
      'Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand',
      'Hhennes\PrestashopConsole\Command\Dev\ListOverridesCommand',
+     'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
 );
 
