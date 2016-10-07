@@ -78,3 +78,9 @@ List overrides of classes and controllers in the project
 ```bash
  php console.php dev:list-overrides
  ```
+##### Install
+Allow to you install a fresh prestashop version
+```bash
+ php console.php install:install [--psVersion=] [--domainName=] [--dbname=] [--dbuser=] [--dbpassword=][--contactEmail=] [--adminpassword=] [--directory=]
+ ```
+Parameters are optionnals and will be asked during the process if not given
