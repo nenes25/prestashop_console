@@ -11,7 +11,7 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '0.2.2',
+    'version' => '0.2.3',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
@@ -32,7 +32,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Module\ResetCommand',
      'Hhennes\PrestashopConsole\Command\Cache\CleanCommand',
      'Hhennes\PrestashopConsole\Command\Cache\FlushCommand',
-//     'Hhennes\PrestashopConsole\Command\Cache\ClearMediaCommand',
+     'Hhennes\PrestashopConsole\Command\Cache\MediaCommand',
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ClearCommand',
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ConfigureCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\GetCommand',
