@@ -30,14 +30,23 @@ use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
 //Autoload Composer
 require_once 'vendor/autoload.php';
 
-//Autoload Prestashop
-require_once '../config/config.inc.php';
-
 //Console Application
 require_once 'config.php';
 
 $app = new PrestashopConsoleApplication($configuration['application']['name'], $configuration['application']['version']);
 
+//Autoload Prestashop
+if ( is_file('../config/config.inc.php')) {
+    include_once '../config/config.inc.php';
+}
+//If no prestashop conf find, only allow to install Prestashop
+else {
+    $configuration['commands'] = array(
+        'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
+        'Hhennes\PrestashopConsole\Command\Install\InfoCommand'
+        );
+    $app->setDefaultCommand('install:info');
+}
 //Add commands from config file
 $customCommands = array();
 foreach ($configuration['commands'] as $command) {

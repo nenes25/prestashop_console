@@ -11,7 +11,7 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '0.2.2',
+    'version' => '0.3.0',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
