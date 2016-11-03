@@ -11,7 +11,7 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '0.3.0',
+    'version' => '0.4.0',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
@@ -36,6 +36,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ClearCommand',
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ConfigureCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\GetCommand',
+     'Hhennes\PrestashopConsole\Command\Configuration\GetAllCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\SetCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand',
      'Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand',

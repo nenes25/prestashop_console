@@ -1,8 +1,33 @@
 # Prestashop Console Commands List
 
 ## Cache :
-###( STILL IN BETA )
 
+clean : clean cache key (default * )
+ ```bash
+ php console.php cache:clean [key]
+ ```
+flush : flush cache
+ ```bash
+ php console.php cache:flush
+ ```
+media : clear media cache
+ ```bash
+ php console.php cache:media
+ ```
+smarty clear : clear Smarty cache
+ ```bash
+ php console.php cache:smarty:clear
+ ```
+smarty configure : Configure smarty cache
+ ```bash
+ php console.php cache:smarty:configure configuration value
+ ```
+Allowed values (configuration => value ):
+ PS_SMARTY_FORCE_COMPILE => 0 | 1 | 2
+ PS_SMARTY_CACHE => 0 | 1
+ PS_SMARTY_CACHING_TYPE => filesystem | mysql
+ PS_SMARTY_CLEAR_CACHE => never | everytime
+ 
 ## Configuration
 
  ConfigurationName is the "name" of the configuration you want to change in the table ps_configuration
@@ -14,6 +39,10 @@
  get : get configuration value
  ```bash
  php console.php configuration:get [configurationName]
+ ```
+ getAll : get All configuration values
+ ```bash
+ php console.php configuration:getAll [|grep configurationName ]
  ```
  set : Set configuration value
  ```bash
