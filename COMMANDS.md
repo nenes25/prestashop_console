@@ -107,6 +107,20 @@ List overrides of classes and controllers in the project
 ```bash
  php console.php dev:list-overrides
  ```
+
+## Admin
+### User
+Create new admin user
+```bash
+ php console.php admin:user:create
+ ```
+
+### Password
+Change admin password
+```bash
+ php console.php admin:user:create
+ ```
+
 ##### Install
 Allow to you install a fresh prestashop version
 ```bash

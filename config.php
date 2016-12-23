@@ -47,5 +47,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand',
      'Hhennes\PrestashopConsole\Command\Dev\ListOverridesCommand',
      'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
+     'Hhennes\PrestashopConsole\Command\Admin\User\CreateCommand',
+     'Hhennes\PrestashopConsole\Command\Admin\User\PasswordCommand',
 );
 
