@@ -27,7 +27,7 @@ Allowed values (configuration => value ):
  PS_SMARTY_CACHE => 0 | 1
  PS_SMARTY_CACHING_TYPE => filesystem | mysql
  PS_SMARTY_CLEAR_CACHE => never | everytime
- 
+
 ## Configuration
 
  ConfigurationName is the "name" of the configuration you want to change in the table ps_configuration
@@ -118,7 +118,7 @@ Create new admin user
 ### Password
 Change admin password
 ```bash
- php console.php admin:user:create
+ php console.php admin:user:create [--email=] [--password=] [--firstname=] [--lastname=]
  ```
 
 ##### Install

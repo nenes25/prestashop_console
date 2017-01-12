@@ -32,3 +32,4 @@
 2016-10-10 - V 0.3.0 : New functionnaly : install prestashop from command line
 2016-11-03 - V 0.4.0 : New command to get all configurations
 2016-12-23 - V 0.5.0 : New commands to create admin user and to change admin password
+2016-01-11 - V 0.5.1 : Improvement for creating admin user

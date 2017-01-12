@@ -43,24 +43,36 @@ class CreateCommand extends Command
     {
         $this
             ->setName('admin:user:create')
-            ->setDescription('Create new admin user');
+            ->setDescription('Create new admin user')
+            ->addOption('email',null,InputOption::VALUE_OPTIONAL , 'Admin email')
+            ->addOption('password',null,InputOption::VALUE_OPTIONAL , 'Admin password')
+            ->addOption('firstname',null,InputOption::VALUE_OPTIONAL , 'firstname')
+            ->addOption('lastname',null,InputOption::VALUE_OPTIONAL , 'lastname');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
 
-        $userQuestion = new Question('admin email :',false);
-        $email = $helper->ask($input,$output,$userQuestion);
+        if ( !$email = $input->getOption('email')) {
+            $userQuestion = new Question('admin email :',false);
+            $email = $helper->ask($input,$output,$userQuestion);
+        }
 
-        $passwordQuestion = new Question('admin password :','admin123456');
-        $password = $helper->ask($input,$output,$passwordQuestion);
+        if ( !$password = $input->getOption('password')) {
+            $passwordQuestion = new Question('admin password :','admin123456');
+            $password = $helper->ask($input,$output,$passwordQuestion);
+        }
 
-        $firstnameQuestion = new Question('firstname :','admin');
-        $firstname = $helper->ask($input,$output,$firstnameQuestion);
+        if ( !$firstname = $input->getOption('firstname')) {
+            $firstnameQuestion = new Question('firstname :','admin');
+            $firstname = $helper->ask($input,$output,$firstnameQuestion);
+        }
 
-        $lastnameQuestion = new Question('lastname :','admin');
-        $lastname = $helper->ask($input,$output,$lastnameQuestion);
+        if ( !$lastname = $input->getOption('lastname')) {
+            $lastnameQuestion = new Question('lastname :','admin');
+            $lastname = $helper->ask($input,$output,$lastnameQuestion);
+        }
 
         //Error if employee with same email already exists
         if ( \Employee::employeeExists($email)){
