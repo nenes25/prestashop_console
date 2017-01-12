@@ -107,6 +107,11 @@ List overrides of classes and controllers in the project
 ```bash
  php console.php dev:list-overrides
  ```
+### Add missing index.php files in directory
+Add missing index.php files in the specified directory
+```bash
+ php console.php dev:add-index-files [directory]
+ ```
 
 ## Admin
 ### User

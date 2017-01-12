@@ -11,7 +11,7 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '0.5.1',
+    'version' => '0.6.0',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
@@ -46,6 +46,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Preferences\UrlRewriteCommand',
      'Hhennes\PrestashopConsole\Command\Preferences\OverrideCommand',
      'Hhennes\PrestashopConsole\Command\Dev\ListOverridesCommand',
+     'Hhennes\PrestashopConsole\Command\Dev\AddIndexFilesCommand',
      'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
      'Hhennes\PrestashopConsole\Command\Admin\User\CreateCommand',
      'Hhennes\PrestashopConsole\Command\Admin\User\PasswordCommand',
