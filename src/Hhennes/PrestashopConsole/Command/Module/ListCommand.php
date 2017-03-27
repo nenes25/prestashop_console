@@ -20,43 +20,53 @@ class ListCommand extends Command
     {
         $this
             ->setName('module:list')
-            ->setDescription('Get modules list');
+            ->setDescription('Get modules list')
+            ->addOption(
+                'active', null, InputOption::VALUE_NONE, 'List only active module'
+            );
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
         $modules = \Module::getModulesOnDisk();
-        //TODO sort by name
+        //module stdClass definition
         /*
-         *             [id] => 36
-                    [warning] =>
-                    [name] => gridhtml
-                    [displayName] => Wyświetlanie prostej tabeli HTML
-                    [version] => 1.3.0
-                    [description] => Pozwól systemowi statystyk na wyświetlanie danych w tabeli.
-                    [author] => PrestaShop
-                    [tab] => administration
-                    [is_configurable] => 0
-                    [need_instance] => 0
-                    [limited_countries] =>
-                    [author_uri] =>
-                    [active] => 1
-                    [onclick_option] =>
-                    [trusted] => 1
-                    [installed] => 1
-                    [database_version] => 1.3.0
-                    [interest] =>
-                    [enable_device] => 7
-
+            [id] => 36
+            [warning] =>
+            [name] => gridhtml
+            [displayName] => Module display name
+            [version] => 1.3.0
+            [description] => Module description
+            [author] => PrestaShop
+            [tab] => administration
+            [is_configurable] => 0
+            [need_instance] => 0
+            [limited_countries] =>
+            [author_uri] =>
+            [active] => 1
+            [onclick_option] =>
+            [trusted] => 1
+            [installed] => 1
+            [database_version] => 1.3.0
+            [interest] =>
+            [enable_device] => 7
          */
 
+        //sort by module name
+        usort($modules, array($this, "cmp"));
         $output->writeln("<info>Currently module on disk:</info>");
 
         $nr = 0;
         $table = new Table($output);
         $table->setHeaders(['Name', 'Version', 'Installed', 'Active']);
         foreach ($modules as $module) {
+            //list only active module
+            if ($input->getOption('active') && !(bool)($module->active)) {
+                $nr++;
+                continue;
+            }
             $table->addRow([
                 $module->name,
                 $module->version,
@@ -68,6 +78,11 @@ class ListCommand extends Command
 
         $table->render();
         $output->writeln("<info>Total modules on disk: $nr</info>");
+    }
+
+    private function cmp($a, $b)
+    {
+        return strcmp($a->name, $b->name);
     }
 
 }

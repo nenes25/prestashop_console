@@ -39,6 +39,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Configuration\GetAllCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\SetCommand',
      'Hhennes\PrestashopConsole\Command\Configuration\DeleteCommand',
+     'Hhennes\PrestashopConsole\Command\Configuration\MassCommand',
      'Hhennes\PrestashopConsole\Command\Preferences\Search\IndexCommand',
      'Hhennes\PrestashopConsole\Command\Preferences\CmsCommand',
      'Hhennes\PrestashopConsole\Command\Preferences\CmsCategoryCommand',
