@@ -49,6 +49,11 @@ Allowed values (configuration => value ):
  php console.php configuration:set [configurationName] [configurationValue]
  ```
 
+ mass : (updateValue | deleteByName | updateGlobalValue | set) operation configuration values with yml file ([example](examples/configuration.mass.yml))
+ ```bash
+ php console.php configuration:mass [configFile] 
+ ```
+
 ## Modules
  disable : disable a specific module
  ```bash
@@ -64,7 +69,7 @@ Allowed values (configuration => value ):
  ```
  list : get module list
  ```bash
- php console.php module:list
+ php console.php module:list [active]
  ```
  reset : reset module
  ```bash

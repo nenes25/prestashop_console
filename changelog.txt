@@ -34,3 +34,4 @@
 2016-12-23 - V 0.5.0 : New commands to create admin user and to change admin password
 2016-01-11 - V 0.5.1 : Improvement for creating admin user
 2016-01-12 - V 0.6.0 : New command to add index.php files in directories
+2016-03-27 - V 0.7.0 : New command for mass configuration object changes

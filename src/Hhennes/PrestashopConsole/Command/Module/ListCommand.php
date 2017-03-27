@@ -3,6 +3,7 @@
 namespace Hhennes\PrestashopConsole\Command\Module;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,64 +19,70 @@ class ListCommand extends Command
     protected function configure()
     {
         $this
-                ->setName('module:list')
-                ->setDescription('Get installed modules list')
-                ->addArgument(
-                        'type', InputArgument::OPTIONAL, 'core|others|all(default)'
-                )
-                ->addOption(
-                        'active', null, InputOption::VALUE_NONE, 'List only active module'
-                );
+            ->setName('module:list')
+            ->setDescription('Get modules list')
+            ->addOption(
+                'active', null, InputOption::VALUE_NONE, 'List only active module'
+            );
 
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $type = $input->getArgument('type');
-
-        /**
-         * En fonction du type de module qu'on souhaite afficher
+        $modules = \Module::getModulesOnDisk();
+        //module stdClass definition
+        /*
+            [id] => 36
+            [warning] =>
+            [name] => gridhtml
+            [displayName] => Module display name
+            [version] => 1.3.0
+            [description] => Module description
+            [author] => PrestaShop
+            [tab] => administration
+            [is_configurable] => 0
+            [need_instance] => 0
+            [limited_countries] =>
+            [author_uri] =>
+            [active] => 1
+            [onclick_option] =>
+            [trusted] => 1
+            [installed] => 1
+            [database_version] => 1.3.0
+            [interest] =>
+            [enable_device] => 7
          */
-        switch ( $type ) {
 
-            //@ToDO : Pour l'instant Bug avec la récupération XML de la liste des modules dans certains cas
-            //Seul la fonction all fonctionne
-            case 'core':
-                $modules = \Module::getNativeModuleList();
-                break;
-            case 'others':
-                $modules = \Module::getNonNativeModuleList();
-                break;
-            case 'all':
-            default:
-                $modules = \Module::getModulesInstalled();
-                break;
-        }
+        //sort by module name
+        usort($modules, array($this, "cmp"));
+        $output->writeln("<info>Currently module on disk:</info>");
 
-        /**
-         * Filtre des modules uniquement actifs
-         * (Prestashop ne renvoie pas les bonnes données avec ses fonctions (...) manque les données shop
-         */
-        if ($input->getOption('active')) {
-            $modules = array_filter($modules,function($row){
-                if ( (int)$row['active'] != 1) {
-                    unset($row);
-                }
-                else {
-                    return $row;
-                }
-            });
-        }
-
-        $outputString = 'Currently Installed module '.$type."\n";
-
-
+        $nr = 0;
+        $table = new Table($output);
+        $table->setHeaders(['Name', 'Version', 'Installed', 'Active']);
         foreach ($modules as $module) {
-            $outputString .= $module['name'] . ' v' . $module['version'] . "\n";
+            //list only active module
+            if ($input->getOption('active') && !(bool)($module->active)) {
+                $nr++;
+                continue;
+            }
+            $table->addRow([
+                $module->name,
+                $module->version,
+                ((bool)($module->installed) ? 'true' : 'false'),
+                ((bool)($module->active) ? 'true' : 'false')
+            ]);
+            $nr++;
         }
 
-        $output->writeln('<info>'.$outputString.'</info>');
+        $table->render();
+        $output->writeln("<info>Total modules on disk: $nr</info>");
+    }
+
+    private function cmp($a, $b)
+    {
+        return strcmp($a->name, $b->name);
     }
 
 }
