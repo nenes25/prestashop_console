@@ -32,12 +32,11 @@ require_once 'vendor/autoload.php';
 
 //Console Application
 require_once 'config.php';
-
 $app = new PrestashopConsoleApplication($configuration['application']['name'], $configuration['application']['version']);
 
 //Autoload Prestashop
-if ( is_file('../config/config.inc.php')) {
-    include_once '../config/config.inc.php';
+if ( is_file('config/config.inc.php')) {
+    include_once 'config/config.inc.php';
 }
 //If no prestashop conf find, only allow to install Prestashop
 else {
@@ -47,6 +46,7 @@ else {
         );
     $app->setDefaultCommand('install:info');
 }
+
 //Add commands from config file
 $customCommands = array();
 foreach ($configuration['commands'] as $command) {

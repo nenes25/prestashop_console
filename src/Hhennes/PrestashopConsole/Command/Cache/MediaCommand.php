@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -23,8 +24,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-
-namespace Hhennes\PrestashopConsole\Command\Preferences;
+namespace Hhennes\PrestashopConsole\Command\Cache;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -33,37 +33,20 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet d'activer / desactiver la réécriture d'url
- *
+ * Clear Media cache
  */
-class UrlRewriteCommand extends Command
+class MediaCommand extends Command
 {
      protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
-            ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
-            );
+                ->setName('cache:media')
+                ->setDescription('Clean media cache directory');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        $type = $input->getArgument('type');
-
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
-
-        switch ($type) {
-            case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
-                break;
-            case 'disable':
-            default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
-                break;
-        }
+        \Media::clearCache();
+        $output->writeln('<info>Media cache cleared</info>');
     }
 }

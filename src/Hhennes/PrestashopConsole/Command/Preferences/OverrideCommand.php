@@ -33,16 +33,16 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet d'activer / desactiver la réécriture d'url
+ * Commande qui permet d'activer / desactiver les override
  *
  */
-class UrlRewriteCommand extends Command
+class OverrideCommand extends Command
 {
      protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
+            ->setName('preferences:override')
+            ->setDescription('Disable or enable Override')
             ->addArgument(
                 'type', InputArgument::OPTIONAL, 'enable|disable(default)'
             );
@@ -56,13 +56,14 @@ class UrlRewriteCommand extends Command
 
         switch ($type) {
             case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
+			case 1:
+                $output->writeln("<info>All override are enabled</info>");
+                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
                 break;
             case 'disable':
             default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
+                $output->writeln("<info>All override are disabled</info>");
+                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 1);
                 break;
         }
     }

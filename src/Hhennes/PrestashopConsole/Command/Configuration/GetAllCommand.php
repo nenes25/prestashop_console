@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -23,47 +24,39 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-
-namespace Hhennes\PrestashopConsole\Command\Preferences;
+namespace Hhennes\PrestashopConsole\Command\Configuration;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Commande qui permet d'activer / desactiver la réécriture d'url
+ * Get All Configuration values
  *
  */
-class UrlRewriteCommand extends Command
+class GetAllCommand extends Command
 {
      protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
-            ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
-            );
+                ->setName('configuration:getAll')
+                ->setDescription('get all configuration values');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $type = $input->getArgument('type');
+        //Load All Configurations
+        \Configuration::loadConfiguration();
 
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
-
-        switch ($type) {
-            case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
-                break;
-            case 'disable':
-            default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
-                break;
+        //Get All Configuration names (except xml configuration)
+        $configurationNames = \Db::getInstance()->executeS("SELECT name FROM "._DB_PREFIX_."configuration WHERE name <> 'PS_INSTALL_XML_LOADERS_ID'");
+        $configList = '';
+        
+        //Get All configuration keys and value
+        foreach ( $configurationNames as $config ){
+                $configList.= $config['name'] .' '.\Configuration::get($config['name'])."\n";
         }
+        $output->write('<info>'.$configList.'</info>');
     }
+
 }

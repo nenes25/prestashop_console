@@ -24,46 +24,44 @@
  *  http://www.h-hennes.fr/blog/
  */
 
-namespace Hhennes\PrestashopConsole\Command\Preferences;
+namespace Hhennes\PrestashopConsole\Command\Dev;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 
 /**
- * Commande qui permet d'activer / desactiver la réécriture d'url
+ * Commande qui permet de lister les overrides en place sur le site
  *
  */
-class UrlRewriteCommand extends Command
+class ListOverridesCommand extends Command
 {
      protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
-            ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
-            );
+            ->setName('dev:list-overrides')
+            ->setDescription('List overrides of classes and controllers in the project');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $type = $input->getArgument('type');
+        $outputString = '';
+        try {
+            $finder = new Finder();
+            $finder->files()->in(_PS_OVERRIDE_DIR_)->name('*.php')->notName('index.php');
 
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
-
-        switch ($type) {
-            case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
-                break;
-            case 'disable':
-            default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
-                break;
+            foreach ($finder as $file) {
+                $outputString.= $file->getRelativePathname()."\n";
+            }
+        } catch (Exception $e) {
+            $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
         }
+        if ( $outputString == '') {
+            $outputString = 'No class or controllers overrides on this project';
+        }
+        $output->writeln("<info>".$outputString."</info>");
     }
 }

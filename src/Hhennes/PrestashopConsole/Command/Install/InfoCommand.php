@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -23,47 +24,35 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
-
-namespace Hhennes\PrestashopConsole\Command\Preferences;
+namespace Hhennes\PrestashopConsole\Command\Install;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\ListCommand;
 
 /**
- * Commande qui permet d'activer / desactiver la réécriture d'url
+ * This commands display information on ps install
  *
  */
-class UrlRewriteCommand extends Command
+class InfoCommand extends ListCommand
 {
-     protected function configure()
+
+    protected function configure()
     {
         $this
-            ->setName('preferences:urlrewrite')
-            ->setDescription('Disable or enable Url Rewrite')
-            ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
-            );
+            ->setName('install:info')
+            ->setDescription('prestashop install info')
+            ->setDefinition($this->getNativeDefinition());
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $type = $input->getArgument('type');
-
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
-
-        switch ($type) {
-            case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
-                break;
-            case 'disable':
-            default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
-                break;
-        }
+        parent::execute($input,$output);
+        $output->writeln("<error>No prestashop installation detected, please install it or place the console in the right place.</error>");
+        $output->writeln("<error>Or run install:install to install a new prestashop website.</error>");
+        $output->writeln("<error>All console commands will be available once a prestashop installation will be detected</error>");
     }
 }

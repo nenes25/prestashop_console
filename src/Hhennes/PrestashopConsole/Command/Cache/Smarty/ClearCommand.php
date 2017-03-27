@@ -49,23 +49,7 @@ class ClearCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ( function_exists('exec') ) {
-
-            $smartyCompileDir = _PS_CACHE_DIR_.'smarty/compile';
-            $smartyCacheDir = _PS_CACHE_DIR_.'smarty/cache';
-
-            if ( is_dir($smartyCompileDir)) {
-                exec("rm -rf $smartyCompileDir/*");
-                $output->writeln('<info>Smarty Compile dir cleaned</info>');
-            }
-
-            if ( is_dir($smartyCacheDir)) {
-                exec("rm -rf $smartyCacheDir/*");
-                $output->writeln('<info>Smarty Cache dir cleaned</info>');
-            }
-        }
-        else {
-            $output->writeln('<error>Unable to clear smarty cache, exec function is disabled</error>');
-        }
+        \Tools::clearSmartyCache();
+        $output->writeln('<info>Smarty Cache and compiled dir cleaned</info>');
     }
 }
