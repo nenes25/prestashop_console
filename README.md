@@ -3,7 +3,6 @@
 Prestashop cli tools based on Symphony2 Console
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
 
-Be carreful , for now the phar version works only for prestashop < 1.7
 
 #Phar version
 

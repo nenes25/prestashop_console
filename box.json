@@ -1,13 +1,13 @@
 {
     "chmod": "0755",
     "directories": [
-        "src"
+        "src/Hhennes"
     ],
     "finder": [
         {
             "name": "*.php",
             "exclude": ["Tests"],
-            "in": "vendor"
+            "in": "src/vendor"
         },
         {
             "name": "config.php",

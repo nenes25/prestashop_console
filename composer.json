@@ -1,9 +1,11 @@
 {
     "name": "PrestashopConsole",
+	"description" : "Tools to manage your prestashop with CLI",
     "authors": [
         {
             "name": "hhennes",
-            "email": "contact@h-hennes.fr"
+            "email": "contact@h-hennes.fr",
+			"homepage": "https://www.h-hennes.fr/blog/"
         }
     ],
     "require": {
@@ -16,5 +18,8 @@
         "psr-0" : {
             "Hhennes": "src"
         }
-    }
+    },
+    "config": {
+	"vendor-dir": "src/vendor"
+   }
 }

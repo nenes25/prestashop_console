@@ -28,7 +28,7 @@
 use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
 
 //Autoload Composer
-require_once 'vendor/autoload.php';
+require_once 'src/vendor/autoload.php';
 
 //Console Application
 require_once 'config.php';
