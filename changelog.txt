@@ -36,3 +36,4 @@
 2016-01-12 - V 0.6.0 : New command to add index.php files in directories
 2016-03-27 - V 0.7.0 : New command for mass configuration object changes
 2017-05-06 - V 0.7.1 : Now works with prestashop 1.7
+2017-05-06 - V 0.7.2 : New Command to download Class Names for autocomplete

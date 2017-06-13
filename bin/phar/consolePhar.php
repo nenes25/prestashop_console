@@ -33,6 +33,7 @@ require_once 'src/vendor/autoload.php';
 //Console Application
 require_once 'config.php';
 $app = new PrestashopConsoleApplication($configuration['application']['name'], $configuration['application']['version']);
+$app->setRunAs('phar');
 
 //Autoload Prestashop
 if ( is_file('config/config.inc.php')) {

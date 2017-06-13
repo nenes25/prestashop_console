@@ -35,4 +35,25 @@ class PrestashopConsoleApplication extends BaseApplication
 
     const APP_VERSION = '0.1.0';
 
+    /** @var string php|phar Console run mod */
+    protected $_runAs = 'php';
+
+    /**
+     * Set RunAs Mode
+     * @param type $mode
+     */
+    public function setRunAs($mode)
+    {
+        $this->_runAs = $mode;
+    }
+
+    /**
+     * Get RunAs
+     * @return type
+     */
+    public function getRunAs()
+    {
+        return $this->_runAs;
+    }
+
 }
