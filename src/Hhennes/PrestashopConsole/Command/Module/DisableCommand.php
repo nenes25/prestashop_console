@@ -24,6 +24,7 @@
  *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
+
 namespace Hhennes\PrestashopConsole\Command\Module;
 
 use Symfony\Component\Console\Command\Command;
@@ -38,13 +39,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DisableCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('module:disable')
                 ->setDescription('Disable module')
                 ->addArgument(
-                        'name', InputArgument::OPTIONAL, 'module name'
+                        'name', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'module name ( separate multiple with spaces )'
                 );
     }
 
@@ -53,24 +54,30 @@ class DisableCommand extends Command
 
         $name = $input->getArgument('name');
 
-        if ($module = \Module::getInstanceByName($name)) {
+        if (count($name) > 0) {
 
-            if (\Module::isInstalled($module->name)) {
-                try {
-                    $module->disable();
-                } catch (PrestashopException $e) {
-                    $outputString = '<error>Error : module ' . $name . ' ' . $e->getMesage() . "<error>";
-                    $output->writeln($outputString);
-                    return;
+            foreach ($name as $moduleName) {
+
+                if ($module = \Module::getInstanceByName($moduleName)) {
+
+                    if (\Module::isInstalled($module->name)) {
+                        try {
+                            $module->disable();
+                        } catch (PrestashopException $e) {
+                            $outputString = '<error>Error : module ' . $moduleName . ' ' . $e->getMesage() . "<error>";
+                            $output->writeln($outputString);
+                            return;
+                        }
+                        $outputString = '<info>Module ' . $moduleName . ' disable with sucess' . "</info>";
+                    } else {
+                        $outputString = '<error>Error : module ' . $moduleName . ' is not installed' . "<error>";
+                    }
+                } else {
+                    $outputString = '<error>Error : Unknow module name ' . $moduleName . "</error>";
                 }
-                $outputString = '<info>Module '.$name.' disable with sucess'."</info>";
-            } else {
-                $outputString = '<error>Error : module ' . $name . ' is not installed' . "<error>";
+                $output->writeln($outputString);
             }
-        } else {
-            $outputString = '<error>Error : Unknow module name '.$name."</error>";
         }
-        $output->writeln($outputString);
     }
 
 }

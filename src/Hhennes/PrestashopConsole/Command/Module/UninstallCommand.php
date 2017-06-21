@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 2007-2016 PrestaShop
  *
@@ -33,11 +34,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UninstallCommand extends Command
 {
+
     protected function configure()
     {
         $this->setName('module:uninstall')
-            ->setDescription('Uninstall module')
-            ->addArgument('name', InputArgument::REQUIRED, 'module name');
+                ->setDescription('Uninstall module')
+                ->addArgument(
+                        'name', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'module name ( separate multiple with spaces )'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,26 +49,31 @@ class UninstallCommand extends Command
 
         $name = $input->getArgument('name');
 
-        if ($module = \Module::getInstanceByName($name)) {
+        if (count($name) > 0) {
 
-            if (\Module::isInstalled($module->name)) {
+            foreach ($name as $moduleName) {
 
-                try {
-                    if (!$module->uninstall()) {
-                        $output->writeln("<error>Cannot uninstall module: '$name'</error>");
-                        return;
+                if ($module = \Module::getInstanceByName($moduleName)) {
+
+                    if (\Module::isInstalled($module->name)) {
+
+                        try {
+                            if (!$module->uninstall()) {
+                                $output->writeln("<error>Cannot uninstall module: '$moduleName'</error>");
+                                return;
+                            }
+                        } catch (\PrestashopException $e) {
+                            $output->writeln("<error>Module: '$moduleName' $e->getMesage()</error>");
+                            return;
+                        }
+                        $output->writeln("<info>Module '$moduleName' uninstalled with success</info>");
+                    } else {
+                        $output->writeln("<comment>Module '$moduleName' is uninstalled</comment>");
                     }
-                } catch (\PrestashopException $e) {
-                    $output->writeln("<error>Module: '$name' $e->getMesage()</error>");
-                    return;
+                } else {
+                    $output->writeln("<error>Unknow module name '$moduleName' </error>");
                 }
-                $output->writeln("<info>Module '$name' uninstalled with success</info>");
-            } else {
-                $output->writeln("<comment>Module '$name' is uninstalled</comment>");
             }
-            
-        } else {
-            $output->writeln("<error>Unknow module name '$name' </error>");
         }
     }
 }

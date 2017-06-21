@@ -24,6 +24,7 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *  http://www.h-hennes.fr/blog/
  */
+
 namespace Hhennes\PrestashopConsole\Command\Module;
 
 use Symfony\Component\Console\Command\Command;
@@ -38,11 +39,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EnableCommand extends Command
 {
+
     protected function configure()
     {
         $this->setName('module:enable')
-            ->setDescription('Enable module')
-            ->addArgument('name', InputArgument::OPTIONAL, 'module name');
+                ->setDescription('Enable module')
+                ->addArgument(
+                        'name', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'module name ( separate multiple with spaces )'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -50,26 +54,32 @@ class EnableCommand extends Command
 
         $name = $input->getArgument('name');
 
-        if ($module = \Module::getInstanceByName($name)) {
+        if (count($name) > 0) {
 
-            if (\Module::isInstalled($module->name)) {
+            foreach ($name as $moduleName) {
 
-                // Exécution de l'action du module
-                try {
-                    $module->enable();
-                } catch (PrestashopException $e) {
-                    $outputString = '<error>module ' . $name . ' ' . $e->getMesage() . "</error>";
-                    $output->writeln($outputString);
-                    return;
+                if ($module = \Module::getInstanceByName($moduleName)) {
+
+                    if (\Module::isInstalled($module->name)) {
+
+                        // Exécution de l'action du module
+                        try {
+                            $module->enable();
+                        } catch (PrestashopException $e) {
+                            $outputString = '<error>module ' . $moduleName . ' ' . $e->getMesage() . "</error>";
+                            $output->writeln($outputString);
+                            return;
+                        }
+                        $outputString = '<info>Module ' . $moduleName . ' enable with sucess' . "</info>";
+                    } else {
+                        $outputString = '<error>module ' . $moduleName . ' is not installed' . "<error>";
+                    }
+                } else {
+                    $outputString = '<error>Unknow module name ' . $moduleName . "<error>";
                 }
-                $outputString = '<info>Module ' . $name . ' enable with sucess' . "</info>";
-            } else {
-                $outputString = '<error>module ' . $name . ' is not installed' . "<error>";
+                $output->writeln($outputString);
             }
-        } else {
-            $outputString = '<error>Unknow module name ' . $name . "<error>";
         }
-        $output->writeln($outputString);
     }
 
 }
