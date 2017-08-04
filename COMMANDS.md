@@ -51,7 +51,7 @@ Allowed values (configuration => value ):
 
  mass : (updateValue | deleteByName | updateGlobalValue | set) operation configuration values with yml file ([example](examples/configuration.mass.yml))
  ```bash
- php console.php configuration:mass [configFile] 
+ php console.php configuration:mass [configFile]
  ```
 
 ## Modules
@@ -78,6 +78,20 @@ Allowed values (configuration => value ):
  uninstall : uninstall module
  ```bash
  php console.php module:reset [moduleName]
+ ```
+
+### Hook
+ list : list module hook
+ ```bash
+ php console.php module:hook:list [moduleName]
+ ```
+add : add module to hook(s)
+ ```bash
+ php console.php module:hook:add [moduleName] [hookName1] [hookName2] [hookNameN] ..
+ ```
+remove : remove module from hook(s)
+ ```bash
+ php console.php module:hook:remove [moduleName] [hookName1] [hookName2] [hookNameN] ..
  ```
 
 ## Preferences

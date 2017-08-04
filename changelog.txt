@@ -32,9 +32,10 @@
 2016-10-10 - V 0.3.0 : New functionnaly : install prestashop from command line
 2016-11-03 - V 0.4.0 : New command to get all configurations
 2016-12-23 - V 0.5.0 : New commands to create admin user and to change admin password
-2016-01-11 - V 0.5.1 : Improvement for creating admin user
+2016-01-11 - V 0.5.1 : Improvment for creating admin user
 2016-01-12 - V 0.6.0 : New command to add index.php files in directories
 2016-03-27 - V 0.7.0 : New command for mass configuration object changes
 2017-05-06 - V 0.7.1 : Now works with prestashop 1.7
 2017-06-06 - V 0.7.2 : New Command to download Class Names for autocomplete
 2017-06-21 - V 0.8.0 : Refactor modules commands to deals with multiples modules
+2017-08-01 - V 0.9.0 : New commands to deals with hooks
