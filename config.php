@@ -11,7 +11,7 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '0.9.0',
+    'version' => '0.1.0-beta1',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
@@ -24,6 +24,7 @@ $configuration['application'] = array(
  * Add your new commands in the end of the array
  */
 $configuration['commands'] = array(
+  'Hhennes\PrestashopConsole\Command\Console\SelfUpdateCommand',
   'Hhennes\PrestashopConsole\Command\Module\EnableCommand',
      'Hhennes\PrestashopConsole\Command\Module\DisableCommand',
      'Hhennes\PrestashopConsole\Command\Module\ListCommand',
