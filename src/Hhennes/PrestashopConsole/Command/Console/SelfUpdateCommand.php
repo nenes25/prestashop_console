@@ -25,7 +25,7 @@
  *  http://www.h-hennes.fr/blog/
  */
 
-namespace Hhennes\PrestashopConsole\Command\Console; //REnseigner Namespace
+namespace Hhennes\PrestashopConsole\Command\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
