@@ -4,23 +4,23 @@
 
 clean : clean cache key (default * )
  ```bash
- php console.php cache:clean [key]
+ cache:clean [key]
  ```
 flush : flush cache
  ```bash
- php console.php cache:flush
+cache:flush
  ```
 media : clear media cache
  ```bash
- php console.php cache:media
+ cache:media
  ```
 smarty clear : clear Smarty cache
  ```bash
- php console.php cache:smarty:clear
+ cache:smarty:clear
  ```
 smarty configure : Configure smarty cache
  ```bash
- php console.php cache:smarty:configure configuration value
+ cache:smarty:configure configuration value
  ```
 Allowed values (configuration => value ):
  PS_SMARTY_FORCE_COMPILE => 0 | 1 | 2
@@ -34,120 +34,138 @@ Allowed values (configuration => value ):
 
  delete : delete configuration value
  ```bash
- php console.php configuration:delete [configurationName]
+ configuration:delete [configurationName]
  ```
  get : get configuration value
  ```bash
- php console.php configuration:get [configurationName]
+ configuration:get [configurationName]
  ```
  getAll : get All configuration values
  ```bash
- php console.php configuration:getAll [|grep configurationName ]
+ configuration:getAll [|grep configurationName ]
  ```
  set : Set configuration value
  ```bash
- php console.php configuration:set [configurationName] [configurationValue]
+ configuration:set [configurationName] [configurationValue]
  ```
 
  mass : (updateValue | deleteByName | updateGlobalValue | set) operation configuration values with yml file ([example](examples/configuration.mass.yml))
  ```bash
- php console.php configuration:mass [configFile]
+ configuration:mass [configFile]
  ```
 
 ## Modules
  disable : disable a specific module
  ```bash
- php console.php module:disable [moduleName]
+ module:disable [moduleName]
  ```
  enable : enable a specific module
  ```bash
- php console.php module:enable [moduleName]
+ module:enable [moduleName]
  ```
  install : install specific module
  ```bash
- php console.php module:install [moduleName]
+module:install [moduleName]
  ```
  list : get module list
  ```bash
- php console.php module:list [active]
+ module:list [active]
  ```
  reset : reset module
  ```bash
- php console.php module:reset [moduleName]
+ module:reset [moduleName]
  ```
  uninstall : uninstall module
  ```bash
- php console.php module:reset [moduleName]
+ module:reset [moduleName]
  ```
 
 ### Hook
- list : list module hook
+ list : list module hook(s)
  ```bash
- php console.php module:hook:list [moduleName]
+module:hook:list [moduleName]
  ```
 add : add module to hook(s)
  ```bash
- php console.php module:hook:add [moduleName] [hookName1] [hookName2] [hookNameN] ..
+module:hook:add [moduleName] [hookName1] [hookName2] [hookNameN] ..
  ```
 remove : remove module from hook(s)
  ```bash
- php console.php module:hook:remove [moduleName] [hookName1] [hookName2] [hookNameN] ..
+ module:hook:remove [moduleName] [hookName1] [hookName2] [hookNameN] ..
  ```
 
 ## Preferences
 ### cmscategory
 Enable or disable Cms Category
 ```bash
- php console.php preferences:cmscategory [cmsCategoryId] [enable|disable(default)]
+ preferences:cmscategory [cmsCategoryId] [enable|disable(default)]
  ```
 ### cmspage
 Enable or disable Cms Page
 ```bash
- php console.php preferences:cmspage [cmsPageId] [enable|disable(default)]
+preferences:cmspage [cmsPageId] [enable|disable(default)]
+ ```
+### search
+Add missing products to the index or re-build the entire index
+```bash
+preferences:search [add|rebuild(default)]
  ```
 ### maintenance
 Enable or disable Shop
 ```bash
- php console.php preferences:maintenance [enable|disable(default)]
+preferences:maintenance [enable|disable(default)]
  ```
 ##### urlrewrite
 Enable or disable Url Rewrite
 ```bash
- php console.php preferences:maintenance [enable|disable(default)]
+preferences:urlrewrite [enable|disable(default)]
  ```
 ##### Override
 Enable or disable classes override
 ```bash
- php console.php preferences:override [enable|disable(default)]
+preferences:override [enable|disable(default)]
  ```
 
-##### Dev
+## Dev
+
 List overrides of classes and controllers in the project
 ```bash
- php console.php dev:list-overrides
+dev:list-overrides
  ```
-### Add missing index.php files in directory
 Add missing index.php files in the specified directory
 ```bash
- php console.php dev:add-index-files [directory]
+dev:add-index-files [directory]
+ ```
+List overrides of classes and controllers in the project
+```bash
+dev:list-overrides
+ ```
+###Cron
+List cron tasks configured with the module cronjobs
+```bash
+dev:cron:list
+ ```
+Run cron tasks configured with the module cronjobs
+```bash
+dev:cron:run [cronjob_id]
  ```
 
 ## Admin
 ### User
 Create new admin user
 ```bash
- php console.php admin:user:create
+ admin:user:create
  ```
 
 ### Password
 Change admin password
 ```bash
- php console.php admin:user:create [--email=] [--password=] [--firstname=] [--lastname=]
+admin:user:create [--email=] [--password=] [--firstname=] [--lastname=]
  ```
 
 ##### Install
 Allow to you install a fresh prestashop version
 ```bash
- php console.php install:install [--psVersion=] [--domainName=] [--dbname=] [--dbuser=] [--dbpassword=][--contactEmail=] [--adminpassword=] [--directory=]
+ install:install [--psVersion=] [--domainName=] [--dbname=] [--dbuser=] [--dbpassword=][--contactEmail=] [--adminpassword=] [--directory=]
  ```
 Parameters are optionnals and will be asked during the process if not given

@@ -41,7 +41,7 @@ class RunCronCommand extends Command {
     protected function configure() {
         $this
                 ->setName('dev:cron:run')
-                ->setDescription('List cron tasks configured with the module cronjobs')
+                ->setDescription('Run cron task configured with the module cronjobs')
                 ->addArgument(
                         'id_cronjob', InputArgument::REQUIRED, 'cron job id ( use command dev:cron:list to get it )'
         );
