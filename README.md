@@ -4,7 +4,7 @@ Prestashop cli tools based on Symphony2 Console
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
 
 
-#Phar version
+# Phar version
 
 download the file from github in your prestashop root directory  
  ```bash
@@ -22,13 +22,13 @@ Run the console
 ./prestashopConsole.phar
  ```
 
-#Php Version
+# Php Version
 
-##Requires
+## Requires
 Composer
 Git
 
-##How to install it
+## How to install it
 Login to your hosting with ssh and go the root directory of your prestashop
 
 Clone the github repository in the directory console
