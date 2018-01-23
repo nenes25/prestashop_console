@@ -11,7 +11,7 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '1.1.0',
+    'version' => '1.2.0',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
@@ -53,6 +53,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Dev\ListOverridesCommand',
      'Hhennes\PrestashopConsole\Command\Dev\AddIndexFilesCommand',
      'Hhennes\PrestashopConsole\Command\Dev\IdeClassNamesCommand',
+     'Hhennes\PrestashopConsole\Command\Dev\Clean\CleanCommand',
      'Hhennes\PrestashopConsole\Command\Dev\Cron\ListCronCommand',
      'Hhennes\PrestashopConsole\Command\Dev\Cron\RunCronCommand',
      'Hhennes\PrestashopConsole\Command\Install\InstallCommand',

@@ -150,6 +150,11 @@ Run cron tasks configured with the module cronjobs
 dev:cron:run [cronjob_id]
  ```
 
+### Clean  
+Clean existing websites datas ( catalog / sales ...)
+```bash
+dev:clean [all|catalog|sales]
+
 ## Admin
 ### User
 Create new admin user
