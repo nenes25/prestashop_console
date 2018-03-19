@@ -21,6 +21,16 @@ Run the console
  ```bash
 ./prestashopConsole.phar
  ```
+ 
+ You can also add the phar globaly by adding it in your /usr/local/bin directory
+  ```bash
+sudo mv prestashopConsole.phar /user/local/bin/prestashopConsole
+ ```
+ 
+ Then run it with ( Only work in Prestashop root directories )
+  ```bash
+prestashopConsole
+ ```
 
 # Php Version
 
