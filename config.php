@@ -35,6 +35,7 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Module\Hook\RemoveModuleHooksCommand',
      'Hhennes\PrestashopConsole\Command\Module\Hook\ListModuleHooksCommand',
      'Hhennes\PrestashopConsole\Command\Cache\CleanCommand',
+     'Hhennes\PrestashopConsole\Command\Cache\ClearAllCommand',
      'Hhennes\PrestashopConsole\Command\Cache\FlushCommand',
      'Hhennes\PrestashopConsole\Command\Cache\MediaCommand',
      'Hhennes\PrestashopConsole\Command\Cache\Smarty\ClearCommand',

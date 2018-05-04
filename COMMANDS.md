@@ -6,6 +6,10 @@ clean : clean cache key (default * )
  ```bash
  cache:clean [key]
  ```
+clearAll : clear all caches ( PS > 1.7 Only )
+ ```bash
+ cache:clearAll
+ ```
 flush : flush cache
  ```bash
 cache:flush
