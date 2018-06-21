@@ -52,31 +52,25 @@ class CleanCommand extends CleanCommandAbstract {
                 return 0;
             }
 
-            try
+            switch ($type)
             {
-                switch ($type)
-                {
 
-                    case 'all':
-                        $this->_cleanModuleInstance->truncate('catalog');
-                        $this->_cleanModuleInstance->truncate('sales');
-                        $output->writeln('<info>All datas have been cleaned</info>');
-                        break;
-                    case 'catalog':
-                        $this->_cleanModuleInstance->truncate('catalog');
-                        $output->writeln('<info>Catalog datas have been cleaned</info>');
-                        break;
-                    case 'sales':
-                        $this->_cleanModuleInstance->truncate('sales');
-                        $output->writeln('<info>Sales datas have been cleaned</info>');
-                        break;
-                    default:
-                        $output->writeln('<error>Unknow clean type</error>');
-                        break;
-                }
-            }
-            finally {
-                $lock->release();
+                case 'all':
+                    $this->_cleanModuleInstance->truncate('catalog');
+                    $this->_cleanModuleInstance->truncate('sales');
+                    $output->writeln('<info>All datas have been cleaned</info>');
+                    break;
+                case 'catalog':
+                    $this->_cleanModuleInstance->truncate('catalog');
+                    $output->writeln('<info>Catalog datas have been cleaned</info>');
+                    break;
+                case 'sales':
+                    $this->_cleanModuleInstance->truncate('sales');
+                    $output->writeln('<info>Sales datas have been cleaned</info>');
+                    break;
+                default:
+                    $output->writeln('<error>Unknow clean type</error>');
+                    break;
             }
         }
     }
