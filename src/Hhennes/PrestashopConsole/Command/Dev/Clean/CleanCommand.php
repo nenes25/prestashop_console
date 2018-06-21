@@ -23,11 +23,10 @@ namespace Hhennes\PrestashopConsole\Command\Dev\Clean;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-
+use Symfony\Component\Lock\Factory;
+use Symfony\Component\Lock\Store\SemaphoreStore;
 
 class CleanCommand extends CleanCommandAbstract {
-    
-    use \Symfony\Component\Console\Command\LockableTrait;
     
     protected $_allowedCleanType = ['all','catalog','sales'];
 
@@ -43,14 +42,19 @@ class CleanCommand extends CleanCommandAbstract {
         if ( $this->_cleanModuleInstance ) {      
         
             $type = $input->getArgument('type');
-            
-            if (!$this->lock()) {
+
+            $store = new SemaphoreStore();
+            $factory = new Factory($store);
+
+            $lock = $factory->createLock($this->getName());
+            if (!$lock->acquire()) {
                $output->writeln('<error>The command is already running in another process.</error>');
                 return 0;
             }
-            
-            switch ( $type ) {
-                
+
+            switch ($type)
+            {
+
                 case 'all':
                     $this->_cleanModuleInstance->truncate('catalog');
                     $this->_cleanModuleInstance->truncate('sales');
