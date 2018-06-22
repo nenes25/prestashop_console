@@ -21,6 +21,7 @@
 namespace Hhennes\PrestashopConsole\Command\Configuration;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -30,7 +31,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GetAllCommand extends Command
 {
-     protected function configure()
+    const MAX_LENGTH_CONFIGURATION_VALUE = 130;
+
+    protected function configure()
     {
         $this
                 ->setName('configuration:getAll')
@@ -44,13 +47,20 @@ class GetAllCommand extends Command
 
         //Get All Configuration names (except xml configuration)
         $configurationNames = \Db::getInstance()->executeS("SELECT name FROM "._DB_PREFIX_."configuration WHERE name <> 'PS_INSTALL_XML_LOADERS_ID'");
-        $configList = '';
-        
-        //Get All configuration keys and value
-        foreach ( $configurationNames as $config ){
-                $configList.= $config['name'] .' '.\Configuration::get($config['name'])."\n";
+
+        $table = new Table($output);
+        $table->setHeaders(['Name', 'Value']);
+        foreach ($configurationNames as $configuration_name)
+        {
+            $configuration_value = \Configuration::get($configuration_name['name']);
+            if(strlen($configuration_value) > self::MAX_LENGTH_CONFIGURATION_VALUE) {
+                $configuration_value = substr($configuration_value,0, self::MAX_LENGTH_CONFIGURATION_VALUE)." (*)";
+            }
+            $table->addRow([$configuration_name['name'], $configuration_value]);
         }
-        $output->write('<info>'.$configList.'</info>');
+
+        $table->render();
+        $output->writeln("(*) : Value truncated");
     }
 
 }
