@@ -31,6 +31,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use PrestaShop\PrestaShop\Adapter\Cache\CacheClearer;
 
 /**
  * Clear all caches commands
@@ -47,12 +48,9 @@ class ClearAllCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ( \Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=') ) {
-            \Tools::clearSf2Cache();
-            \Tools::clearSmartyCache();
-            \Tools::clearXMLCache();
-            \Media::clearCache();
-            \Tools::generateIndex();
-
+            
+            $cacheClearer = new CacheClearer();
+            $cacheClearer->clearAllCaches();
             $output->writeln("<info>All cache cleared with success</info>");
         } else {
            $output->writeln("<error>This command is only available for Prestashop > 1.7.0.0 </error>"); 
