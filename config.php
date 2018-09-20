@@ -60,5 +60,6 @@ $configuration['commands'] = array(
      'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
      'Hhennes\PrestashopConsole\Command\Admin\User\CreateCommand',
      'Hhennes\PrestashopConsole\Command\Admin\User\PasswordCommand',
+     \Hhennes\PrestashopConsole\Command\Dev\DevModeCommand::class,
 );
 
