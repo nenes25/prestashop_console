@@ -74,17 +74,17 @@ class ListCommand extends Command
 
         //sort by module name
         usort($modules, array($this, "cmp"));
+        // apply filters
+        if ($input->getOption('active')) {
+            $modules = array_filter($modules, function($module) {return (bool)($module->active);});
+        }
+
         $output->writeln("<info>Currently module on disk:</info>");
 
         $nr = 0;
         $table = new Table($output);
         $table->setHeaders(['Name', 'Version', 'Installed', 'Active']);
         foreach ($modules as $module) {
-            //list only active module
-            if ($input->getOption('active') && !(bool)($module->active)) {
-                $nr++;
-                continue;
-            }
             $table->addRow([
                 $module->name,
                 $module->version,
