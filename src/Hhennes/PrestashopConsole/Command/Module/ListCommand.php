@@ -40,7 +40,10 @@ class ListCommand extends Command
             ->setName('module:list')
             ->setDescription('Get modules list')
             ->addOption(
-                'active', null, InputOption::VALUE_NONE, 'List only active module'
+                'active', null, InputOption::VALUE_NONE, 'List only active modules'
+            )
+            ->addOption(
+                'installed', null, InputOption::VALUE_NONE, 'List only installed modules'
             );
 
     }
@@ -77,6 +80,9 @@ class ListCommand extends Command
         // apply filters
         if ($input->getOption('active')) {
             $modules = array_filter($modules, function($module) {return (bool)($module->active);});
+        }
+        if ($input->getOption('installed')) {
+            $modules = array_filter($modules, function($module) {return (bool)($module->installed);});
         }
 
         $output->writeln("<info>Currently module on disk:</info>");
