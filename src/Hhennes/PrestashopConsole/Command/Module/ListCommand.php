@@ -47,6 +47,9 @@ class ListCommand extends Command
             )
             ->addOption(
                 'installed', null, InputOption::VALUE_NONE, 'List only installed modules'
+            )
+            ->addOption(
+                'no-installed', null, InputOption::VALUE_NONE, 'List only not installed modules'
             );
 
     }
@@ -89,6 +92,9 @@ class ListCommand extends Command
         }
         if ($input->getOption('installed')) {
             $modules = array_filter($modules, function($module) {return (bool)($module->installed);});
+        }
+        if ($input->getOption('no-installed')) {
+            $modules = array_filter($modules, function($module) {return !($module->installed);});
         }
 
         $output->writeln("<info>Currently module on disk:</info>");
