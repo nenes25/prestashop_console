@@ -43,6 +43,9 @@ class ListCommand extends Command
                 'active', null, InputOption::VALUE_NONE, 'List only active modules'
             )
             ->addOption(
+                'no-active', null, InputOption::VALUE_NONE, 'List only not active modules'
+            )
+            ->addOption(
                 'installed', null, InputOption::VALUE_NONE, 'List only installed modules'
             );
 
@@ -80,6 +83,9 @@ class ListCommand extends Command
         // apply filters
         if ($input->getOption('active')) {
             $modules = array_filter($modules, function($module) {return (bool)($module->active);});
+        }
+        if ($input->getOption('no-active')) {
+            $modules = array_filter($modules, function($module) {return !($module->active);});
         }
         if ($input->getOption('installed')) {
             $modules = array_filter($modules, function($module) {return (bool)($module->installed);});
