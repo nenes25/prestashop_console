@@ -1,6 +1,7 @@
 <?php
 /**
  * 2007-2018 Hennes Hervé
+ * 2018-2018 Monterisi Sébastien
  *
  * NOTICE OF LICENSE
  *
@@ -13,7 +14,8 @@
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
  * @author    Hennes Hervé <contact@h-hennes.fr>
- * @copyright 2007-2018 Hennes Hervé
+ * @author    Monterisi Sébastien <contact@seb7.fr>
+ * @copyright 2007-2018 Hennes Hervé - 2018-2018 Monterisi Sébastien
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
@@ -40,7 +42,16 @@ class ListCommand extends Command
             ->setName('module:list')
             ->setDescription('Get modules list')
             ->addOption(
-                'active', null, InputOption::VALUE_NONE, 'List only active module'
+                'active', null, InputOption::VALUE_NONE, 'List only active modules'
+            )
+            ->addOption(
+                'no-active', null, InputOption::VALUE_NONE, 'List only not active modules'
+            )
+            ->addOption(
+                'installed', null, InputOption::VALUE_NONE, 'List only installed modules'
+            )
+            ->addOption(
+                'no-installed', null, InputOption::VALUE_NONE, 'List only not installed modules'
             );
 
     }
@@ -74,17 +85,26 @@ class ListCommand extends Command
 
         //sort by module name
         usort($modules, array($this, "cmp"));
+        // apply filters
+        if ($input->getOption('active')) {
+            $modules = array_filter($modules, function($module) {return (bool)($module->active);});
+        }
+        if ($input->getOption('no-active')) {
+            $modules = array_filter($modules, function($module) {return !($module->active);});
+        }
+        if ($input->getOption('installed')) {
+            $modules = array_filter($modules, function($module) {return (bool)($module->installed);});
+        }
+        if ($input->getOption('no-installed')) {
+            $modules = array_filter($modules, function($module) {return !($module->installed);});
+        }
+
         $output->writeln("<info>Currently module on disk:</info>");
 
         $nr = 0;
         $table = new Table($output);
         $table->setHeaders(['Name', 'Version', 'Installed', 'Active']);
         foreach ($modules as $module) {
-            //list only active module
-            if ($input->getOption('active') && !(bool)($module->active)) {
-                $nr++;
-                continue;
-            }
             $table->addRow([
                 $module->name,
                 $module->version,
