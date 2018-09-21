@@ -132,10 +132,6 @@ preferences:override [enable|disable(default)]
 
 ## Dev
 
-List overrides of classes and controllers in the project
-```bash
-dev:list-overrides
- ```
 Add missing index.php files in the specified directory
 ```bash
 dev:add-index-files [directory]
@@ -144,6 +140,11 @@ List overrides of classes and controllers in the project
 ```bash
 dev:list-overrides
  ```
+Enable / Disable debug mode (to display errors).
+```bash
+dev:mode [enable|disable|toggle]
+ ```
+
 ### Cron  
 List cron tasks configured with the module cronjobs
 ```bash
