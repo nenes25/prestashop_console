@@ -109,7 +109,7 @@ class DevModeCommand extends Command
 
     }
 
-    private final function getWarningText() : string
+    private final function getWarningText()
     {
         return 'Be sure to include "include(__DIR__. \'/'.$this->debug_file_name.'\');" in config/defines.inc.php for this feature to run.';
     }
@@ -117,7 +117,7 @@ class DevModeCommand extends Command
     /**
      * @return string
      */
-    protected function getDebugFilePath(): string
+    protected function getDebugFilePath()
     {
         return getcwd() . '/config/' . $this->debug_file_name;
     }
