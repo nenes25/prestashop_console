@@ -11,11 +11,12 @@ $configuration = array();
  */
 $configuration['application'] = array(
     'name' => 'PrestashopConsole',
-    'version' => '1.2.0',
+    'version' => '1.2.2',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => array(
         'okom3pom',
-        'lutek'
+        'lutek',
+        'SebSept'
     )
 );
 

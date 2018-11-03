@@ -68,6 +68,7 @@ class SelfUpdateCommand extends Command
             }
         } catch (\Exception $e) {
             $output->writeln('<error>Unable to update console</error>');
+            $output->writeln('<error>'.$e->getMessage().'</error>');
         }
     }
 
