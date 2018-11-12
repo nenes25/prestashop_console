@@ -45,3 +45,6 @@
 2018-01-23 - V 1.2.0 : New commands to clean existing datas ( with native module pscleaner )
 2018-05-04 - V 1.2.1 : New command to clear all caches ( PS > 1.7 Only )
 2018-11-12 - V 1.2.2 : New command to anonymise customer datas
+2018-11-03 - V 1.2.2 : New commands and some fixes
+2018-11-12 - V 1.2.3 : New command to anonymise customer datas
+

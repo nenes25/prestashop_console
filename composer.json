@@ -5,7 +5,7 @@
         {
             "name": "hhennes",
             "email": "contact@h-hennes.fr",
-			"homepage": "https://www.h-hennes.fr/blog/"
+	    "homepage": "https://www.h-hennes.fr/blog/"
         }
     ],
     "require": {
@@ -14,7 +14,7 @@
         "symfony/yaml": "^3.0",
         "symfony/finder": "^3.1",
         "padraic/phar-updater": "^1.0",
-        "symfony/lock": "^4.1"
+        "symfony/lock": "^3.4"
     },
     "autoload": {
         "psr-0" : {
