@@ -144,6 +144,10 @@ Enable / Disable debug mode (to display errors).
 ```bash
 dev:mode [enable|disable|toggle]
  ```
+Anonymise customer datas
+ ```bash
+ dev:anonymise:customer [--type (customers|addresses|newsletter] [--exclude-emails email1@test.com,email2@test.com] [--names 1]
+  ```
 
 ### Cron  
 List cron tasks configured with the module cronjobs
