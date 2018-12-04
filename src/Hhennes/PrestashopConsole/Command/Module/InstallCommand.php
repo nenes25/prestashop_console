@@ -56,7 +56,7 @@ class InstallCommand extends Command
                                 return;
                             }
                         } catch (\PrestashopException $e) {
-                            $output->writeln("<error>Module: '$moduleName' $e->getMesage()</error>");
+                            $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
                             return;
                         }
                         $output->writeln("<info>Module '$moduleName' installed with success</info>");

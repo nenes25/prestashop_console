@@ -46,4 +46,4 @@
 2018-05-04 - V 1.2.1 : New command to clear all caches ( PS > 1.7 Only )
 2018-11-03 - V 1.2.2 : New commands and some fixes
 2018-11-12 - V 1.2.3 : New command to anonymise customer datas
-
+2018-12-03 - V 1.2.4 : Fix wrong exception message in Module/InstallCommand
