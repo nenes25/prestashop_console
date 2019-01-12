@@ -57,7 +57,7 @@ class DisableCommand extends Command
                         try {
                             $module->disable();
                         } catch (PrestashopException $e) {
-                            $outputString = '<error>Error : module ' . $moduleName . ' ' . $e->getMesage() . "<error>";
+                            $outputString = '<error>Error : module ' . $moduleName . ' ' . $e->getMessage() . "<error>";
                             $output->writeln($outputString);
                             return;
                         }

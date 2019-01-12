@@ -79,7 +79,7 @@ class ResetCommand extends Command
                                     break;
                             }
                         } catch (\PrestashopException $e) {
-                            $output->writeln("<error>Module: '$moduleName' $e->getMesage()</error>");
+                            $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
                            $error = true;
                         }
                         if ( !$error ) {

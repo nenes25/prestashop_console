@@ -59,7 +59,7 @@ class EnableCommand extends Command
                         try {
                             $module->enable();
                         } catch (PrestashopException $e) {
-                            $outputString = '<error>module ' . $moduleName . ' ' . $e->getMesage() . "</error>";
+                            $outputString = '<error>module ' . $moduleName . ' ' . $e->getMessage() . "</error>";
                             $output->writeln($outputString);
                             return;
                         }
