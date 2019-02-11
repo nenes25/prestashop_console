@@ -2,3 +2,4 @@ config.xml
 /vendor/
 /src/vendor/
 /nbproject/
+/.github/config.php
