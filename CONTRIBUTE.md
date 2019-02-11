@@ -57,8 +57,7 @@ class ClearCommand extends Command
 For example if your command deals with modules you can create it in :
 src/Hhennes/Prestashop/Command/Module/SampleCommand.php
 
-To make your command works you have to register it in the file config.php above the existing ones.
-Simply by adding its namespace.
+Your command then will be find automatically
 
 Then everything should works
 

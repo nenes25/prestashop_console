@@ -32,6 +32,7 @@ $app->setRunAs('phar');
 //Autoload Prestashop
 if ( is_file('config/config.inc.php')) {
     include_once 'config/config.inc.php';
+    $app->getDeclaredCommands();
 }
 //If no prestashop conf find, only allow to install Prestashop
 else {
@@ -41,13 +42,6 @@ else {
         );
     $app->setDefaultCommand('install:info');
 }
-
-//Add commands from config file
-$customCommands = array();
-foreach ($configuration['commands'] as $command) {
-    $customCommands[] = new $command();
-}
-$app->addCommands($customCommands);
 
 //Application run
 $app->run();

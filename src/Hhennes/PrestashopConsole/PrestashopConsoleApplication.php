@@ -17,19 +17,22 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
+
 namespace Hhennes\PrestashopConsole;
 
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Finder\Finder;
 
 class PrestashopConsoleApplication extends BaseApplication
 {
 
     const APP_NAME = 'prestashopConsole';
 
-    const APP_VERSION = '0.1.0';
-
     /** @var string php|phar Console run mod */
     protected $_runAs = 'php';
+
+    /** @var string Commands directory */
+    protected $_commandsDir = 'src/Hhennes/PrestashopConsole/Command';
 
     /**
      * Set RunAs Mode
@@ -47,6 +50,41 @@ class PrestashopConsoleApplication extends BaseApplication
     public function getRunAs()
     {
         return $this->_runAs;
+    }
+
+    /**
+     * Automatically Detect Registered commands
+     */
+    public function getDeclaredCommands()
+    {
+        if ($this->getRunAs() == 'phar') {
+            $dir = $this->_getPharPath();
+        } else {
+            $dir = getcwd().DIRECTORY_SEPARATOR.$this->_commandsDir;
+        }
+
+        $finder = new Finder();
+        $commands = $finder->files()->name('*Command.php')->in($dir);
+        $customCommands = array();
+        if (sizeof($commands)) {
+            foreach ($commands as $command) {
+                $classPath = 'Hhennes\\PrestashopConsole\\Command\\' . str_replace(
+                        '/', "\\", $command->getRelativePathname()
+                    );
+                $commandName = basename($classPath, '.php');
+                $customCommands[] = new $commandName();
+            }
+
+            $this->addCommands($customCommands);
+        }
+    }
+
+    /**
+     * Get Phar path
+     * @return string
+     */
+    protected function _getPharPath() {
+        return 'phar://'.getcwd().DIRECTORY_SEPARATOR .self::APP_NAME.'.phar'.DIRECTORY_SEPARATOR .$this->_commandsDir;
     }
 
 }
