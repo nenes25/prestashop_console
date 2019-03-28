@@ -19,7 +19,6 @@ namespace Hhennes\PrestashopConsole\Command\Module\Generate;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -55,6 +54,8 @@ class UpgradeCommand extends Command
         $defaultContent = $this->_getDefaultContent();
         $defaultContent = str_replace('{version}', $convertedVersion, $defaultContent);
         file_put_contents(_PS_MODULE_DIR_ . $moduleName . '/upgrade/install' . $moduleVersion . '.php', $defaultContent);
+
+        $output->writeln('<info>Update file generated</info>');
     }
 
     /**

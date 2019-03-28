@@ -97,6 +97,22 @@ remove : remove module from hook(s)
  ```bash
  module:hook:remove [moduleName] [hookName1] [hookName2] [hookNameN] ..
  ```
+ 
+### Generate
+module : generate module (default) file
+```bash
+module:generate:module [moduleName] [--interactive=] [--author=] [--displayName=] [--description=] [--hookList=] [--widget=]
+``` 
+In interactive mod, all the following options will be asked.
+
+controller : generate module front or admin controller (in legacy format)
+```bash
+module:generate:module [moduleName] [controllerName] [controllerType (front|admin)] [--full=]
+``` 
+upgrade : generate module upgrade file
+```bash
+module:generate:upgrade [moduleName] [moduleVersion]
+``` 
 
 ## Preferences
 ### cmscategory
