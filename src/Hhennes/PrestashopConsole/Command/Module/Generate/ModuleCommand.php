@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class ModuleCommand
@@ -18,6 +19,12 @@ use Symfony\Component\Console\Question\Question;
  */
 class ModuleCommand extends Command
 {
+
+    /** @var string Module Name */
+    protected $_moduleName;
+
+    /** @var Filesystem */
+    protected $_fileSystem;
 
     protected function configure()
     {
@@ -31,8 +38,9 @@ class ModuleCommand extends Command
             ->addOption('author', 'a', InputOption::VALUE_OPTIONAL, 'Module author name', 'hhennes')
             ->addOption('displayName', 'dn', InputOption::VALUE_OPTIONAL, 'Display Name', 'Your module display name')
             ->addOption('description', 'd', InputOption::VALUE_OPTIONAL, 'Description', 'Your module description')
-            ->addOption('hookList', 'ho', InputOption::VALUE_OPTIONAL, 'Comma separated hook List')
-            ->addOption('widget', 'w', InputOption::VALUE_OPTIONAL, 'Implement widget interface');
+            ->addOption('hookList', 'l', InputOption::VALUE_OPTIONAL, 'Comma separated hook List')
+            ->addOption('widget', 'w', InputOption::VALUE_OPTIONAL, 'Implement widget interface')
+            ->addOption('templates','t',InputOption::VALUE_OPTIONAL, 'Generate hook templates');
     }
 
     /**
@@ -43,11 +51,18 @@ class ModuleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $moduleName = $input->getArgument('name');
+        $this->_moduleName = $moduleName;
+        $this->_fileSystem = new Filesystem();
 
         if (is_dir(_PS_MODULE_DIR_ . $moduleName)) {
             $output->writeln('<error>Module already exists</error>');
         } else {
-            mkdir(_PS_MODULE_DIR_ . $moduleName,0775);
+            try {
+                $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $moduleName, 0775);
+            }catch (IOException $e) {
+                $output->writeln('<error>Unable to creat controller directories</error>');
+                return false;
+            }
         }
 
         //Interactive Option : We ask for each cases
@@ -57,20 +72,38 @@ class ModuleCommand extends Command
             $displayName = $helper->ask($input, $output, new Question('<question>Module Display name :</question>'));
             $description = $helper->ask($input, $output, new Question('<question>Module description :</question>'));
             $hookList = $helper->ask($input, $output, new Question('<question>Module hook List :</question>'));
-            $widget = $helper->ask($input, $output,
+
+            $widgetAnswer = $helper->ask($input, $output,
                 new ChoiceQuestion('<question>Implement widget Interface :</question>',
                     array(
-                        'Yes',
                         'No',
+                        'Yes',
                     )
                 )
             );
+            $widgetAnswer == "No" ? $widget = null : $widget = true;
+
+            if ( $hookList ) {
+                $templateAnswer = $helper->ask($input, $output,
+                    new ChoiceQuestion('<question>Generate templates for content hooks :</question>',
+                        array(
+                            'No',
+                            'Yes',
+                        )
+                    )
+                );
+                $templateAnswer == "No" ? $templates = null : $templates = true;
+            } else {
+                $templates = null;
+            }
+
         } else {
             $author = $input->getOption('author');
             $displayName = $input->getOption('displayName');
             $description = $input->getOption('description');
             $hookList = $input->getOption('hookList');
             $widget = $input->getOption('widget');
+            $templates = $input->getOption('templates');
         }
 
         $defaultContent = $this->_getDefaultContent();
@@ -102,12 +135,12 @@ class ModuleCommand extends Command
         }
 
         if ($hookList) {
-            $defaultContent = $this->_replaceHookContent($defaultContent, $hookList);
+            $defaultContent = $this->_replaceHookContent($defaultContent, $hookList,$templates);
         } else {
             $defaultContent = str_replace(array('{registerHooks}', '{hookfunctions}'), '', $defaultContent);
         }
 
-        file_put_contents(_PS_MODULE_DIR_ . $moduleName . '/' . $moduleName . '.php', $defaultContent);
+        $this->_fileSystem->dumpFile(_PS_MODULE_DIR_ . $moduleName . '/' . $moduleName . '.php', $defaultContent);
         $output->writeln('<info>Module generated with success</info>');
     }
 
@@ -118,52 +151,52 @@ class ModuleCommand extends Command
      */
     protected function _getDefaultContent()
     {
-        return '<?php
-        '.ModuleHeader::getHeader().'
-        
-        if (!defined(\'_PS_VERSION_\')) {
-            exit;
-        }
-        
-        {useWidget}
-        
-        class {moduleClassName} extends Module {widgetImplement} {
+        return
+'<?php
+'.ModuleHeader::getHeader().'
+if (!defined(\'_PS_VERSION_\')) {
+    exit;
+}
 
-        public function __construct()
-        {
-            $this->name = \'{moduleName}\';
-            $this->tab = \'others\';
-            $this->version = \'0.1.0\';
-            $this->author = \'{author}\';
-            $this->bootstrap = true;
-            parent::__construct();
-    
-            $this->displayName = $this->l(\'{moduleDisplayName}\');
-            $this->description = $this->l(\'{moduleDescription}\');
-        }
-    
-        /**
-         * Installation du module
-         * @return bool
-         */
-        public function install()
-        {
-            if (!parent::install()
-                {registerHooks}
-    
-            ) {
-                return false;
-            }
-    
-            return true;
-        }
-        
-        {hookfunctions}
-        
-        {widgetFuctions}
-    
+{useWidget}
+
+class {moduleClassName} extends Module {widgetImplement} {
+
+public function __construct()
+{
+    $this->name = \'{moduleName}\';
+    $this->tab = \'others\';
+    $this->version = \'0.1.0\';
+    $this->author = \'{author}\';
+    $this->bootstrap = true;
+    parent::__construct();
+
+    $this->displayName = $this->l(\'{moduleDisplayName}\');
+    $this->description = $this->l(\'{moduleDescription}\');
+}
+
+/**
+ * Installation du module
+ * @return bool
+ */
+public function install()
+{
+    if (!parent::install()
+        {registerHooks}
+
+    ) {
+        return false;
     }
-    ';
+
+    return true;
+}
+
+{hookfunctions}
+
+{widgetFuctions}
+
+}
+';
     }
 
     /**
@@ -197,24 +230,36 @@ class ModuleCommand extends Command
 
     /**
      * Add Hook Contents
-     * @param $defaultContent
+     * @param mixed $defaultContent
+     * @param mixed $hookList comma separated list of module hooks
+     * @param $generateTemplates bool
      * @return mixed
      */
-    protected function _replaceHookContent($defaultContent, $hookList)
+    protected function _replaceHookContent($defaultContent, $hookList,$generateTemplates)
     {
         $hooks = explode(',', $hookList);
         if (sizeof($hooks)) {
             $registerHook = '|| !$this->registerHook([\'' . implode("','", $hooks) . "'])";
             $hookFunctions = '';
             foreach ($hooks as $hook) {
-                $hookFunctions .= '
-                /**
-                 * Function description 
-                 * @param array $params
-                 */
-                public function hook' . ucfirst($hook) . '($params){
-                    //@Todo implements function
-                }' . "\n\n";
+
+                if ( $generateTemplates && preg_match('#^display#',$hook)) {
+                    $hookContent = 'return $this->display(__FILE__,"views/templates/hook/'.$hook.'.tpl");';
+                    $this->_generateTemplate($hook);
+                } else {
+                    $hookContent = '//@Todo implements function';
+                }
+
+
+$hookFunctions .= '
+/**
+ * Function '.$hook.'description 
+ * @param array $params
+ * @return mixed
+ */
+public function hook' . ucfirst($hook) . '($params){
+    '.$hookContent.'
+}' . "\n\n";
             }
             $defaultContent = str_replace(
                 array('{registerHooks}', '{hookfunctions}'),
@@ -223,5 +268,31 @@ class ModuleCommand extends Command
             );
         }
         return $defaultContent;
+    }
+
+    /**
+     * Generate displayHooks Templates
+     * @param $hookName
+     */
+    protected function _generateTemplate($hookName)
+    {
+
+        $this->_createDirectories();
+
+        $defaultContent = '<p>Content of hook '.$hookName.' generated by Prestashop Console</p>';
+        $fileName = _PS_MODULE_DIR_ . $this->_moduleName. '/views/templates/hook/'.$hookName.'.tpl';
+        $this->_fileSystem->dumpFile($fileName,$defaultContent);
+    }
+
+    /**
+     * Create module controllers directories
+     * @Todo : generate index.php files
+     * @param $moduleName
+     */
+    protected function _createDirectories()
+    {
+        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook') ){
+            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook', 0775);
+        }
     }
 }

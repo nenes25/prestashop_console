@@ -3,3 +3,4 @@ config.xml
 /src/vendor/
 /nbproject/
 /.github/config.php
+console_dev.php

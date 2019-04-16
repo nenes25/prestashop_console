@@ -20,15 +20,21 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class UpgradeCommand
  * This command will create a new upgrade file
- * @Todo Validate version
  * @package Hhennes\PrestashopConsole\Command\Module\Generate
  */
 class UpgradeCommand extends Command
 {
+    /** @var string Module Name */
+    protected $_moduleName;
+
+    /** @var Filesystem */
+    protected $_fileSystem;
 
     protected function configure()
     {
@@ -43,6 +49,13 @@ class UpgradeCommand extends Command
     {
         $moduleName = $input->getArgument('moduleName');
         $moduleVersion = $input->getArgument('moduleVersion');
+        $this->_fileSystem = new Filesystem();
+        $this->_moduleName = $moduleName;
+
+        if (!$this->_isValidModuleVersion($moduleVersion)) {
+            $output->writeln('<error>Module version is not valid</error>');
+            return false;
+        }
         $convertedVersion = str_replace('.', '_', $moduleVersion);
 
         if (!is_dir(_PS_MODULE_DIR_ . $moduleName)) {
@@ -50,12 +63,37 @@ class UpgradeCommand extends Command
             return false;
         }
 
-        $this->_createDirectories($moduleName);
+        try {
+            $this->_createDirectories();
+        } catch (IOException $e) {
+            $output->writeln('<error>Unable to creat ugrade directory</error>');
+            return false;
+        }
+
         $defaultContent = $this->_getDefaultContent();
         $defaultContent = str_replace('{version}', $convertedVersion, $defaultContent);
-        file_put_contents(_PS_MODULE_DIR_ . $moduleName . '/upgrade/install' . $moduleVersion . '.php', $defaultContent);
+
+        try {
+            $this->_fileSystem->dumpFile(
+                _PS_MODULE_DIR_ . $moduleName . '/upgrade/upgrade-' . $moduleVersion . '.php',
+                $defaultContent
+            );
+        } catch (IOException $e) {
+            $output->writeln('<error>Unable to creat upgrade file</error>');
+            return false;
+        }
 
         $output->writeln('<info>Update file generated</info>');
+    }
+
+    /**
+     * Check if module version is in correct format
+     * @param $moduleVersion
+     * @return bool
+     */
+    protected function _isValidModuleVersion($moduleVersion)
+    {
+        return preg_match('#^[0-9]{1}\.[0-9]+\.?[0-9]*$#', $moduleVersion);
     }
 
     /**
@@ -63,28 +101,30 @@ class UpgradeCommand extends Command
      */
     protected function _getDefaultContent()
     {
-        return '<?php
+        return
+            '<?php
+ ' . ModuleHeader::getHeader() . '
 
 if (!defined(\'_PS_VERSION_\')) {
     exit;
 }
 
-function upgrade_module_{version}($object)
+function upgrade_module_{version}($module)
 {
     //@Todo generate content
 }
 ';
     }
 
+
     /**
-     * Create module controllers directories
-     * @Todo : generate index.php files
-     * @param $moduleName
+     * Create upgrade directories
+     * @todo Add index.php files
      */
-    protected function _createDirectories($moduleName)
+    protected function _createDirectories()
     {
-        if (!is_dir(_PS_MODULE_DIR_ . $moduleName . '/upgrade')) {
-            mkdir(_PS_MODULE_DIR_ . $moduleName . '/upgrade', 0775);
+        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade')) {
+            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade', 0775);
         }
     }
 

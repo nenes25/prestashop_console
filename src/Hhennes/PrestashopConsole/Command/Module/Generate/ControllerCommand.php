@@ -21,10 +21,14 @@
 namespace Hhennes\PrestashopConsole\Command\Module\Generate;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class ControllerCommand
@@ -37,6 +41,22 @@ class ControllerCommand extends Command
     /** @var array Allowed Controllers Types */
     protected $_allowedControllerTypes = array('front', 'admin');
 
+    /** @var string Module Name */
+    protected $_moduleName;
+
+    /** @var string Controller Name */
+    protected $_controllerName;
+
+    /** @var string Controller Type */
+    protected $_controllerType;
+
+    /** @var bool Generate template or not */
+    protected $_template;
+
+    /** @var Filesystem */
+    protected $_fileSystem;
+
+
     protected function configure()
     {
         $this
@@ -45,76 +65,95 @@ class ControllerCommand extends Command
             ->addArgument('moduleName', InputArgument::REQUIRED, 'module name')
             ->addArgument('controllerName', InputArgument::REQUIRED, 'controller name')
             ->addArgument('controllerType', InputArgument::REQUIRED, 'controller type')
-            ->addOption('full', null, InputArgument::OPTIONAL, 'full mode', true);
+            ->addOption('template', 't', InputArgument::OPTIONAL, 'generate template', true);
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|void|null
+     * @return bool|int|void|null
+     * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $moduleName = $input->getArgument('moduleName');
-        $controllerName = $input->getArgument('controllerName');
-        $controllerType = $input->getArgument('controllerType');
-        $full = $input->getOption('full');
+        $this->_moduleName = $input->getArgument('moduleName');
+        $this->_controllerName = $input->getArgument('controllerName');
+        $this->_controllerType = $input->getArgument('controllerType');
+        $this->_template = $input->getOption('template');
+        $this->_fileSystem = new Filesystem();
 
-        if (!is_dir(_PS_MODULE_DIR_ . $moduleName)) {
+        if (!is_dir(_PS_MODULE_DIR_ . $this->_moduleName)) {
             $output->writeln('<error>Module not exists</error>');
             return false;
         }
 
-        if (!in_array($controllerType, $this->_allowedControllerTypes)) {
+        if (!in_array($this->_controllerType, $this->_allowedControllerTypes)) {
             $output->writeln('<error>Unknown controller type</error>');
             return false;
         }
 
-        $this->_createDirectories($moduleName);
-
-        if ($controllerType == 'admin') {
-            $defaultContent = $this->_getAdminControllerContent($full);
-            $controllerClass = ucfirst($moduleName) . ucfirst($controllerName);
+        //Create all module directories
+        try {
+            $this->_createDirectories();
+        } catch (IOException $e) {
+            $output->writeln('<error>Unable to creat controller directories</error>');
+            return false;
+        }
+        $controllerClass = ucfirst($this->_moduleName) . ucfirst($this->_controllerName);
+        if ($this->_controllerType == 'admin') {
+            $defaultContent = $this->_getAdminControllerContent();
+            if ($this->_template === true) {
+                $output->writeln('<info>Template cannot be generated for admin controllers</info>');
+            }
         } else {
-            $defaultContent = $this->_getFrontControllerContent($full);
-            $controllerClass = ucfirst($controllerName);
+            $defaultContent = $this->_getFrontControllerContent();
+            if ($this->_template === true) {
+                $this->_generateTemplate();
+            }
         }
 
         $defaultContent = str_replace('{controllerClass}', $controllerClass, $defaultContent);
 
-        //@ToDO : en full mode déjà remplir un canevas par défaut
-        if ($full) {
-            $defaultContent = str_replace('{full}', $this->_getFullContent(), $defaultContent);
-        } else {
-            $defaultContent = str_replace('{full}', '', $defaultContent);
+        try {
+            $this->_fileSystem->dumpFile(
+                _PS_MODULE_DIR_ . $this->_moduleName . '/controllers/' . $this->_controllerType . '/' . strtolower($this->_controllerName) . '.php',
+                $defaultContent
+            );
+        } catch (IOException $e) {
+            $output->writeln('<error>Unable to creat controller directories</error>');
+            return false;
         }
 
-        file_put_contents(
-            _PS_MODULE_DIR_ . $moduleName . '/controllers/' . $controllerType . '/' . strtolower($controllerName) . '.php',
-            $defaultContent
-        );
-
-        echo $output->writeln('<info>Controller ' . $controllerName . ' created with sucess');
+        echo $output->writeln('<info>Controller ' . $this->_controllerName . ' created with sucess');
     }
 
+
     /**
-     * Create module controllers directories
-     * @Todo : generate index.php files
-     * @param $moduleName
+     * Generate controller directories
+     * @throws \Exception
+     * @todo Add add index.php security files
      */
-    protected function _createDirectories($moduleName)
+    protected function _createDirectories()
     {
-        if (!is_dir(_PS_MODULE_DIR_ . $moduleName . '/controllers')) {
-            mkdir(_PS_MODULE_DIR_ . $moduleName . '/controllers', 0775);
+
+        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin')) {
+            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin', 0775);
         }
 
-        if (!is_dir(_PS_MODULE_DIR_ . $moduleName . '/controllers/front')) {
-            mkdir(_PS_MODULE_DIR_ . $moduleName . '/controllers/front', 0775);
+        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/front')) {
+            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/front', 0775);
         }
 
-        if (!is_dir(_PS_MODULE_DIR_ . $moduleName . '/controllers/admin')) {
-            mkdir(_PS_MODULE_DIR_ . $moduleName . '/controllers/admin', 0775);
+        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front')) {
+            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front', 0775);
         }
+
+        /*$indexCommand = $this->getApplication()->find('dev:add-index-files');
+        $arguments = [
+            'command' => 'dev:add-index-files',
+            'dir' => _PS_MODULE_DIR_ . $this->_moduleName,
+        ];
+        $indexCommand->run(new ArrayInput([$arguments]),new NullOutput());*/
     }
 
     /**
@@ -123,14 +162,13 @@ class ControllerCommand extends Command
      */
     protected function _getAdminControllerContent()
     {
-        return '
-        <?php
-        '.ModuleHeader::getHeader().'
-        class {controllerClass}Controller extends ModuleAdminController {
-         
-         {full}
-        
-        }';
+        return
+            '<?php
+' . ModuleHeader::getHeader() . '
+class {controllerClass}Controller extends ModuleAdminController {
+ 
+ 
+}';
     }
 
     /**
@@ -139,33 +177,54 @@ class ControllerCommand extends Command
      */
     protected function _getFrontControllerContent()
     {
-        return '
-        <?php
-        '.ModuleHeader::getHeader().'
-        class {controllerClass}ModuleFrontController extends ModuleFrontController {
-            
-            {full}
-        
-        }';
+        $controllerContent =
+            '<?php
+' . ModuleHeader::getHeader() . '
+class {controllerClass}ModuleFrontController extends ModuleFrontController {
+    
+    public function init()
+    {
+        // TODO: Change the autogenerated stub
+        return parent::init(); 
+    }
 
+    public function postProcess()
+    {
+        // TODO: Change the autogenerated stub
+        parent::postProcess(); 
+    }
+
+    ';
+        if ($this->_template === true) {
+
+            $controllerContent .= '
+    public function initContent()
+    {
+        parent::initContent();
+        $this->setTemplate(\'module:' . $this->_moduleName . '/views/templates/front/' . $this->_controllerName . '.tpl\');
+    }';
+        }
+
+        $controllerContent .= '
+}';
+
+        return $controllerContent;
     }
 
     /**
-     * Basic needed content for controller
-     * @todo : 1 for back 1 for front + more functions
-     * @return string
+     * Generate Template for front Controller
      */
-    protected function _getFullContent()
+    protected function _generateTemplate()
     {
-        return '
-    public function postProcess()
-    {
-     parent::postProcess();
-    }
-    
-    public function initContent(){
-     parent::initContent();
-    }
-        ';
+        $defaultTemplateContent =
+            '{extends file=\'page.tpl\'}
+{block name="content"}
+<p>Controller template generated by PrestashopConsole to edit</p>
+{/block}
+';
+        $this->_fileSystem->dumpFile(
+            _PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front/' . $this->_controllerName . '.tpl',
+            $defaultTemplateContent
+        );
     }
 }
