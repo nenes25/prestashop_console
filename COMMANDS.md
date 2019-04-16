@@ -103,11 +103,11 @@ module : generate module (default) file
 ```bash
 module:generate:module [moduleName] [--interactive=] [--author=] [--displayName=] [--description=] [--hookList=] [--widget=]
 ``` 
-In interactive mod, all the following options will be asked.
+In interactive mode, all the following options will be asked.
 
 controller : generate module front or admin controller (in legacy format)
 ```bash
-module:generate:module [moduleName] [controllerName] [controllerType (front|admin)] [--full=]
+module:generate:module [moduleName] [controllerName] [controllerType (front|admin)] [--template=]
 ``` 
 upgrade : generate module upgrade file
 ```bash
