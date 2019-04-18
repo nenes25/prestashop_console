@@ -1,7 +1,7 @@
 <?php
 /**
- * 2007-2018 Hennes Hervé
- * 2018-2018 Monterisi Sébastien
+ * 2007-2019 Hennes Hervé
+ * 2019-2019 Monterisi Sébastien
  *
  * NOTICE OF LICENSE
  *
@@ -15,7 +15,7 @@
  *
  * @author    Hennes Hervé <contact@h-hennes.fr>
  * @author    Monterisi Sébastien <contact@seb7.fr>
- * @copyright 2007-2018 Hennes Hervé - 2018-2018 Monterisi Sébastien
+ * @copyright 2007-2019 Hennes Hervé - 2019-2019 Monterisi Sébastien
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */

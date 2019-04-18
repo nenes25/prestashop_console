@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2018 Hennes Hervé
+ * 2007-2019 Hennes Hervé
  *
  * NOTICE OF LICENSE
  *
@@ -13,7 +13,7 @@
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
  * @author    Hennes Hervé <contact@h-hennes.fr>
- * @copyright 2007-2018 Hennes Hervé
+ * @copyright 2007-2019 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
@@ -25,6 +25,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Configuration;
 
 /**
  * Commande qui permet de récupérer une valeur de configuration
@@ -45,7 +46,7 @@ class GetCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
-        $value = \Configuration::get($name);
+        $value = Configuration::get($name);
         $output->writeln('<info>'.$value.'</info>');
     }
 

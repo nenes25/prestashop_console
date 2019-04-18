@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2018 PrestaShop
+ * 2007-2019 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -19,7 +19,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    Mariusz Mielnik <mariusz@ecbox.pl>
- * @copyright 2013-2018 Mariusz Mielnik
+ * @copyright 2013-2019 Mariusz Mielnik
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  *  http://www.ecbox.pl
  */

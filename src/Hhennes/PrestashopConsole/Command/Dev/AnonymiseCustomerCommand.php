@@ -1,6 +1,6 @@
 <?php
 /**
- * 2002-2018 ADVISA
+ * 2002-2019 ADVISA
  *
  * NOTICE OF LICENSE
  *
@@ -10,7 +10,7 @@
  * to mage@advisa.fr so we can send you a copy immediately.
  *
  * @author ADVISA
- * @copyright 2002-2018 ADVISA
+ * @copyright 2002-2019 ADVISA
  * @license http://www.opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  */
 
