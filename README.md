@@ -1,5 +1,7 @@
 # prestashop Console
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f72aeabcce684a8ca888cd53a954212e)](https://app.codacy.com/app/nenes25/prestashop_console?utm_source=github.com&utm_medium=referral&utm_content=nenes25/prestashop_console&utm_campaign=Badge_Grade_Dashboard)
+
 Prestashop cli tools based on Symphony2 Console
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
 
