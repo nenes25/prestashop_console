@@ -30,6 +30,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Context;
+use Shop;
+use Configuration;
 
 class MaintenanceCommand extends Command
 {
@@ -47,18 +50,17 @@ class MaintenanceCommand extends Command
     {
 
         $type = $input->getArgument('type');
-
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
+        Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
 
         switch ($type) {
             case 'enable':
                 $output->writeln("<info>Shop is enabled</info>");
-                \Configuration::updateValue('PS_SHOP_ENABLE', 1);
+                Configuration::updateValue('PS_SHOP_ENABLE', 1);
                 break;
             case 'disable':
             default:
                 $output->writeln("<info>Shop is disabled</info>");
-                \Configuration::updateValue('PS_SHOP_ENABLE', 0);
+                Configuration::updateValue('PS_SHOP_ENABLE', 0);
                 break;
         }
 

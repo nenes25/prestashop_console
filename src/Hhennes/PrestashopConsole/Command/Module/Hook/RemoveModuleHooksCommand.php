@@ -18,13 +18,13 @@
  * http://www.h-hennes.fr/blog/
  */
 
-namespace Hhennes\PrestashopConsole\Command\Module\Hook; //REnseigner Namespace
+namespace Hhennes\PrestashopConsole\Command\Module\Hook;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Module;
 
 /**
  * Commande qui permet de supprimer les modules d'un hook
@@ -55,7 +55,7 @@ class RemoveModuleHooksCommand extends Command
         $moduleName = $input->getArgument('name');
         $hooks = $input->getArgument('hooks');
 
-        if ($module = \Module::getInstanceByName($moduleName)) {
+        if ($module = Module::getInstanceByName($moduleName)) {
 
             if (sizeof($hooks)) {
                 foreach ( $hooks as $hook) {

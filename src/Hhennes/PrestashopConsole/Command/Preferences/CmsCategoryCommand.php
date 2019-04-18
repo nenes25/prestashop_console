@@ -23,8 +23,10 @@ namespace Hhennes\PrestashopConsole\Command\Preferences;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Context;
+use Shop;
+use CMSCategory;
 
 /**
  * This commands allow to enable/disable cms categories
@@ -49,9 +51,9 @@ class CmsCategoryCommand extends Command
         $id_cms = $input->getArgument('id');
         $action = $input->getArgument('action');
 
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
+        Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
 
-        $cmsCategory = new \CMSCategory($id_cms);
+        $cmsCategory = new CMSCategory($id_cms);
 
         if ( $cmsCategory->id == NULL ){
             $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>",$id_cms));

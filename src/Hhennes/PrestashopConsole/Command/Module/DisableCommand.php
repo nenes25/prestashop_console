@@ -23,8 +23,9 @@ namespace Hhennes\PrestashopConsole\Command\Module;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Module;
+use PrestashopException;
 
 /**
  * Commande qui permet d'activer un module
@@ -51,9 +52,9 @@ class DisableCommand extends Command
 
             foreach ($name as $moduleName) {
 
-                if ($module = \Module::getInstanceByName($moduleName)) {
+                if ($module = Module::getInstanceByName($moduleName)) {
 
-                    if (\Module::isInstalled($module->name)) {
+                    if (Module::isInstalled($module->name)) {
                         try {
                             $module->disable();
                         } catch (PrestashopException $e) {

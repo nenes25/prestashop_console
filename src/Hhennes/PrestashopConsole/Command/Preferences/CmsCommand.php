@@ -23,8 +23,10 @@ namespace Hhennes\PrestashopConsole\Command\Preferences;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Context;
+use Shop;
+use CMS;
 
 /**
  * This commands allow to enable/disable cms pages
@@ -50,9 +52,9 @@ class CmsCommand extends Command
         $id_cms = $input->getArgument('id');
         $action = $input->getArgument('action');
 
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
+        Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
 
-        $cms = new \CMS($id_cms);
+        $cms = new CMS($id_cms);
 
         if ( $cms->id == NULL ){
             $output->writeln(sprintf("<error>Error Cms page %d doesn't exists</error>",$id_cms));

@@ -21,11 +21,10 @@
 namespace Hhennes\PrestashopConsole\Command\Admin\User;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Employee;
 
 /**
  * Change admin password
@@ -47,7 +46,7 @@ class PasswordCommand extends Command
         $email = $helper->ask($input,$output,$userQuestion);
 
          //Error if no employee exists with email
-        if ( ! \Employee::employeeExists($email)){
+        if ( ! Employee::employeeExists($email)){
             $output->writeln("<error>Employee with this email not exists");
             return;
         }
@@ -63,7 +62,7 @@ class PasswordCommand extends Command
             return;
         }
 
-        $employee = new \Employee();
+        $employee = new Employee();
         $employee->getByEmail($email);
         $employee->passwd = \Tools::encrypt($password);
 

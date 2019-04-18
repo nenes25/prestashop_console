@@ -23,8 +23,8 @@ namespace Hhennes\PrestashopConsole\Command\Module\Hook;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Module;
 
 /**
  * Commande qui permet de greffer des modules sur un hook
@@ -55,7 +55,7 @@ class AddModuleHooksCommand extends Command
         $moduleName = $input->getArgument('name');
         $hooks = $input->getArgument('hooks');
 
-        if ($module = \Module::getInstanceByName($moduleName)) {
+        if ($module = Module::getInstanceByName($moduleName)) {
 
             if ( ! $module->registerHook($hooks)){
                $output->writeln('<error>Error during hook assignation</error>');

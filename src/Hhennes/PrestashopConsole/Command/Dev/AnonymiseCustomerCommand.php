@@ -17,10 +17,10 @@
 namespace Hhennes\PrestashopConsole\Command\Dev;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Db;
 
 class AnonymiseCustomerCommand extends Command
 {
@@ -79,7 +79,7 @@ class AnonymiseCustomerCommand extends Command
         }
 
         try {
-            \Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "customer SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlUpd . ' ' . $sqlCond);
+            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "customer SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlUpd . ' ' . $sqlCond);
         } catch (\PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
@@ -108,7 +108,7 @@ class AnonymiseCustomerCommand extends Command
         }
 
         try {
-            \Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
+            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
         }catch (\PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
@@ -143,7 +143,7 @@ class AnonymiseCustomerCommand extends Command
         }
 
         try {
-            \Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table." SET email = CONCAT(MD5(email),'@fake-email.com') ". $sqlCond);
+            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table." SET email = CONCAT(MD5(email),'@fake-email.com') ". $sqlCond);
         }catch (\PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }

@@ -20,10 +20,9 @@
 namespace Hhennes\PrestashopConsole\Command\Cache\Smarty;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tools;
 
 /**
  * Commande qui permet de supprimer tout le cache smarty
@@ -42,7 +41,7 @@ class ClearCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        \Tools::clearSmartyCache();
+        Tools::clearSmartyCache();
         $output->writeln('<info>Smarty Cache and compiled dir cleaned</info>');
     }
 }

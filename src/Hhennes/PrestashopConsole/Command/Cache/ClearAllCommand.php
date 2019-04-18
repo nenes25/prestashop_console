@@ -28,10 +28,10 @@
 namespace Hhennes\PrestashopConsole\Command\Cache;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PrestaShop\PrestaShop\Adapter\Cache\CacheClearer;
+use Tools;
 
 /**
  * Clear all caches commands
@@ -47,7 +47,7 @@ class ClearAllCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ( \Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=') ) {
+        if ( Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=') ) {
             
             $cacheClearer = new CacheClearer();
             $cacheClearer->clearAllCaches();

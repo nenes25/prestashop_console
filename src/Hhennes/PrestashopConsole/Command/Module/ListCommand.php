@@ -24,10 +24,10 @@ namespace Hhennes\PrestashopConsole\Command\Module;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Module;
 
 /**
  * Commande qui permet de récupérer la liste des modules installé
@@ -59,7 +59,7 @@ class ListCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $modules = \Module::getModulesOnDisk();
+        $modules = Module::getModulesOnDisk();
         //module stdClass definition
         /*
             [id] => 36

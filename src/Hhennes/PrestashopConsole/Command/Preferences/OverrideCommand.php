@@ -23,8 +23,10 @@ namespace Hhennes\PrestashopConsole\Command\Preferences;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Context;
+use Shop;
+use Configuration;
 
 /**
  * Commande qui permet d'activer / desactiver les override
@@ -46,18 +48,18 @@ class OverrideCommand extends Command
     {
         $type = $input->getArgument('type');
 
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
+        Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
 
         switch ($type) {
             case 'enable':
 			case 1:
                 $output->writeln("<info>All override are enabled</info>");
-                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
+                Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
                 break;
             case 'disable':
             default:
                 $output->writeln("<info>All override are disabled</info>");
-                \Configuration::updateValue('PS_DISABLE_OVERRIDES', 1);
+                Configuration::updateValue('PS_DISABLE_OVERRIDES', 1);
                 break;
         }
     }

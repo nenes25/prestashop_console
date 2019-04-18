@@ -23,8 +23,8 @@ namespace Hhennes\PrestashopConsole\Command\Cache;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Cache;
 
 /**
  * Clean cache
@@ -50,7 +50,7 @@ class CleanCommand extends Command
             $key = "*";
         }
 
-        $cache =  \Cache::getInstance();
+        $cache =  Cache::getInstance();
         $cache->clean($key);
 
         $output->writeln('<info>Cache cleaned</info>');

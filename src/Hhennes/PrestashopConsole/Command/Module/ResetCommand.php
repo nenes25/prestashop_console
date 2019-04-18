@@ -25,6 +25,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Module;
+use PrestashopException;
 
 class ResetCommand extends Command
 {
@@ -49,8 +51,8 @@ class ResetCommand extends Command
 
             foreach ($name as $moduleName) {
 
-                if ($module = \Module::getInstanceByName($moduleName)) {
-                    if (\Module::isInstalled($module->name)) {
+                if ($module = Module::getInstanceByName($moduleName)) {
+                    if (Module::isInstalled($module->name)) {
                         try {
                             $error = false;
                             switch ($type) {
@@ -78,7 +80,7 @@ class ResetCommand extends Command
                                     }
                                     break;
                             }
-                        } catch (\PrestashopException $e) {
+                        } catch (PrestashopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
                            $error = true;
                         }

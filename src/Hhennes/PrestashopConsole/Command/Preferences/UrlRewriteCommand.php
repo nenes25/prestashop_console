@@ -23,8 +23,10 @@ namespace Hhennes\PrestashopConsole\Command\Preferences;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Context;
+use Shop;
+use Configuration;
 
 /**
  * Commande qui permet d'activer / desactiver la réécriture d'url
@@ -46,17 +48,17 @@ class UrlRewriteCommand extends Command
     {
         $type = $input->getArgument('type');
 
-        \Context::getContext()->shop->setContext(\Shop::CONTEXT_ALL);
+        Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
 
         switch ($type) {
             case 'enable':
                 $output->writeln("<info>Url rewrite is enabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
+                Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
                 break;
             case 'disable':
             default:
                 $output->writeln("<info>Url rewrite is disabled</info>");
-                \Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
+                Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
                 break;
         }
     }

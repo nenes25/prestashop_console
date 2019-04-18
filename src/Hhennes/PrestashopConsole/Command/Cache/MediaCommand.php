@@ -21,10 +21,9 @@
 namespace Hhennes\PrestashopConsole\Command\Cache;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Media;
 
 /**
  * Clear Media cache
@@ -40,7 +39,7 @@ class MediaCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        \Media::clearCache();
+        Media::clearCache();
         $output->writeln('<info>Media cache cleared</info>');
     }
 }

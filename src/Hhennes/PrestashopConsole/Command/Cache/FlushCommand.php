@@ -21,10 +21,9 @@
 namespace Hhennes\PrestashopConsole\Command\Cache;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Cache;
 
 /**
  * Flush prestashop cache
@@ -44,7 +43,7 @@ class FlushCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         
-        $cache =  \Cache::getInstance();
+        $cache =  Cache::getInstance();
         $cache->flush();
 
         //Specific cacheFS

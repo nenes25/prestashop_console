@@ -23,8 +23,8 @@ namespace Hhennes\PrestashopConsole\Command\Cache\Smarty;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Configuration;
 
 /**
  * Commande qui permet de configurer le cache Smarty
@@ -65,7 +65,7 @@ class ConfigureCommand extends Command
             if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
                 $output->writeln("<error>Value not allowed for configuration " . $name."</error>");
             } else {
-                \Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
+                Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
                 $output->writeln("<info>Update configuration " . $name . " with " . $value."</info>");
             }
         }

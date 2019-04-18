@@ -24,6 +24,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Humbug\SelfUpdate\Updater;
+use Exception;
 
 /**
  * Commande qui permet de mettre à jour la console
@@ -66,7 +67,7 @@ class SelfUpdateCommand extends Command
             } else {
                 $output->writeLn('<info>No update needed<info>');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->writeln('<error>Unable to update console</error>');
             $output->writeln('<error>'.$e->getMessage().'</error>');
         }

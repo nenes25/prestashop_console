@@ -21,11 +21,10 @@
 namespace Hhennes\PrestashopConsole\Command\Dev\Cron;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
+use Module;
 
 class ListCronCommand extends Command {
 
@@ -40,9 +39,9 @@ class ListCronCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output) {
 
-        if ($module = \Module::getInstanceByName($this->_cronModuleName)) {
+        if ($module = Module::getInstanceByName($this->_cronModuleName)) {
 
-            if (!\Module::isInstalled($module->name) || !$module->active) {
+            if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
                 return;
             }

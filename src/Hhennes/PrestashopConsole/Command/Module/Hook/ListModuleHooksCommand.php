@@ -23,8 +23,8 @@ namespace Hhennes\PrestashopConsole\Command\Module\Hook;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Module;
 
 /**
  * Commande qui permet de lister les hooks d'un module
@@ -52,7 +52,7 @@ class ListModuleHooksCommand extends Command
     {
         $moduleName = $input->getArgument('name');
 
-        if ($module = \Module::getInstanceByName($moduleName)) {
+        if ($module = Module::getInstanceByName($moduleName)) {
 
             //Possible hook list
             $possibleHooksList = $module->getPossibleHooksList();
