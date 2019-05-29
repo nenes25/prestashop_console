@@ -12,7 +12,7 @@
         "symfony/console": "^3.0",
         "psr/log": "^1.0",
         "symfony/yaml": "^3.0",
-        "symfony/finder": "^3.1",
+        "symfony/finder": "^4.2",
         "padraic/phar-updater": "^1.0",
         "symfony/lock": "^3.4",
         "symfony/filesystem": "^3.4"
