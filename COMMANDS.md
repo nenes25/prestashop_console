@@ -107,7 +107,7 @@ In interactive mode, all the following options will be asked.
 
 controller : generate module front or admin controller (in legacy format)
 ```bash
-module:generate:module [moduleName] [controllerName] [controllerType (front|admin)] [--template=]
+module:generate:controller [moduleName] [controllerName] [controllerType (front|admin)] [--template=]
 ``` 
 upgrade : generate module upgrade file
 ```bash
@@ -162,7 +162,7 @@ dev:mode [enable|disable|toggle]
  ```
 Anonymise customer datas
  ```bash
- dev:anonymise:customer [--type (customers|addresses|newsletter] [--exclude-emails email1@test.com,email2@test.com] [--names 1]
+ dev:anonymise:customer [--type (customers|addresses|newsletter)] [--exclude-emails email1@test.com,email2@test.com] [--names 1]
   ```
 
 ### Cron  
@@ -179,7 +179,7 @@ dev:cron:run [cronjob_id]
 Clean existing websites datas ( catalog / sales ...)
 ```bash
 dev:clean [all|catalog|sales]
-
+```
 ## Admin
 ### User
 Create new admin user
