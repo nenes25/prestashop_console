@@ -15,7 +15,7 @@
         "symfony/finder": "^3.1",
         "padraic/phar-updater": "^1.0",
         "symfony/lock": "^3.4",
-        "symfony/filesystem": "^3.4"
+        "symfony/filesystem": "^4.3"
     },
     "autoload": {
         "psr-0" : {
