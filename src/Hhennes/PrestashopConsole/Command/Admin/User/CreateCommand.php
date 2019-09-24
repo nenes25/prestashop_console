@@ -55,6 +55,7 @@ class CreateCommand extends Command
 
         if ( !$password = $input->getOption('password')) {
             $passwordQuestion = new Question('admin password :','admin123456');
+            $passwordQuestion->setHidden(true);
             $password = $helper->ask($input,$output,$passwordQuestion);
         }
 

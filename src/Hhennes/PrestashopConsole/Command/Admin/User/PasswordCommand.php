@@ -52,9 +52,11 @@ class PasswordCommand extends Command
         }
 
         $passwordQuestion = new Question('admin password :','admin123456');
+        $passwordQuestion->setHidden(true);
         $password = $helper->ask($input,$output,$passwordQuestion);
 
         $passwordConfirmQuestion = new Question('confirm admin password :','admin123456');
+        $passwordConfirmQuestion->setHidden(true);
         $passwordConfirm = $helper->ask($input,$output,$passwordConfirmQuestion);
 
         if ( $password !== $passwordConfirm ) {
