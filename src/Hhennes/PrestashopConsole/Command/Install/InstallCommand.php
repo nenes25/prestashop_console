@@ -75,7 +75,7 @@ class InstallCommand extends Command
             /**
              * First step : Select prestashop version
              */
-            $psVersion = new ChoiceQuestion('Please select the version to install', array(
+            $psVersion = new ChoiceQuestion('Please select the version to install ( Only compatible with ps 1.6.1 )', array(
                 '1.6.1.0',
                 '1.6.1.1',
                 '1.6.1.2',
@@ -84,6 +84,23 @@ class InstallCommand extends Command
                 '1.6.1.5',
                 '1.6.1.6',
                 '1.6.1.7',
+                '1.6.1.8',
+                '1.6.1.9',
+                '1.6.1.10',
+                '1.6.1.11',
+                '1.6.1.12',
+                '1.6.1.13',
+                '1.6.1.14',
+                '1.6.1.15',
+                '1.6.1.16',
+                '1.6.1.17',
+                '1.6.1.18',
+                '1.6.1.19',
+                '1.6.1.20',
+                '1.6.1.21',
+                '1.6.1.22',
+                '1.6.1.23',
+                '1.6.1.24',
             ));
             $psVersion->setErrorMessage('Option %s is invalid');
 

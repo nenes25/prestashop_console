@@ -1,28 +1,28 @@
 {
-    "name": "PrestashopConsole",
-	"description" : "Tools to manage your prestashop with CLI",
-    "authors": [
-        {
-            "name": "hhennes",
-            "email": "contact@h-hennes.fr",
-	    "homepage": "https://www.h-hennes.fr/blog/"
-        }
-    ],
-    "require": {
-        "symfony/console": "^3.0",
-        "psr/log": "^1.0",
-        "symfony/yaml": "^3.0",
-        "symfony/finder": "^3.1",
-        "padraic/phar-updater": "^1.0",
-        "symfony/lock": "^3.4",
-        "symfony/filesystem": "^3.4"
-    },
-    "autoload": {
-        "psr-0" : {
-            "Hhennes": "src"
-        }
-    },
-    "config": {
-	"vendor-dir": "src/vendor"
-   }
+  "name": "PrestashopConsole",
+  "description": "Tools to manage your prestashop with CLI",
+  "authors": [
+    {
+      "name": "hhennes",
+      "email": "contact@h-hennes.fr",
+      "homepage": "https://www.h-hennes.fr/blog/"
+    }
+  ],
+  "require": {
+    "symfony/console": "^3.0",
+    "psr/log": "^1.0",
+    "symfony/yaml": "^3.0",
+    "symfony/finder": "^3.1",
+    "padraic/phar-updater": "^1.0",
+    "symfony/lock": "^3.4",
+    "symfony/filesystem": "^3.4"
+  },
+  "autoload": {
+    "psr-0": {
+      "Hhennes": "src"
+    }
+  },
+  "config": {
+    "vendor-dir": "src/vendor"
+  }
 }
