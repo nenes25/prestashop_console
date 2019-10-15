@@ -20,21 +20,23 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Db;
 
-class AnonymiseCustomerCommand extends Command
+class AnonymizeCustomerCommand extends Command
 {
-    protected $_allowedTypes = array('customers', 'addresses', 'newsletter');
+    protected $_allowedTypes = array('all', 'customers', 'addresses', 'newsletter');
     protected $_excludedEmail = null;
 
     protected function configure()
     {
         $this
-            ->setName('dev:anonymise:customer')
-            ->setDescription('Anonymise Customer information')
-            ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'customers(default)|addresses|newsletter', 'customers')
+            ->setName('dev:anonymize:customer')
+            ->setDescription('Anonymize Customer information')
+            ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'allowed values all|customers|addresses|newsletter')
             ->addOption('exclude-emails', null, InputOption::VALUE_OPTIONAL, 'emails to exclude separated by commas')
-            ->addOption('names', null, InputOption::VALUE_OPTIONAL, 'anonymise names (default none ) use only for customers');
+            ->addOption('names', null, InputOption::VALUE_OPTIONAL, 'anonymize names (default none ) use only for customers')
+            ->setHelp('This command will anonymize customer related data (lastname,firstname,email ) without erasing them');
     }
 
     /**
@@ -44,20 +46,45 @@ class AnonymiseCustomerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $type = $input->getOption('type');
-        $this->_excludedEmail = $input->getOption('exclude-emails');
+        $excludes = $input->getOption('exclude-emails');
+
+        //Interactive mod
+        if (null === $type) {
+            $questionHelper = $this->getHelper('question');
+            $type = $questionHelper->ask($input, $output, $this->_getTypeQuestion());
+            if (null === $excludes) {
+                $excludes = $questionHelper->ask($input, $output, $this->getEmailQuestion());
+            }
+        }
+
+        $this->_excludedEmail = $excludes;
         if (!$type || !in_array($type, $this->_allowedTypes)) {
             $type = 'customers';
         }
-        $method = '_anonymise' . ucfirst(strtolower($type));
+
+        $method = '_anonymize' . ucfirst(strtolower($type));
         $message = $this->$method($input);
         $output->writeln($message);
     }
 
     /**
+     * Anonymize all content
      * @param InputInterface $input
      * @return string
      */
-    protected function _anonymiseCustomers(InputInterface $input)
+    protected function _anonymizeAll(InputInterface $input)
+    {
+        $this->_anonymizeCustomers($input);
+        $this->_anonymizeAddresses($input);
+        $this->_anonymizeNewsletter($input);
+    }
+
+    /**
+     * Anonymize customer data
+     * @param InputInterface $input
+     * @return string
+     */
+    protected function _anonymizeCustomers(InputInterface $input)
     {
         $anonymiseName = $input->getOption('names');
         $sqlCond = $sqlUpd = '';
@@ -84,19 +111,20 @@ class AnonymiseCustomerCommand extends Command
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
-        return '<info>Customer anonymised with success</info>';
+        return '<info>Customer anonymized with success</info>';
     }
 
     /**
+     * Anonymize address data
      * @param InputInterface $input
      * @return string
      */
-    protected function _anonymiseAddresses(InputInterface $input)
+    protected function _anonymizeAddresses(InputInterface $input)
     {
 
         $sqlCond = '';
         if ($this->_excludedEmail) {
-            $sqlCond .= 'WHERE id_customer NOT IN ( SELECT id_customer FROM '._DB_PREFIX_.'customer WHERE email IN (';
+            $sqlCond .= 'WHERE id_customer NOT IN ( SELECT id_customer FROM ' . _DB_PREFIX_ . 'customer WHERE email IN (';
             $emails = explode(',', $this->_excludedEmail);
             foreach ($emails as $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -109,27 +137,28 @@ class AnonymiseCustomerCommand extends Command
 
         try {
             Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
-        }catch (\PrestaShopDatabaseException $e) {
+        } catch (\PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
-        return '<info>Addresses anonymised with success</info>';
+        return '<info>Addresses anonymized with success</info>';
 
     }
 
     /**
+     * Anonymize newsletter data
      * @param InputInterface $input
-     * @ToDo noms de tables différents en fonction de ps 1.6 et 1.7
+     * @return string
      */
-    protected function _anonymiseNewsletter(InputInterface $input)
+    protected function _anonymizeNewsletter(InputInterface $input)
     {
-        if ( version_compare('1.7',_PS_VERSION_) == 1) {
+        if (version_compare('1.7', _PS_VERSION_) == 1) {
             $table = 'newsletter';
         } else {
             $table = 'emailsubscription';
         }
 
-        $sqlCond ='';
+        $sqlCond = '';
         if ($this->_excludedEmail) {
             $sqlCond .= 'WHERE email NOT IN (';
             $emails = explode(',', $this->_excludedEmail);
@@ -143,13 +172,51 @@ class AnonymiseCustomerCommand extends Command
         }
 
         try {
-            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table." SET email = CONCAT(MD5(email),'@fake-email.com') ". $sqlCond);
-        }catch (\PrestaShopDatabaseException $e) {
+            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table . " SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlCond);
+        } catch (\PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
-        return '<info>Newsletter subscriber anonymised with success</info>';
+        return '<info>Newsletter subscriber anonymized with success</info>';
 
+    }
+
+
+    /**
+     * Get Type Question
+     * @return Question
+     */
+    protected function _getTypeQuestion()
+    {
+        $cleanTypeQuestion = new Question('<question>Clean Type :</question>');
+        $allowedTypes = $this->_allowedTypes;
+        $cleanTypeQuestion->setAutocompleterValues($allowedTypes);
+        $cleanTypeQuestion->setValidator(function ($answer) use ($allowedTypes) {
+            if ($answer !== null && !in_array($answer, $allowedTypes)) {
+                throw new \RuntimeException('The field type must be part of the suggested');
+            }
+        });
+
+        return $cleanTypeQuestion;
+    }
+
+    /**
+     * Get email question
+     * @return Question
+     */
+    protected function getEmailQuestion()
+    {
+        $emailQuestion = new Question('<question>Exclude emails from anonymization ? (separated by commas)</question>');
+        $emailQuestion->setValidator(function ($answer) {
+            $allAnswers = explode(',', $answer);
+            foreach ($allAnswers as $allAnswer) {
+                if (!empty($allAnswer) && !filter_var($allAnswer, FILTER_VALIDATE_EMAIL)) {
+                    throw  new \RuntimeException("Invalid email  in exclude email");
+                }
+            }
+        });
+
+        return $emailQuestion;
     }
 
     /**
