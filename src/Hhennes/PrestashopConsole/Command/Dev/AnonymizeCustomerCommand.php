@@ -74,9 +74,12 @@ class AnonymizeCustomerCommand extends Command
      */
     protected function _anonymizeAll(InputInterface $input)
     {
-        $this->_anonymizeCustomers($input);
-        $this->_anonymizeAddresses($input);
-        $this->_anonymizeNewsletter($input);
+        $message = '';
+        $message .= $this->_anonymizeCustomers($input)."\n";
+        $message .= $this->_anonymizeAddresses($input)."\n";
+        $message .= $this->_anonymizeNewsletter($input);
+
+        return $message;
     }
 
     /**
@@ -195,6 +198,7 @@ class AnonymizeCustomerCommand extends Command
             if ($answer !== null && !in_array($answer, $allowedTypes)) {
                 throw new \RuntimeException('The field type must be part of the suggested');
             }
+            return $answer;
         });
 
         return $cleanTypeQuestion;
@@ -213,6 +217,7 @@ class AnonymizeCustomerCommand extends Command
                 if (!empty($allAnswer) && !filter_var($allAnswer, FILTER_VALIDATE_EMAIL)) {
                     throw  new \RuntimeException("Invalid email  in exclude email");
                 }
+                return $answer;
             }
         });
 
