@@ -68,7 +68,7 @@ class ExportCommand extends Command
             return false;
         }
 
-        $output->writeln('<info>Import started</info>');
+        $output->writeln('<info>Export started</info>');
         $command = "mysqldump -h " . _DB_SERVER_ . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' ';
 
         //Export type management
@@ -87,7 +87,7 @@ class ExportCommand extends Command
         ($gzip !== null) ? $command .= '.gz' : '';
         $export = shell_exec($command);
         $output->writeln('<info>' . $export . '</info>');
-        $output->writeln('<info>Import ended</info>');
+        $output->writeln('<info>Export ended</info>');
 
     }
 

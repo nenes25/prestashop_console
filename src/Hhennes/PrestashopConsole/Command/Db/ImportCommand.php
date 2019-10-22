@@ -17,6 +17,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
+
 namespace Hhennes\PrestashopConsole\Command\Db;
 
 use Symfony\Component\Console\Command\Command;
@@ -33,20 +34,43 @@ class ImportCommand extends Command
     {
         $this
             ->setName('db:import')
-            ->setDescription('Create db export ')
-            ->addOption('type', 't', InputOption::VALUE_OPTIONAL, 'allowed values all|customers|orders|catalog')
-            ->addOption('gzip','g',InputOption::VALUE_OPTIONAL,'gzip ')
-            ->setHelp('This command will export current prestashop database using mysqldump shell command');
+            ->setDescription('Import db dump ')
+            ->addOption('file', 'f', InputOption::VALUE_REQUIRED)
+            ->addOption('gzip', 'g', InputOption::VALUE_OPTIONAL, 'gzip ')
+            ->setHelp('This command will import dumb (gziped or not ) in current prestashop database using mysql shell command');
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @return bool|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        dump('it works');
+        //Shell_exec function is required
+        if (!function_exists('shell_exec')) {
+            $output->writeln('<error>The function shell_exec is not present</error>');
+            return false;
+        }
+
+        $file = $input->getOption('file');
+        $gzip = $input->getOption('gzip');
+
+        if (!is_file($file)) {
+            $output->writeln('<error>The import file does not exists</error>');
+            return false;
+        }
+
+        if (null !== $gzip) {
+            $command = 'zcat ' . $file . ' | mysql -h ' . _DB_SERVER_ . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_;
+        } else {
+            $command = 'mysql -h ' . _DB_SERVER_ . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' < ' . $file;
+        }
+        $output->writeln('<info>Import started</info>');
+        $import = shell_exec($command);
+        $output->writeln($import);
+        $output->writeln('<info>Import ended</info>');
 
     }
 
