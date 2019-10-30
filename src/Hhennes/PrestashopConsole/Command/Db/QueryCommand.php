@@ -24,7 +24,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Helper\Table;
 use Db;
 
 class QueryCommand extends Command
@@ -34,6 +34,7 @@ class QueryCommand extends Command
     {
         $this
             ->setName('db:query')
+            ->addOption('query', 's', InputOption::VALUE_REQUIRED)
             ->setDescription('Run sql query on prestashop db')
             ->setHelp('This command will exec db query using the prestashop Db class');
     }
@@ -41,11 +42,43 @@ class QueryCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @return bool | void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        dump('it works');
+        $query = $input->getOption('query');
+        if (null === $query) {
+            $output->writeln('<error>No query given</error>');
+            return false;
+        }
+
+        $query = trim($query);
+        //Gestion des requêtes select
+        if (preg_match('#^SELECT#i', $query)) {
+
+            try {
+                $results = Db::getInstance()->executeS($query);
+
+                if ($results) {
+                    $table = new Table($output);
+                    $table->setHeaders(array_keys($results[0]));
+                    foreach ($results as $result) {
+                        $table->addRow(
+                            array_values($result)
+                        );
+                    }
+                    $table->render();
+                } else {
+                    $output->writeln('<info>No results for your query</info>');
+                }
+
+            } catch (PrestashopDbException $e) {
+                $output->writeln('<error>' . $e->getMessage() . '</error>');
+            }
+        } else {
+            $output->writeln('<error>Only SELECT query are managed for now</error>');
+        }
 
     }
 
