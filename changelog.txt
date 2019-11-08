@@ -23,6 +23,9 @@
 *  http://www.h-hennes.fr/blog/
 */
 
+2019-11-   - V 1.5.0 : New commands for db interactions
+                       New command to list admin users
+                       Add pre-commit hook to automatically build phar and update documentation
 2019-05-10 - V 1.4.2 : Module generation improvments ( objectmodel )
 2019-04-16 - V 1.4.1 : Module generation improvments
 2019-03-11 - V 1.4.0 : New commands to generate module files ( declaration, controllers , upgrade )

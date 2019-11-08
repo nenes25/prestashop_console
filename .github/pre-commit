@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#Dev file not versionned
+devFile="console_dev.php"
+echo "Automatical actions before commit"
+echo "Creating phar file"
+php build.php
+git add bin/
+
+if [ -f "$devFile" ]; then
+  echo "Generate documentation"
+  php $devFile list --format=md > COMMANDS.md
+  git add COMMANDS.md
+fi
+
