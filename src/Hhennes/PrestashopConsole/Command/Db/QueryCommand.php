@@ -26,6 +26,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Db;
+use PrestaShopDatabaseException;
 
 class QueryCommand extends Command
 {
@@ -36,7 +37,7 @@ class QueryCommand extends Command
             ->setName('db:query')
             ->addOption('query', 's', InputOption::VALUE_REQUIRED)
             ->setDescription('Run sql query on prestashop db')
-            ->setHelp('This command will exec db query using the prestashop Db class');
+            ->setHelp('This command will exec db query using the prestashop Db class, its only allow SELECT queries');
     }
 
     /**
@@ -54,7 +55,8 @@ class QueryCommand extends Command
         }
 
         $query = trim($query);
-        //Gestion des requêtes select
+
+        //Only allow select queries
         if (preg_match('#^SELECT#i', $query)) {
 
             try {
@@ -73,7 +75,7 @@ class QueryCommand extends Command
                     $output->writeln('<info>No results for your query</info>');
                 }
 
-            } catch (PrestashopDbException $e) {
+            } catch (PrestaShopDatabaseException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
             }
         } else {
