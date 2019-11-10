@@ -48,6 +48,10 @@ PrestashopConsole 1.5.0
 * [`dev:list-overrides`](#devlist-overrides)
 * [`dev:mode`](#devmode)
 
+**images:**
+
+* [`images:export`](#imagesexport)
+
 **install:**
 
 * [`install:info`](#installinfo)
@@ -2377,6 +2381,109 @@ Be sure to include "include(__DIR__. '/debug_mode.php');" in config/defines.inc.
 * Default: `NULL`
 
 ### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:export`
+---------------
+
+Export images
+
+### Usage
+
+* `images:export [-t|--type [TYPE]] [-i|--interactive [INTERACTIVE]] [-a|--archive [ARCHIVE]]`
+
+Export images
+
+### Options
+
+#### `--type|-t`
+
+type of file to export
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--interactive|-i`
+
+Interactive Mode
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--archive|-a`
+
+Archive format
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `'tar.gz'`
 
 #### `--help|-h`
 
