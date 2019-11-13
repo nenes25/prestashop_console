@@ -67,6 +67,9 @@ PrestashopConsole 1.5.0
 * [`module:install`](#moduleinstall)
 * [`module:list`](#modulelist)
 * [`module:reset`](#modulereset)
+* [`module:tab:add`](#moduletabadd)
+* [`module:tab:list`](#moduletablist)
+* [`module:tab:remove`](#moduletabremove)
 * [`module:uninstall`](#moduleuninstall)
 
 **preferences:**
@@ -3753,6 +3756,297 @@ hard|soft(default)
 * Is value required: no
 * Is multiple: no
 * Default: `NULL`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`module:tab:add`
+----------------
+
+Add module admin tab
+
+### Usage
+
+* `module:tab:add [-p|--parentTab [PARENTTAB]] [--] <name> <tab> <label>`
+
+Add module admin tab
+
+### Arguments
+
+#### `name`
+
+module name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+#### `tab`
+
+tab name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+#### `label`
+
+tab label
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--parentTab|-p`
+
+Parent tab
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `'DEFAULT'`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`module:tab:list`
+-----------------
+
+list module admin tab
+
+### Usage
+
+* `module:tab:list <name>`
+
+list module admin tab
+
+### Arguments
+
+#### `name`
+
+module name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`module:tab:remove`
+-------------------
+
+remove module admin tab
+
+### Usage
+
+* `module:tab:remove <name> <tab>`
+
+remove module admin tab
+
+### Arguments
+
+#### `name`
+
+module name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+#### `tab`
+
+tab name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
 
 #### `--help|-h`
 
