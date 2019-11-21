@@ -39,7 +39,7 @@ class RemoveCommand extends Command
                 'name', InputArgument::REQUIRED, 'module name'
             )
             ->addArgument(
-                'tab', InputArgument::REQUIRED, 'tab name'
+                'tab', InputArgument::REQUIRED, 'tab class name'
             );
     }
 

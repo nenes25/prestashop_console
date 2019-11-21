@@ -34,39 +34,46 @@ use Language;
  */
 class AddCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
             ->setName('module:tab:add')
             ->setDescription('Add module admin tab')
-            ->addArgument(
-                'name', InputArgument::REQUIRED, 'module name'
-            )
-            ->addArgument(
-                'tab', InputArgument::REQUIRED, 'tab name'
-            )
-            ->addArgument(
-                'label', InputArgument::REQUIRED, 'tab label'
-            )
+            ->addArgument('name', InputArgument::REQUIRED, 'module name')
+            ->addArgument('tab', InputArgument::REQUIRED, 'tab class name')
+            ->addArgument('label', InputArgument::REQUIRED, 'tab label')
             ->addOption(
-                'parentTab', 'p', InputOption::VALUE_OPTIONAL, 'Parent tab', 'DEFAULT'
-            );
+                'parentTab', 'p', InputOption::VALUE_OPTIONAL, 'Parent tab',
+                'DEFAULT'
+            )
+            ->addOption('icon', 'i', InputOption::VALUE_OPTIONAL, 'Tab icon')
+            ->setHelp('Allow to add a new admin tab (controller )');
     }
 
 
+    /**
+     * @inheritDoc
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $moduleName = $input->getArgument('name');
         $tabClass = $input->getArgument('tab');
         $label = $input->getArgument('label');
         $parentTab = $input->getOption('parentTab');
+        $icon = $input->getOption('icon');
 
-        if ($module = Module::getInstanceByName($this->moduleName)) {
+        if ($module = Module::getInstanceByName($moduleName)) {
             try {
                 $tab = new Tab();
                 $tab->class_name = $tabClass;
                 $tab->module = $moduleName;
                 $tab->id_parent = (int)Tab::getIdFromClassName($parentTab);
+                if (null !== $icon) {
+                    $tab->icon = $icon;
+                }
                 $languages = Language::getLanguages();
                 foreach ($languages as $lang) {
                     $tab->name[$lang['id_lang']] = $label;

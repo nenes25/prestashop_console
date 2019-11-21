@@ -3827,9 +3827,9 @@ Add module admin tab
 
 ### Usage
 
-* `module:tab:add [-p|--parentTab [PARENTTAB]] [--] <name> <tab> <label>`
+* `module:tab:add [-p|--parentTab [PARENTTAB]] [-i|--icon [ICON]] [--] <name> <tab> <label>`
 
-Add module admin tab
+Allow to add a new admin tab (controller )
 
 ### Arguments
 
@@ -3843,7 +3843,7 @@ module name
 
 #### `tab`
 
-tab name
+tab class name
 
 * Is required: yes
 * Is array: no
@@ -3867,6 +3867,15 @@ Parent tab
 * Is value required: no
 * Is multiple: no
 * Default: `'DEFAULT'`
+
+#### `--icon|-i`
+
+Tab icon
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
 
 #### `--help|-h`
 
@@ -4040,7 +4049,7 @@ module name
 
 #### `tab`
 
-tab name
+tab class name
 
 * Is required: yes
 * Is array: no
