@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 PrestashopConsole 1.4.1
+=======
+PrestashopConsole 1.5.0
+>>>>>>> dev
 =======================
 
 * [`help`](#help)
@@ -8,6 +12,10 @@ PrestashopConsole 1.4.1
 
 * [`admin:user:change-password`](#adminuserchange-password)
 * [`admin:user:create`](#adminusercreate)
+<<<<<<< HEAD
+=======
+* [`admin:user:list`](#adminuserlist)
+>>>>>>> dev
 
 **cache:**
 
@@ -30,6 +38,15 @@ PrestashopConsole 1.4.1
 
 * [`console:self-upgrade`](#consoleself-upgrade)
 
+<<<<<<< HEAD
+=======
+**db:**
+
+* [`db:export`](#dbexport)
+* [`db:import`](#dbimport)
+* [`db:query`](#dbquery)
+
+>>>>>>> dev
 **dev:**
 
 * [`dev:add-index-files`](#devadd-index-files)
@@ -60,6 +77,12 @@ PrestashopConsole 1.4.1
 * [`module:install`](#moduleinstall)
 * [`module:list`](#modulelist)
 * [`module:reset`](#modulereset)
+<<<<<<< HEAD
+=======
+* [`module:tab:add`](#moduletabadd)
+* [`module:tab:list`](#moduletablist)
+* [`module:tab:remove`](#moduletabremove)
+>>>>>>> dev
 * [`module:uninstall`](#moduleuninstall)
 
 **preferences:**
@@ -426,6 +449,85 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+=======
+`admin:user:list`
+-----------------
+
+List admin users
+
+### Usage
+
+* `admin:user:list`
+
+List admin users registered in employee table
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+>>>>>>> dev
 `cache:clean`
 -------------
 
@@ -1413,6 +1515,7 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
 `dev:add-index-files`
 ---------------------
 
@@ -1433,6 +1536,375 @@ directory to fill ( relative to ps root path)
 * Is required: yes
 * Is array: no
 * Default: `NULL`
+
+### Options
+=======
+`db:export`
+-----------
+
+Create db export 
+
+### Usage
+
+* `db:export [-t|--type [TYPE]] [-g|--gzip [GZIP]]`
+
+This command will export current prestashop database using mysqldump shell command
+
+### Options
+
+#### `--type|-t`
+
+allowed values all|customers|orders|catalog
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `'all'`
+
+#### `--gzip|-g`
+
+gzip 
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+>>>>>>> dev
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+<<<<<<< HEAD
+`dev:anonymize:customer`
+------------------------
+
+Anonymize Customer information
+
+### Usage
+
+* `dev:anonymize:customer [--type [TYPE]] [--exclude-emails [EXCLUDE-EMAILS]] [--names [NAMES]]`
+
+This command will anonymize customer related data (lastname,firstname,email ) without erasing them
+
+### Options
+
+#### `--type`
+
+allowed values all|customers|addresses|newsletter
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--exclude-emails`
+
+emails to exclude separated by commas
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--names`
+
+anonymize names (default none ) use only for customers
+=======
+`db:import`
+-----------
+
+Import db dump 
+
+### Usage
+
+* `db:import [-f|--file FILE] [-g|--gzip [GZIP]]`
+
+This command will import dumb (gziped or not ) in current prestashop database using mysql shell command
+
+### Options
+
+#### `--file|-f`
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
+
+#### `--gzip|-g`
+
+gzip 
+>>>>>>> dev
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+<<<<<<< HEAD
+`dev:clean`
+-----------
+
+Clean existing datas with module PsCleaner
+
+### Usage
+
+* `dev:clean <type>`
+
+Clean existing datas with module PsCleaner
+
+### Arguments
+
+#### `type`
+
+data types. Possibles values all, catalog, sales
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+=======
+`db:query`
+----------
+
+Run sql query on prestashop db
+
+### Usage
+
+* `db:query [-s|--query QUERY]`
+
+This command will exec db query using the prestashop Db class, its only allow SELECT queries
+
+### Options
+
+#### `--query|-s`
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
+
+>>>>>>> dev
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+<<<<<<< HEAD
+`dev:cron:list`
+---------------
+
+List cron tasks configured with the module cronjobs
+
+### Usage
+
+* `dev:cron:list`
+
+List cron tasks configured with the module cronjobs
+=======
+`dev:add-index-files`
+---------------------
+
+Add missing index.php files in directory
+
+### Usage
+
+* `dev:add-index-files <dir>`
+
+Add missing index.php files in directory
+
+### Arguments
+
+#### `dir`
+
+directory to fill ( relative to ps root path)
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+>>>>>>> dev
 
 ### Options
 
@@ -1499,6 +1971,30 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+`dev:cron:run`
+--------------
+
+Run cron task configured with the module cronjobs
+
+### Usage
+
+* `dev:cron:run <id_cronjob>`
+
+Run cron task configured with the module cronjobs
+
+### Arguments
+
+#### `id_cronjob`
+
+cron job id ( use command dev:cron:list to get it )
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+=======
 `dev:anonymize:customer`
 ------------------------
 
@@ -1538,6 +2034,7 @@ anonymize names (default none ) use only for customers
 * Is value required: no
 * Is multiple: no
 * Default: `NULL`
+>>>>>>> dev
 
 #### `--help|-h`
 
@@ -1602,6 +2099,18 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+`dev:ide-class-names`
+---------------------
+
+Download class names index to resolve autocompletion in IDE
+
+### Usage
+
+* `dev:ide-class-names`
+
+Download class names index to resolve autocompletion in IDE
+=======
 `dev:clean`
 -----------
 
@@ -1622,6 +2131,7 @@ data types. Possibles values all, catalog, sales
 * Is required: yes
 * Is array: no
 * Default: `NULL`
+>>>>>>> dev
 
 ### Options
 
@@ -1688,6 +2198,18 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+`dev:list-overrides`
+--------------------
+
+List overrides of classes and controllers in the project
+
+### Usage
+
+* `dev:list-overrides`
+
+List overrides of classes and controllers in the project
+=======
 `dev:cron:list`
 ---------------
 
@@ -1698,6 +2220,7 @@ List cron tasks configured with the module cronjobs
 * `dev:cron:list`
 
 List cron tasks configured with the module cronjobs
+>>>>>>> dev
 
 ### Options
 
@@ -1764,6 +2287,25 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+`dev:mode`
+----------
+
+Enable / Disable debug mode (to display errors).
+
+### Usage
+
+* `dev:mode <state>`
+
+Enable / Disable debug mode (to display errors).
+
+### Arguments
+
+#### `state`
+
+enable or disable debug mode ( possible values : enable,disable,toggle)
+Be sure to include "include(__DIR__. '/debug_mode.php');" in config/defines.inc.php for this feature to run.
+=======
 `dev:cron:run`
 --------------
 
@@ -1780,6 +2322,7 @@ Run cron task configured with the module cronjobs
 #### `id_cronjob`
 
 cron job id ( use command dev:cron:list to get it )
+>>>>>>> dev
 
 * Is required: yes
 * Is array: no
@@ -1850,6 +2393,26 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+`install:info`
+--------------
+
+prestashop install info
+
+### Usage
+
+* `install:info [--raw] [--format FORMAT] [--] [<namespace>]`
+
+prestashop install info
+
+### Arguments
+
+#### `namespace`
+
+The namespace name
+
+* Is required: no
+=======
 `dev:ide-class-names`
 ---------------------
 
@@ -2107,6 +2670,7 @@ prestashop install info
 The namespace name
 
 * Is required: no
+>>>>>>> dev
 * Is array: no
 * Default: `NULL`
 
@@ -3465,6 +4029,309 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+<<<<<<< HEAD
+=======
+`module:tab:add`
+----------------
+
+Add module admin tab
+
+### Usage
+
+* `module:tab:add [-p|--parentTab [PARENTTAB]] [-i|--icon [ICON]] [--] <name> <tab> <label>`
+
+Allow to add a new admin tab (controller )
+
+### Arguments
+
+#### `name`
+
+module name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+#### `tab`
+
+tab class name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+#### `label`
+
+tab label
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--parentTab|-p`
+
+Parent tab
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `'DEFAULT'`
+
+#### `--icon|-i`
+
+Tab icon
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`module:tab:list`
+-----------------
+
+list module admin tab
+
+### Usage
+
+* `module:tab:list <name>`
+
+list module admin tab
+
+### Arguments
+
+#### `name`
+
+module name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`module:tab:remove`
+-------------------
+
+remove module admin tab
+
+### Usage
+
+* `module:tab:remove <name> <tab>`
+
+remove module admin tab
+
+### Arguments
+
+#### `name`
+
+module name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+#### `tab`
+
+tab class name
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+>>>>>>> dev
 `module:uninstall`
 ------------------
 

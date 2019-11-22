@@ -1,6 +1,7 @@
 {
-  "name": "PrestashopConsole",
+  "name": "hhennes/prestashop-console",
   "description": "Tools to manage your prestashop with CLI",
+  "homepage": "https://github.com/nenes25/prestashop_console",
   "authors": [
     {
       "name": "hhennes",
@@ -8,7 +9,9 @@
       "homepage": "https://www.h-hennes.fr/blog/"
     }
   ],
+  "license": "OSL-3.0",
   "require": {
+    "php" : ">=5.6",
     "symfony/console": "^3.0",
     "psr/log": "^1.0",
     "symfony/yaml": "^3.0",
