@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-PrestashopConsole 1.4.1
-=======
 PrestashopConsole 1.5.0
->>>>>>> dev
 =======================
 
 * [`help`](#help)
@@ -12,10 +8,7 @@ PrestashopConsole 1.5.0
 
 * [`admin:user:change-password`](#adminuserchange-password)
 * [`admin:user:create`](#adminusercreate)
-<<<<<<< HEAD
-=======
 * [`admin:user:list`](#adminuserlist)
->>>>>>> dev
 
 **cache:**
 
@@ -38,15 +31,12 @@ PrestashopConsole 1.5.0
 
 * [`console:self-upgrade`](#consoleself-upgrade)
 
-<<<<<<< HEAD
-=======
 **db:**
 
 * [`db:export`](#dbexport)
 * [`db:import`](#dbimport)
 * [`db:query`](#dbquery)
 
->>>>>>> dev
 **dev:**
 
 * [`dev:add-index-files`](#devadd-index-files)
@@ -57,6 +47,12 @@ PrestashopConsole 1.5.0
 * [`dev:ide-class-names`](#devide-class-names)
 * [`dev:list-overrides`](#devlist-overrides)
 * [`dev:mode`](#devmode)
+
+**images:**
+
+* [`images:filesystem`](#imagesfilesystem)
+* [`images:thumbnails`](#imagesthumbnails)
+* [`images:watermark`](#imageswatermark)
 
 **install:**
 
@@ -77,12 +73,9 @@ PrestashopConsole 1.5.0
 * [`module:install`](#moduleinstall)
 * [`module:list`](#modulelist)
 * [`module:reset`](#modulereset)
-<<<<<<< HEAD
-=======
 * [`module:tab:add`](#moduletabadd)
 * [`module:tab:list`](#moduletablist)
 * [`module:tab:remove`](#moduletabremove)
->>>>>>> dev
 * [`module:uninstall`](#moduleuninstall)
 
 **preferences:**
@@ -449,8 +442,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-=======
 `admin:user:list`
 -----------------
 
@@ -527,7 +518,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
->>>>>>> dev
 `cache:clean`
 -------------
 
@@ -1515,30 +1505,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:add-index-files`
----------------------
-
-Add missing index.php files in directory
-
-### Usage
-
-* `dev:add-index-files <dir>`
-
-Add missing index.php files in directory
-
-### Arguments
-
-#### `dir`
-
-directory to fill ( relative to ps root path)
-
-* Is required: yes
-* Is array: no
-* Default: `NULL`
-
-### Options
-=======
 `db:export`
 -----------
 
@@ -1569,7 +1535,6 @@ gzip
 * Is value required: no
 * Is multiple: no
 * Default: `NULL`
->>>>>>> dev
 
 #### `--help|-h`
 
@@ -1634,42 +1599,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:anonymize:customer`
-------------------------
-
-Anonymize Customer information
-
-### Usage
-
-* `dev:anonymize:customer [--type [TYPE]] [--exclude-emails [EXCLUDE-EMAILS]] [--names [NAMES]]`
-
-This command will anonymize customer related data (lastname,firstname,email ) without erasing them
-
-### Options
-
-#### `--type`
-
-allowed values all|customers|addresses|newsletter
-
-* Accept value: yes
-* Is value required: no
-* Is multiple: no
-* Default: `NULL`
-
-#### `--exclude-emails`
-
-emails to exclude separated by commas
-
-* Accept value: yes
-* Is value required: no
-* Is multiple: no
-* Default: `NULL`
-
-#### `--names`
-
-anonymize names (default none ) use only for customers
-=======
 `db:import`
 -----------
 
@@ -1693,7 +1622,6 @@ This command will import dumb (gziped or not ) in current prestashop database us
 #### `--gzip|-g`
 
 gzip 
->>>>>>> dev
 
 * Accept value: yes
 * Is value required: no
@@ -1763,31 +1691,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:clean`
------------
-
-Clean existing datas with module PsCleaner
-
-### Usage
-
-* `dev:clean <type>`
-
-Clean existing datas with module PsCleaner
-
-### Arguments
-
-#### `type`
-
-data types. Possibles values all, catalog, sales
-
-* Is required: yes
-* Is array: no
-* Default: `NULL`
-
-### Options
-
-=======
 `db:query`
 ----------
 
@@ -1808,7 +1711,6 @@ This command will exec db query using the prestashop Db class, its only allow SE
 * Is multiple: no
 * Default: `NULL`
 
->>>>>>> dev
 #### `--help|-h`
 
 Display this help message
@@ -1872,18 +1774,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:cron:list`
----------------
-
-List cron tasks configured with the module cronjobs
-
-### Usage
-
-* `dev:cron:list`
-
-List cron tasks configured with the module cronjobs
-=======
 `dev:add-index-files`
 ---------------------
 
@@ -1904,7 +1794,6 @@ directory to fill ( relative to ps root path)
 * Is required: yes
 * Is array: no
 * Default: `NULL`
->>>>>>> dev
 
 ### Options
 
@@ -1971,30 +1860,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:cron:run`
---------------
-
-Run cron task configured with the module cronjobs
-
-### Usage
-
-* `dev:cron:run <id_cronjob>`
-
-Run cron task configured with the module cronjobs
-
-### Arguments
-
-#### `id_cronjob`
-
-cron job id ( use command dev:cron:list to get it )
-
-* Is required: yes
-* Is array: no
-* Default: `NULL`
-
-### Options
-=======
 `dev:anonymize:customer`
 ------------------------
 
@@ -2034,7 +1899,6 @@ anonymize names (default none ) use only for customers
 * Is value required: no
 * Is multiple: no
 * Default: `NULL`
->>>>>>> dev
 
 #### `--help|-h`
 
@@ -2099,18 +1963,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:ide-class-names`
----------------------
-
-Download class names index to resolve autocompletion in IDE
-
-### Usage
-
-* `dev:ide-class-names`
-
-Download class names index to resolve autocompletion in IDE
-=======
 `dev:clean`
 -----------
 
@@ -2131,7 +1983,6 @@ data types. Possibles values all, catalog, sales
 * Is required: yes
 * Is array: no
 * Default: `NULL`
->>>>>>> dev
 
 ### Options
 
@@ -2198,18 +2049,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:list-overrides`
---------------------
-
-List overrides of classes and controllers in the project
-
-### Usage
-
-* `dev:list-overrides`
-
-List overrides of classes and controllers in the project
-=======
 `dev:cron:list`
 ---------------
 
@@ -2220,7 +2059,6 @@ List cron tasks configured with the module cronjobs
 * `dev:cron:list`
 
 List cron tasks configured with the module cronjobs
->>>>>>> dev
 
 ### Options
 
@@ -2287,25 +2125,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`dev:mode`
-----------
-
-Enable / Disable debug mode (to display errors).
-
-### Usage
-
-* `dev:mode <state>`
-
-Enable / Disable debug mode (to display errors).
-
-### Arguments
-
-#### `state`
-
-enable or disable debug mode ( possible values : enable,disable,toggle)
-Be sure to include "include(__DIR__. '/debug_mode.php');" in config/defines.inc.php for this feature to run.
-=======
 `dev:cron:run`
 --------------
 
@@ -2322,7 +2141,6 @@ Run cron task configured with the module cronjobs
 #### `id_cronjob`
 
 cron job id ( use command dev:cron:list to get it )
->>>>>>> dev
 
 * Is required: yes
 * Is array: no
@@ -2393,26 +2211,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-`install:info`
---------------
-
-prestashop install info
-
-### Usage
-
-* `install:info [--raw] [--format FORMAT] [--] [<namespace>]`
-
-prestashop install info
-
-### Arguments
-
-#### `namespace`
-
-The namespace name
-
-* Is required: no
-=======
 `dev:ide-class-names`
 ---------------------
 
@@ -2652,6 +2450,252 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+`images:filesystem`
+-------------------
+
+Move image to new filesystem
+
+### Usage
+
+* `images:filesystem`
+
+Move image to new filesystem
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:thumbnails`
+-------------------
+
+Manage images thumbnails
+
+### Usage
+
+* `images:thumbnails [<type>] [<erase>]`
+
+Manage images thumbnails
+
+### Arguments
+
+#### `type`
+
+Thumbnail types : categories, manufacturers, suppliers, products, stores, ( default : all )
+
+* Is required: no
+* Is array: no
+* Default: `'all'`
+
+#### `erase`
+
+Erase previous images ( default : true )
+
+* Is required: no
+* Is array: no
+* Default: `true`
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:watermark`
+------------------
+
+Move image to new filesystem
+
+### Usage
+
+* `images:watermark`
+
+Move image to new filesystem
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
 `install:info`
 --------------
 
@@ -2670,7 +2714,6 @@ prestashop install info
 The namespace name
 
 * Is required: no
->>>>>>> dev
 * Is array: no
 * Default: `NULL`
 
@@ -3021,7 +3064,7 @@ Generate module controller file
 
 ### Usage
 
-* `module:generate:controller [-t|--template TEMPLATE] [--] <moduleName> <controllerName> <controllerType>`
+* `module:generate:controller [-t|--template TEMPLATE] [-m|--model MODEL] [--] <moduleName> <controllerName> <controllerType>`
 
 Generate module controller file
 
@@ -3061,6 +3104,15 @@ generate template
 * Is value required: yes
 * Is multiple: no
 * Default: `true`
+
+#### `--model|-m`
+
+Model for admin controller
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
 
 #### `--help|-h`
 
@@ -4029,8 +4081,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-<<<<<<< HEAD
-=======
 `module:tab:add`
 ----------------
 
@@ -4331,7 +4381,6 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
->>>>>>> dev
 `module:uninstall`
 ------------------
 
