@@ -36,8 +36,8 @@ use Tools;
 /**
  * Clear all caches commands
  */
-class ClearAllCommand extends Command {
-    
+class ClearAllCommand extends Command
+{
     protected function configure()
     {
         $this
@@ -47,14 +47,12 @@ class ClearAllCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ( Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=') ) {
-            
+        if (Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
             $cacheClearer = new CacheClearer();
             $cacheClearer->clearAllCaches();
             $output->writeln("<info>All cache cleared with success</info>");
         } else {
-           $output->writeln("<error>This command is only available for Prestashop > 1.7.0.0 </error>"); 
+            $output->writeln("<error>This command is only available for Prestashop > 1.7.0.0 </error>");
         }
     }
-    
 }

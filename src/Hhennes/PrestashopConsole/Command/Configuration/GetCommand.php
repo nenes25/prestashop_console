@@ -32,13 +32,15 @@ use Configuration;
  */
 class GetCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('configuration:get')
                 ->setDescription('get configuration value')
                 ->addArgument(
-                        'name', InputArgument::REQUIRED, 'configuration name'
+                    'name',
+                    InputArgument::REQUIRED,
+                    'configuration name'
                 );
     }
 
@@ -48,5 +50,4 @@ class GetCommand extends Command
         $value = Configuration::get($name);
         $output->writeln('<info>'.$value.'</info>');
     }
-
 }

@@ -21,11 +21,14 @@
 namespace Hhennes\PrestashopConsole\Command\Admin\User;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Configuration;
+use Employee;
+use PrestaShopException;
+use Tools;
 
 /**
  * Create New Admin User
@@ -33,64 +36,70 @@ use Symfony\Component\Console\Question\Question;
  */
 class CreateCommand extends Command
 {
-     protected function configure()
+    /**
+     * @inheritDoc
+     */
+    protected function configure()
     {
         $this
             ->setName('admin:user:create')
             ->setDescription('Create new admin user')
-            ->addOption('email',null,InputOption::VALUE_OPTIONAL , 'Admin email')
-            ->addOption('password',null,InputOption::VALUE_OPTIONAL , 'Admin password')
-            ->addOption('firstname',null,InputOption::VALUE_OPTIONAL , 'firstname')
-            ->addOption('lastname',null,InputOption::VALUE_OPTIONAL , 'lastname');
+            ->addOption('email', null, InputOption::VALUE_OPTIONAL, 'Admin email')
+            ->addOption('password', null, InputOption::VALUE_OPTIONAL, 'Admin password')
+            ->addOption('firstname', null, InputOption::VALUE_OPTIONAL, 'firstname')
+            ->addOption('lastname', null, InputOption::VALUE_OPTIONAL, 'lastname');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
 
-        if ( !$email = $input->getOption('email')) {
-            $userQuestion = new Question('admin email :',false);
-            $email = $helper->ask($input,$output,$userQuestion);
+        if (!$email = $input->getOption('email')) {
+            $userQuestion = new Question('admin email :', false);
+            $email = $helper->ask($input, $output, $userQuestion);
         }
 
-        if ( !$password = $input->getOption('password')) {
-            $passwordQuestion = new Question('admin password :','admin123456');
+        if (!$password = $input->getOption('password')) {
+            $passwordQuestion = new Question('admin password :', 'admin123456');
             $passwordQuestion->setHidden(true);
-            $password = $helper->ask($input,$output,$passwordQuestion);
+            $password = $helper->ask($input, $output, $passwordQuestion);
         }
 
-        if ( !$firstname = $input->getOption('firstname')) {
-            $firstnameQuestion = new Question('firstname :','admin');
-            $firstname = $helper->ask($input,$output,$firstnameQuestion);
+        if (!$firstname = $input->getOption('firstname')) {
+            $firstnameQuestion = new Question('firstname :', 'admin');
+            $firstname = $helper->ask($input, $output, $firstnameQuestion);
         }
 
-        if ( !$lastname = $input->getOption('lastname')) {
-            $lastnameQuestion = new Question('lastname :','admin');
-            $lastname = $helper->ask($input,$output,$lastnameQuestion);
+        if (!$lastname = $input->getOption('lastname')) {
+            $lastnameQuestion = new Question('lastname :', 'admin');
+            $lastname = $helper->ask($input, $output, $lastnameQuestion);
         }
 
         //Error if employee with same email already exists
-        if ( \Employee::employeeExists($email)){
+        if (Employee::employeeExists($email)) {
             $output->writeln("<error>Employee with this email already exists");
             return;
         }
 
-        $employee = new \Employee();
+        $employee = new Employee();
         $employee->active = 1;
         $employee->email = $email;
-        $employee->passwd = \Tools::encrypt($password);
+        $employee->passwd = Tools::encrypt($password);
         $employee->firstname = $firstname;
         $employee->lastname = $lastname;
-        $employee->id_lang = \Configuration::get('PS_LANG_DEFAULT');
+        $employee->id_lang = Configuration::get('PS_LANG_DEFAULT');
         $employee->id_profile = _PS_ADMIN_PROFILE_;
         $employee->default_tab = 1;
         $employee->bo_theme = 'default';
 
         try {
             $employee->save();
-        } catch (Exception $e) {
-             $output->writeln("<error>".$e->getMessage()."</error>");
-             return;
+        } catch (PrestaShopException $e) {
+            $output->writeln("<error>".$e->getMessage()."</error>");
+            return;
         }
 
         $output->writeln("<info>New user ".$email." created</info>");

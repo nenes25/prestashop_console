@@ -32,17 +32,21 @@ use Module;
  */
 class RemoveModuleHooksCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('module:hook:remove')
                 ->setDescription('Remove module to one or several hooks')
                 ->addArgument(
-                        'name', InputArgument::REQUIRED, 'module name'
-                        )
+                    'name',
+                    InputArgument::REQUIRED,
+                    'module name'
+                )
                 ->addArgument(
-                        'hooks', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'hooks name ( separate multiple with spaces )'
-        );
+                    'hooks',
+                    InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                    'hooks name ( separate multiple with spaces )'
+                );
     }
 
     /**
@@ -56,9 +60,8 @@ class RemoveModuleHooksCommand extends Command
         $hooks = $input->getArgument('hooks');
 
         if ($module = Module::getInstanceByName($moduleName)) {
-
             if (sizeof($hooks)) {
-                foreach ( $hooks as $hook) {
+                foreach ($hooks as $hook) {
                     if (!$module->unregisterHook($hook)) {
                         $output->writeln('<error>Error during hook remove from hook '.$hook.'</error>');
                     } else {
@@ -68,7 +71,6 @@ class RemoveModuleHooksCommand extends Command
             } else {
                 $output->writeln('<error>Not hooks given for ' . $moduleName . '</error>');
             }
-
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
         }

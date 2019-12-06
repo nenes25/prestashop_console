@@ -26,21 +26,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
 use Module;
 
-class ListCronCommand extends Command {
+class ListCronCommand extends Command
+{
 
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
-    protected function configure() {
+    protected function configure()
+    {
         $this
                 ->setName('dev:cron:list')
                 ->setDescription('List cron tasks configured with the module cronjobs');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
-
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
-
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
                 return;
@@ -71,5 +72,4 @@ class ListCronCommand extends Command {
             $output->writeln('<error>' . $this->_cronModuleName . ' is not installed');
         }
     }
-
 }

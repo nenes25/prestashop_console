@@ -34,13 +34,15 @@ use Configuration;
  */
 class OverrideCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
             ->setName('preferences:override')
             ->setDescription('Disable or enable Override')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
+                'type',
+                InputArgument::OPTIONAL,
+                'enable|disable(default)'
             );
     }
 
@@ -52,7 +54,7 @@ class OverrideCommand extends Command
 
         switch ($type) {
             case 'enable':
-			case 1:
+            case 1:
                 $output->writeln("<info>All override are enabled</info>");
                 Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
                 break;

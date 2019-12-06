@@ -144,16 +144,19 @@ class ObjectModelCommand extends Command
             ];
 
             //Ask for create a new field
-            $newField = $helper->ask($input, $output,
+            $newField = $helper->ask(
+                $input,
+                $output,
                 new ConfirmationQuestion('<question>Add another field (y/n) default n ?</question>', false, '/^(y|j)/i')
             );
-
         } while ($newField === true);
 
         $params['fields'] = $fields;
 
         //Ask if sql generation is needed
-        $sql = $helper->ask($input, $output,
+        $sql = $helper->ask(
+            $input,
+            $output,
             new ConfirmationQuestion('<question>Generate sql ?</question>', false, '/^(y|j)/i')
         );
         if ($sql) {
@@ -292,7 +295,7 @@ class {object} extends ObjectModel
     protected function _getObjectInstall(array $sqlQueries)
     {
         $installStr = '';
-        if ( !count($sqlQueries) ){
+        if (!count($sqlQueries)) {
             return $installStr;
         }
 
@@ -303,8 +306,8 @@ class {object} extends ObjectModel
          */ 
         public function installSql(){'."\n";
 
-        foreach ( $sqlQueries as $query){
-            if ( $query != ''){
+        foreach ($sqlQueries as $query) {
+            if ($query != '') {
                 $installStr .= "\n".' Db::getInstance()->execute("'.$query.'");'."\n";
             }
         }

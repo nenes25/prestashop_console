@@ -35,30 +35,39 @@ use Module;
  */
 class ListCommand extends Command
 {
-
     protected function configure()
     {
         $this
             ->setName('module:list')
             ->setDescription('Get modules list')
             ->addOption(
-                'active', null, InputOption::VALUE_NONE, 'List only active modules'
+                'active',
+                null,
+                InputOption::VALUE_NONE,
+                'List only active modules'
             )
             ->addOption(
-                'no-active', null, InputOption::VALUE_NONE, 'List only not active modules'
+                'no-active',
+                null,
+                InputOption::VALUE_NONE,
+                'List only not active modules'
             )
             ->addOption(
-                'installed', null, InputOption::VALUE_NONE, 'List only installed modules'
+                'installed',
+                null,
+                InputOption::VALUE_NONE,
+                'List only installed modules'
             )
             ->addOption(
-                'no-installed', null, InputOption::VALUE_NONE, 'List only not installed modules'
+                'no-installed',
+                null,
+                InputOption::VALUE_NONE,
+                'List only not installed modules'
             );
-
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $modules = Module::getModulesOnDisk();
         //module stdClass definition
         /*
@@ -87,16 +96,24 @@ class ListCommand extends Command
         usort($modules, array($this, "cmp"));
         // apply filters
         if ($input->getOption('active')) {
-            $modules = array_filter($modules, function($module) {return (bool)($module->active);});
+            $modules = array_filter($modules, function ($module) {
+                return (bool)($module->active);
+            });
         }
         if ($input->getOption('no-active')) {
-            $modules = array_filter($modules, function($module) {return !($module->active);});
+            $modules = array_filter($modules, function ($module) {
+                return !($module->active);
+            });
         }
         if ($input->getOption('installed')) {
-            $modules = array_filter($modules, function($module) {return (bool)($module->installed);});
+            $modules = array_filter($modules, function ($module) {
+                return (bool)($module->installed);
+            });
         }
         if ($input->getOption('no-installed')) {
-            $modules = array_filter($modules, function($module) {return !($module->installed);});
+            $modules = array_filter($modules, function ($module) {
+                return !($module->installed);
+            });
         }
 
         $output->writeln("<info>Currently module on disk:</info>");
@@ -122,5 +139,4 @@ class ListCommand extends Command
     {
         return strcmp($a->name, $b->name);
     }
-
 }

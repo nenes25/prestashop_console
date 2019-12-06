@@ -32,7 +32,6 @@ use Cache;
  */
 class FlushCommand extends Command
 {
-
     protected function configure()
     {
         $this
@@ -42,17 +41,15 @@ class FlushCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        
         $cache =  Cache::getInstance();
         $cache->flush();
 
         //Specific cacheFS
-        if (get_class($cache) == 'cacheFs'){
+        if (get_class($cache) == 'cacheFs') {
             $cache::deleteCacheDirectory();
             $cache::createCacheDirectories();
         }
 
         $output->writeln('<info>Cache flushed</info>');
     }
-
 }

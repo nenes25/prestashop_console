@@ -39,21 +39,19 @@ class DisableCommand extends Command
                 ->setName('module:disable')
                 ->setDescription('Disable module')
                 ->addArgument(
-                        'name', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'module name ( separate multiple with spaces )'
+                    'name',
+                    InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                    'module name ( separate multiple with spaces )'
                 );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $name = $input->getArgument('name');
 
         if (count($name) > 0) {
-
             foreach ($name as $moduleName) {
-
                 if ($module = Module::getInstanceByName($moduleName)) {
-
                     if (Module::isInstalled($module->name)) {
                         try {
                             $module->disable();
@@ -73,5 +71,4 @@ class DisableCommand extends Command
             }
         }
     }
-
 }

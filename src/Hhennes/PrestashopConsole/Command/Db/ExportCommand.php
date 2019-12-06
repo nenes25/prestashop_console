@@ -24,12 +24,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use Db;
 
 class ExportCommand extends Command
 {
-
     protected $_allowedTypes = [
         'all',
         'customers',
@@ -88,7 +85,6 @@ class ExportCommand extends Command
         $export = shell_exec($command);
         $output->writeln('<info>' . $export . '</info>');
         $output->writeln('<info>Export ended</info>');
-
     }
 
 

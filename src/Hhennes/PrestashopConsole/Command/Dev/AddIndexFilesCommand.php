@@ -38,7 +38,9 @@ class AddIndexFilesCommand extends Command
             ->setName('dev:add-index-files')
             ->setDescription('Add missing index.php files in directory')
             ->addArgument(
-                        'dir', InputArgument::REQUIRED, 'directory to fill ( relative to ps root path)'
+                'dir',
+                InputArgument::REQUIRED,
+                'directory to fill ( relative to ps root path)'
             );
     }
 
@@ -52,7 +54,7 @@ class AddIndexFilesCommand extends Command
     {
         $dir = $input->getArgument('dir');
         try {
-            if ( !is_dir(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir) ) {
+            if (!is_dir(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir)) {
                 throw new \Exception('directory doesn\'t exists');
             }
 
@@ -62,21 +64,18 @@ class AddIndexFilesCommand extends Command
             $directories = $finder->directories()->in(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir);
 
             $i = 0;
-            foreach ($directories as $directory){
-
+            foreach ($directories as $directory) {
                 ${$i} = new Finder();
                 //Check if index.php file exists in directory
                 $indexFile = ${$i}->files()->in((string)$directory)->depth('==0')->name('index.php');
                 //Create if if not
-                if ( !sizeof($indexFile )) {
-                   $fp = fopen($directory.DIRECTORY_SEPARATOR.'index.php','w+');
-                   fputs($fp,$this->_getIndexContent());
-                   fclose($fp);
+                if (!sizeof($indexFile)) {
+                    $fp = fopen($directory.DIRECTORY_SEPARATOR.'index.php', 'w+');
+                    fputs($fp, $this->_getIndexContent());
+                    fclose($fp);
                 }
                 $i++;
             }
-
-
         } catch (Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
         }

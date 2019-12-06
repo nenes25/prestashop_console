@@ -33,7 +33,6 @@ use Cache;
  */
 class CleanCommand extends Command
 {
-
     protected function configure()
     {
         $this
@@ -46,7 +45,7 @@ class CleanCommand extends Command
     {
         $key = $input->getArgument('key');
 
-        if ( !$key || $key == '') {
+        if (!$key || $key == '') {
             $key = "*";
         }
 
@@ -55,5 +54,4 @@ class CleanCommand extends Command
 
         $output->writeln('<info>Cache cleaned</info>');
     }
-
 }

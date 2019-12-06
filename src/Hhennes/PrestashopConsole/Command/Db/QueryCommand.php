@@ -30,7 +30,6 @@ use PrestaShopDatabaseException;
 
 class QueryCommand extends Command
 {
-
     protected function configure()
     {
         $this
@@ -47,7 +46,6 @@ class QueryCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $query = $input->getOption('query');
         if (null === $query) {
             $output->writeln('<error>No query given</error>');
@@ -58,7 +56,6 @@ class QueryCommand extends Command
 
         //Only allow select queries
         if (preg_match('#^SELECT#i', $query)) {
-
             try {
                 $results = Db::getInstance()->executeS($query);
 
@@ -74,14 +71,11 @@ class QueryCommand extends Command
                 } else {
                     $output->writeln('<info>No results for your query</info>');
                 }
-
             } catch (PrestaShopDatabaseException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
             }
         } else {
             $output->writeln('<error>Only SELECT query are managed for now</error>');
         }
-
     }
-
 }

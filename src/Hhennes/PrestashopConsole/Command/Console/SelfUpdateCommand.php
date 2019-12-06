@@ -32,7 +32,6 @@ use Exception;
  */
 class SelfUpdateCommand extends Command
 {
-
     const PHAR_URL = 'https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar';
     const VERSION_URL = 'https://github.com/nenes25/prestashop_console/raw/master/bin/phar/current.version';
 
@@ -50,7 +49,6 @@ class SelfUpdateCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-
         if ($this->getApplication()->getRunAs() == 'php') {
             $output->writeln('<error>This commande can only be run in phar mode</error>');
             return;
@@ -72,5 +70,4 @@ class SelfUpdateCommand extends Command
             $output->writeln('<error>'.$e->getMessage().'</error>');
         }
     }
-
 }

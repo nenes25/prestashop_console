@@ -32,17 +32,21 @@ use Module;
  */
 class AddModuleHooksCommand extends Command
 {
-   protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('module:hook:add')
                 ->setDescription('Add module to one or several hooks')
                 ->addArgument(
-                        'name', InputArgument::REQUIRED, 'module name'
-                        )
+                    'name',
+                    InputArgument::REQUIRED,
+                    'module name'
+                )
                 ->addArgument(
-                        'hooks', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'hooks name ( separate multiple with spaces )'
-        );
+                    'hooks',
+                    InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                    'hooks name ( separate multiple with spaces )'
+                );
     }
 
     /**
@@ -56,9 +60,8 @@ class AddModuleHooksCommand extends Command
         $hooks = $input->getArgument('hooks');
 
         if ($module = Module::getInstanceByName($moduleName)) {
-
-            if ( ! $module->registerHook($hooks)){
-               $output->writeln('<error>Error during hook assignation</error>');
+            if (! $module->registerHook($hooks)) {
+                $output->writeln('<error>Error during hook assignation</error>');
             } else {
                 $output->writeln('<info>Module hooked with success</info>');
             }

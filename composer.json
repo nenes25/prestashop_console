@@ -27,5 +27,8 @@
   },
   "config": {
     "vendor-dir": "src/vendor"
+  },
+  "require-dev": {
+    "prestashop/php-dev-tools": "^2.2"
   }
 }

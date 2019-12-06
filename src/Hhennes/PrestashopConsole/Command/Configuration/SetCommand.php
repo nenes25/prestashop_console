@@ -32,7 +32,7 @@ use Configuration;
  */
 class SetCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('configuration:set')
@@ -45,8 +45,7 @@ class SetCommand extends Command
     {
         $name = $input->getArgument('name');
         $value = $input->getArgument('value');
-        Configuration::updateValue($name,$value);
+        Configuration::updateValue($name, $value);
         $output->writeln("<info>Update configuration ".$name." with ".$value."</info>");
     }
-
 }

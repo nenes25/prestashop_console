@@ -32,15 +32,16 @@ use Module;
  */
 class ListModuleHooksCommand extends Command
 {
-
     protected function configure()
     {
         $this
                 ->setName('module:hook:list')
                 ->setDescription('Get modules list')
                 ->addArgument(
-                        'name', InputArgument::REQUIRED, 'module name'
-        );
+                    'name',
+                    InputArgument::REQUIRED,
+                    'module name'
+                );
     }
 
     /**
@@ -59,7 +60,6 @@ class ListModuleHooksCommand extends Command
             $moduleHooks = array();
 
             foreach ($possibleHooksList as $hook) {
-
                 $isHooked = (int)$module->getPosition($hook['id_hook']);
 
                 if ($isHooked != 0) {

@@ -35,7 +35,7 @@ class ConfigureCommand extends Command
 
     /**
      * Limitation des donnés à saisir
-     * @var type
+     * @var array $_allowedNames
      */
     protected $_allowedNames = array(
         'compile' => array('config_value' => 'PS_SMARTY_FORCE_COMPILE', 'allowed_values' => array('0', '1', '2')),
@@ -70,5 +70,4 @@ class ConfigureCommand extends Command
             }
         }
     }
-
 }

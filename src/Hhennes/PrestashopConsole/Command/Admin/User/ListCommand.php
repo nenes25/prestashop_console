@@ -20,7 +20,6 @@
 
 namespace Hhennes\PrestashopConsole\Command\Admin\User;
 
-
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,7 +29,6 @@ use Db;
 
 class ListCommand extends Command
 {
-
     protected function configure()
     {
         $this
@@ -68,6 +66,5 @@ class ListCommand extends Command
         } else {
             $output->writeln('<error>No admin user on this shop</error>');
         }
-
     }
 }

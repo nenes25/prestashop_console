@@ -21,9 +21,7 @@
 namespace Hhennes\PrestashopConsole\Command\Dev;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -33,7 +31,7 @@ use Symfony\Component\Finder\Finder;
  */
 class ListOverridesCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
             ->setName('dev:list-overrides')
@@ -53,7 +51,7 @@ class ListOverridesCommand extends Command
         } catch (Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
         }
-        if ( $outputString == '') {
+        if ($outputString == '') {
             $outputString = 'No class or controllers overrides on this project';
         }
         $output->writeln("<info>".$outputString."</info>");

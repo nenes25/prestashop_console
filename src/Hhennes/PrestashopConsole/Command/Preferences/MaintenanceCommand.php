@@ -42,13 +42,14 @@ class MaintenanceCommand extends Command
             ->setName('preferences:maintenance')
             ->setDescription('Disable or enable shop')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
+                'type',
+                InputArgument::OPTIONAL,
+                'enable|disable(default)'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $type = $input->getArgument('type');
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
 
@@ -63,6 +64,5 @@ class MaintenanceCommand extends Command
                 Configuration::updateValue('PS_SHOP_ENABLE', 0);
                 break;
         }
-
     }
 }

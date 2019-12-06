@@ -29,17 +29,20 @@ use Tab;
 
 class RemoveCommand extends Command
 {
-
     protected function configure()
     {
         $this
             ->setName('module:tab:remove')
             ->setDescription('remove module admin tab')
             ->addArgument(
-                'name', InputArgument::REQUIRED, 'module name'
+                'name',
+                InputArgument::REQUIRED,
+                'module name'
             )
             ->addArgument(
-                'tab', InputArgument::REQUIRED, 'tab class name'
+                'tab',
+                InputArgument::REQUIRED,
+                'tab class name'
             );
     }
 

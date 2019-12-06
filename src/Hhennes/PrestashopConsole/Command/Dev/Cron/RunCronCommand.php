@@ -26,24 +26,27 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Module;
 
-class RunCronCommand extends Command {
+class RunCronCommand extends Command
+{
 
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
-    protected function configure() {
+    protected function configure()
+    {
         $this
                 ->setName('dev:cron:run')
                 ->setDescription('Run cron task configured with the module cronjobs')
                 ->addArgument(
-                        'id_cronjob', InputArgument::REQUIRED, 'cron job id ( use command dev:cron:list to get it )'
-        );
+                    'id_cronjob',
+                    InputArgument::REQUIRED,
+                    'cron job id ( use command dev:cron:list to get it )'
+                );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
-
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
-
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
                 return;
@@ -61,15 +64,15 @@ class RunCronCommand extends Command {
      * @param type $cronjob_id
      * @return string
      */
-    protected function _runTask($cronjob_id) {
-
+    protected function _runTask($cronjob_id)
+    {
         $cronJob = \Db::getInstance()->getRow("SELECT id_module,task FROM " . _DB_PREFIX_ . "cronjobs WHERE id_cronjob=" . (int) $cronjob_id);
 
         if (!$cronJob) {
             return '<error>Unknow cronjob_id</error>';
         }
 
-        if ($cronJob['id_module'] !== NULL) {
+        if ($cronJob['id_module'] !== null) {
             \Hook::exec('actionCronJob', array(), $cronJob['id_module']);
         } else {
             \Tools::file_get_contents(urldecode($cronJob['task']), false);
@@ -79,5 +82,4 @@ class RunCronCommand extends Command {
 
         return '<info>Cron job run with success</info>';
     }
-
 }

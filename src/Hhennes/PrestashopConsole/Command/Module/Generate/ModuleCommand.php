@@ -32,7 +32,9 @@ class ModuleCommand extends Command
             ->setName('module:generate:module')
             ->setDescription('Generate module default file')
             ->addArgument(
-                'name', InputArgument::REQUIRED, 'module name'
+                'name',
+                InputArgument::REQUIRED,
+                'module name'
             )
             ->addOption('interactive', 'i', InputOption::VALUE_OPTIONAL, 'Interactive Mode')
             ->addOption('author', 'a', InputOption::VALUE_OPTIONAL, 'Module author name', 'hhennes')
@@ -40,7 +42,7 @@ class ModuleCommand extends Command
             ->addOption('description', 'd', InputOption::VALUE_OPTIONAL, 'Description', 'Your module description')
             ->addOption('hookList', 'l', InputOption::VALUE_OPTIONAL, 'Comma separated hook List')
             ->addOption('widget', 'w', InputOption::VALUE_OPTIONAL, 'Implement widget interface')
-            ->addOption('templates','t',InputOption::VALUE_OPTIONAL, 'Generate hook templates');
+            ->addOption('templates', 't', InputOption::VALUE_OPTIONAL, 'Generate hook templates');
     }
 
     /**
@@ -59,7 +61,7 @@ class ModuleCommand extends Command
         } else {
             try {
                 $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $moduleName, 0775);
-            }catch (IOException $e) {
+            } catch (IOException $e) {
                 $output->writeln('<error>Unable to creat controller directories</error>');
                 return false;
             }
@@ -73,8 +75,11 @@ class ModuleCommand extends Command
             $description = $helper->ask($input, $output, new Question('<question>Module description :</question>'));
             $hookList = $helper->ask($input, $output, new Question('<question>Module hook List :</question>'));
 
-            $widgetAnswer = $helper->ask($input, $output,
-                new ChoiceQuestion('<question>Implement widget Interface :</question>',
+            $widgetAnswer = $helper->ask(
+                $input,
+                $output,
+                new ChoiceQuestion(
+                    '<question>Implement widget Interface :</question>',
                     array(
                         'No',
                         'Yes',
@@ -83,9 +88,12 @@ class ModuleCommand extends Command
             );
             $widgetAnswer == "No" ? $widget = null : $widget = true;
 
-            if ( $hookList ) {
-                $templateAnswer = $helper->ask($input, $output,
-                    new ChoiceQuestion('<question>Generate templates for content hooks :</question>',
+            if ($hookList) {
+                $templateAnswer = $helper->ask(
+                    $input,
+                    $output,
+                    new ChoiceQuestion(
+                        '<question>Generate templates for content hooks :</question>',
                         array(
                             'No',
                             'Yes',
@@ -96,7 +104,6 @@ class ModuleCommand extends Command
             } else {
                 $templates = null;
             }
-
         } else {
             $author = $input->getOption('author');
             $displayName = $input->getOption('displayName');
@@ -124,18 +131,18 @@ class ModuleCommand extends Command
                 $displayName,
                 $description,
             ),
-            $defaultContent);
+            $defaultContent
+        );
 
         //Widget Management
         if ($widget) {
             $defaultContent = $this->_replaceWidgetContent($defaultContent);
-
         } else {
             $defaultContent = str_replace(array('{useWidget}', '{widgetImplement}', '{widgetFuctions}'), '', $defaultContent);
         }
 
         if ($hookList) {
-            $defaultContent = $this->_replaceHookContent($defaultContent, $hookList,$templates);
+            $defaultContent = $this->_replaceHookContent($defaultContent, $hookList, $templates);
         } else {
             $defaultContent = str_replace(array('{registerHooks}', '{hookfunctions}'), '', $defaultContent);
         }
@@ -206,7 +213,8 @@ public function install()
      */
     protected function _replaceWidgetContent($defaultContent)
     {
-        return str_replace(array(
+        return str_replace(
+            array(
             '{useWidget}',
             '{widgetImplement}',
             '{widgetFuctions}'
@@ -223,9 +231,9 @@ public function install()
     {
      //@TODO Implements getWidgetVariables
     }'
-            )
-            , $defaultContent);
-
+            ),
+            $defaultContent
+        );
     }
 
     /**
@@ -235,15 +243,14 @@ public function install()
      * @param $generateTemplates bool
      * @return mixed
      */
-    protected function _replaceHookContent($defaultContent, $hookList,$generateTemplates)
+    protected function _replaceHookContent($defaultContent, $hookList, $generateTemplates)
     {
         $hooks = explode(',', $hookList);
         if (sizeof($hooks)) {
             $registerHook = '|| !$this->registerHook([\'' . implode("','", $hooks) . "'])";
             $hookFunctions = '';
             foreach ($hooks as $hook) {
-
-                if ( $generateTemplates && preg_match('#^display#',$hook)) {
+                if ($generateTemplates && preg_match('#^display#', $hook)) {
                     $hookContent = 'return $this->display(__FILE__,"views/templates/hook/'.$hook.'.tpl");';
                     $this->_generateTemplate($hook);
                 } else {
@@ -251,7 +258,7 @@ public function install()
                 }
 
 
-$hookFunctions .= '
+                $hookFunctions .= '
 /**
  * Function '.$hook.'description 
  * @param array $params
@@ -276,12 +283,11 @@ public function hook' . ucfirst($hook) . '($params){
      */
     protected function _generateTemplate($hookName)
     {
-
         $this->_createDirectories();
 
         $defaultContent = '<p>Content of hook '.$hookName.' generated by Prestashop Console</p>';
         $fileName = _PS_MODULE_DIR_ . $this->_moduleName. '/views/templates/hook/'.$hookName.'.tpl';
-        $this->_fileSystem->dumpFile($fileName,$defaultContent);
+        $this->_fileSystem->dumpFile($fileName, $defaultContent);
     }
 
     /**
@@ -291,7 +297,7 @@ public function hook' . ucfirst($hook) . '($params){
      */
     protected function _createDirectories()
     {
-        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook') ){
+        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook')) {
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook', 0775);
         }
     }

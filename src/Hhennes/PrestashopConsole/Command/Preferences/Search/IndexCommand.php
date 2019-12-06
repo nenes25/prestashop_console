@@ -41,20 +41,20 @@ use Db;
  */
 class IndexCommand extends Command
 {
-
     protected function configure()
     {
         $this
             ->setName('preferences:search:index')
             ->setDescription('Add missing products to the index or re-build the entire index (default)')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'add|rebuild(default)'
+                'type',
+                InputArgument::OPTIONAL,
+                'add|rebuild(default)'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $type = $input->getArgument('type');
 
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
@@ -75,5 +75,4 @@ class IndexCommand extends Command
 
         $output->writeln('<info>Currently indexed products: ' . (int)$indexed . ' / ' . (int)$total . '</info>');
     }
-
 }

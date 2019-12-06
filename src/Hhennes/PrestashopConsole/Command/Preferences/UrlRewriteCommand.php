@@ -34,13 +34,15 @@ use Configuration;
  */
 class UrlRewriteCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
             ->setName('preferences:urlrewrite')
             ->setDescription('Disable or enable Url Rewrite')
             ->addArgument(
-                'type', InputArgument::OPTIONAL, 'enable|disable(default)'
+                'type',
+                InputArgument::OPTIONAL,
+                'enable|disable(default)'
             );
     }
 

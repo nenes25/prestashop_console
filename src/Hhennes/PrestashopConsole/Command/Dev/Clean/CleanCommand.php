@@ -26,21 +26,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Store\SemaphoreStore;
 
-class CleanCommand extends CleanCommandAbstract {
-    
+class CleanCommand extends CleanCommandAbstract
+{
     protected $_allowedCleanType = ['all','catalog','sales'];
 
-    protected function configure() {
+    protected function configure()
+    {
         $this
                 ->setName('dev:clean')
                 ->setDescription('Clean existing datas with module PsCleaner')
                 ->addArgument('type', InputArgument::REQUIRED, 'data types. Possibles values '. implode(', ', $this->_allowedCleanType));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
-        
-        if ( $this->_cleanModuleInstance ) {      
-        
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        if ($this->_cleanModuleInstance) {
             $type = $input->getArgument('type');
 
             $store = new SemaphoreStore();
@@ -48,12 +48,11 @@ class CleanCommand extends CleanCommandAbstract {
 
             $lock = $factory->createLock($this->getName());
             if (!$lock->acquire()) {
-               $output->writeln('<error>The command is already running in another process.</error>');
+                $output->writeln('<error>The command is already running in another process.</error>');
                 return 0;
             }
 
-            switch ($type)
-            {
+            switch ($type) {
 
                 case 'all':
                     $this->_cleanModuleInstance->truncate('catalog');

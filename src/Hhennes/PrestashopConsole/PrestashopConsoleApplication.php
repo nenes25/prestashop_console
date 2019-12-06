@@ -25,7 +25,6 @@ use Symfony\Component\Finder\Finder;
 
 class PrestashopConsoleApplication extends BaseApplication
 {
-
     const APP_NAME = 'prestashopConsole';
 
     /** @var string php|phar Console run mod */
@@ -36,7 +35,7 @@ class PrestashopConsoleApplication extends BaseApplication
 
     /**
      * Set RunAs Mode
-     * @param type $mode
+     * @param string $mode
      */
     public function setRunAs($mode)
     {
@@ -45,7 +44,7 @@ class PrestashopConsoleApplication extends BaseApplication
 
     /**
      * Get RunAs
-     * @return type
+     * @return string
      */
     public function getRunAs()
     {
@@ -69,8 +68,10 @@ class PrestashopConsoleApplication extends BaseApplication
         if (sizeof($commands)) {
             foreach ($commands as $command) {
                 $classPath = 'Hhennes\\PrestashopConsole\\Command\\' . str_replace(
-                        '/', "\\", $command->getRelativePathname()
-                    );
+                    '/',
+                    "\\",
+                    $command->getRelativePathname()
+                );
                 $commandName = basename($classPath, '.php');
                 $customCommands[] = new $commandName();
             }
@@ -83,8 +84,8 @@ class PrestashopConsoleApplication extends BaseApplication
      * Get Phar path
      * @return string
      */
-    protected function _getPharPath() {
+    protected function _getPharPath()
+    {
         return 'phar://'.getcwd().DIRECTORY_SEPARATOR .self::APP_NAME.'.phar'.DIRECTORY_SEPARATOR .$this->_commandsDir;
     }
-
 }

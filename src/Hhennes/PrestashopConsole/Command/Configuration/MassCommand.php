@@ -38,7 +38,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class MassCommand extends Command
 {
-
     protected $allowedCalls = [
         'Configuration' => [
             'updateValue',
@@ -93,7 +92,6 @@ class MassCommand extends Command
                                 $output->writeln("<comment>Calling $callObjName.$method($firstKey => $firstValue [...])</comment>");
                                 call_user_func_array(array($callObject, $method), array_values($callParams));
                             }
-
                         } else {
                             $output->writeln("<error>Method '$callObjName.$method' doesnt exist</error>");
                         }
@@ -111,5 +109,4 @@ class MassCommand extends Command
 
         $output->writeln("<info>Definitions from file '$yamlFile' processed successfully!</info>");
     }
-
 }

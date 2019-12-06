@@ -127,5 +127,4 @@ function upgrade_module_{version}($module)
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade', 0775);
         }
     }
-
 }

@@ -34,16 +34,20 @@ use CMS;
  */
 class CmsCommand extends Command
 {
-
     protected function configure()
     {
         $this
             ->setName('preferences:cmspage')
             ->setDescription('Disable or enable a specific cms page')
             ->addArgument(
-                'id', InputArgument::REQUIRED, 'cms page id'
+                'id',
+                InputArgument::REQUIRED,
+                'cms page id'
             )
-            ->addArgument('action', InputArgument::OPTIONAL, 'enable|disable(default'
+            ->addArgument(
+                'action',
+                InputArgument::OPTIONAL,
+                'enable|disable(default'
             );
     }
 
@@ -56,19 +60,19 @@ class CmsCommand extends Command
 
         $cms = new CMS($id_cms);
 
-        if ( $cms->id == NULL ){
-            $output->writeln(sprintf("<error>Error Cms page %d doesn't exists</error>",$id_cms));
+        if ($cms->id == null) {
+            $output->writeln(sprintf("<error>Error Cms page %d doesn't exists</error>", $id_cms));
             return;
         }
 
-        switch ( $action ) {
+        switch ($action) {
             case 'enable':
                 $cms->active = 1;
-                $output->writeln(sprintf("<info>Enable cms page %d</info>",$id_cms));
+                $output->writeln(sprintf("<info>Enable cms page %d</info>", $id_cms));
                 break;
             case 'disable':
             default:
-                $output->writeln(sprintf("<info>Disable cms page %d</info>",$id_cms));
+                $output->writeln(sprintf("<info>Disable cms page %d</info>", $id_cms));
                 $cms->active = 0;
                 break;
         }

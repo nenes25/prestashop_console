@@ -33,14 +33,15 @@ use Tab;
  */
 class ListCommand extends Command
 {
-
     protected function configure()
     {
         $this
             ->setName('module:tab:list')
             ->setDescription('list module admin tab')
             ->addArgument(
-                'name', InputArgument::REQUIRED, 'module name'
+                'name',
+                InputArgument::REQUIRED,
+                'module name'
             );
     }
 

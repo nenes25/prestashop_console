@@ -30,27 +30,25 @@ use PrestashopException;
 
 class ResetCommand extends Command
 {
-
     protected function configure()
     {
         $this->setName('module:reset')
                 ->setDescription('Reset module: hard = remove data and reinstall, soft(default) = keep data and reinstall')
                 ->addArgument(
-                        'name', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'module name ( separate multiple with spaces )'
+                    'name',
+                    InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                    'module name ( separate multiple with spaces )'
                 )
                 ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'hard|soft(default)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $name = $input->getArgument('name');
         $type = $input->getOption('type');
 
         if (count($name) > 0) {
-
             foreach ($name as $moduleName) {
-
                 if ($module = Module::getInstanceByName($moduleName)) {
                     if (Module::isInstalled($module->name)) {
                         try {
@@ -80,11 +78,11 @@ class ResetCommand extends Command
                                     }
                                     break;
                             }
-                        } catch (PrestashopException $e) {
+                        } catch (\Exception $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
-                           $error = true;
+                            $error = true;
                         }
-                        if ( !$error ) {
+                        if (!$error) {
                             $output->writeln("<info>Module '$moduleName' reset with success</info>");
                         }
                     } else {

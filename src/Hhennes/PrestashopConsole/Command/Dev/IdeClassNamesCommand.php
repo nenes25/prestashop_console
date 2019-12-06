@@ -31,7 +31,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class IdeClassNamesCommand extends Command
 {
-
     const CLASS_NAME_SOURCE = 'https://raw.githubusercontent.com/julienbourdeau/PhpStorm-PrestaShop-Autocomplete/master/autocomplete.php';
     const CLASS_NAME_FILE = 'autocomplete.php';
 
@@ -52,11 +51,11 @@ class IdeClassNamesCommand extends Command
         $content = file_get_contents(self::CLASS_NAME_SOURCE);
         $fileName= self::CLASS_NAME_FILE;
 
-        if (  $this->getApplication()->getRunAs() == 'php' ) {
+        if ($this->getApplication()->getRunAs() == 'php') {
             $fileName = '../'.$fileName;
         }
 
-        if ( file_put_contents($fileName, $content) !== false ) {
+        if (file_put_contents($fileName, $content) !== false) {
             $output->writeln('<info>File '.self::CLASS_NAME_FILE.' download with success</info>');
         } else {
             $output->writeln('<error>Unable to create file'.self::CLASS_NAME_FILE.'</error>');

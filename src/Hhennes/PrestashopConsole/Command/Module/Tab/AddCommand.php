@@ -46,7 +46,10 @@ class AddCommand extends Command
             ->addArgument('tab', InputArgument::REQUIRED, 'tab class name')
             ->addArgument('label', InputArgument::REQUIRED, 'tab label')
             ->addOption(
-                'parentTab', 'p', InputOption::VALUE_OPTIONAL, 'Parent tab',
+                'parentTab',
+                'p',
+                InputOption::VALUE_OPTIONAL,
+                'Parent tab',
                 'DEFAULT'
             )
             ->addOption('icon', 'i', InputOption::VALUE_OPTIONAL, 'Tab icon')
@@ -85,7 +88,6 @@ class AddCommand extends Command
                 return '';
             }
             $output->writeln('<info>Tab ' . $tabClass . ' added with success');
-
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
         }

@@ -33,27 +33,24 @@ use PrestashopException;
  */
 class EnableCommand extends Command
 {
-
     protected function configure()
     {
         $this->setName('module:enable')
                 ->setDescription('Enable module')
                 ->addArgument(
-                        'name', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'module name ( separate multiple with spaces )'
-        );
+                    'name',
+                    InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                    'module name ( separate multiple with spaces )'
+                );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $name = $input->getArgument('name');
 
         if (count($name) > 0) {
-
             foreach ($name as $moduleName) {
-
                 if ($module = Module::getInstanceByName($moduleName)) {
-
                     if (Module::isInstalled($module->name)) {
 
                         // Exécution de l'action du module
@@ -75,5 +72,4 @@ class EnableCommand extends Command
             }
         }
     }
-
 }

@@ -32,13 +32,15 @@ use Configuration;
  */
 class DeleteCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('configuration:delete')
                 ->setDescription('delete configuration value')
                 ->addArgument(
-                        'name', InputArgument::REQUIRED, 'configuration name'
+                    'name',
+                    InputArgument::REQUIRED,
+                    'configuration name'
                 );
     }
 
@@ -48,5 +50,4 @@ class DeleteCommand extends Command
         $value = Configuration::deleteByName($name);
         $output->writeln('<info>'.$value.'</info>');
     }
-
 }

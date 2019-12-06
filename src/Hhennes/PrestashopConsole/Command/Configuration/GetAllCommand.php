@@ -52,11 +52,10 @@ class GetAllCommand extends Command
 
         $table = new Table($output);
         $table->setHeaders(['Name', 'Value']);
-        foreach ($configurationNames as $configuration_name)
-        {
+        foreach ($configurationNames as $configuration_name) {
             $configuration_value = Configuration::get($configuration_name['name']);
-            if(strlen($configuration_value) > self::MAX_LENGTH_CONFIGURATION_VALUE) {
-                $configuration_value = substr($configuration_value,0, self::MAX_LENGTH_CONFIGURATION_VALUE)." (*)";
+            if (strlen($configuration_value) > self::MAX_LENGTH_CONFIGURATION_VALUE) {
+                $configuration_value = substr($configuration_value, 0, self::MAX_LENGTH_CONFIGURATION_VALUE)." (*)";
             }
             $table->addRow([$configuration_name['name'], $configuration_value]);
         }
@@ -64,5 +63,4 @@ class GetAllCommand extends Command
         $table->render();
         $output->writeln("(*) : Value truncated");
     }
-
 }

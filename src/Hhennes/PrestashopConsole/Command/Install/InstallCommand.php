@@ -21,7 +21,6 @@
 namespace Hhennes\PrestashopConsole\Command\Install;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,27 +50,26 @@ class InstallCommand extends Command
         $this
             ->setName('install:install')
             ->setDescription('install prestashop')
-            ->addOption('psVersion',null,InputOption::VALUE_OPTIONAL , 'Prestashop version')
-            ->addOption('domainName',null,InputOption::VALUE_OPTIONAL , 'domainName')
-            ->addOption('dbname',null,InputOption::VALUE_OPTIONAL ,'dbname')
-            ->addOption('dbuser',null,InputOption::VALUE_OPTIONAL ,'dbuser')
-            ->addOption('dbpassword',null,InputOption::VALUE_OPTIONAL ,'dbpassword')
-            ->addOption('contactEmail',null,InputOption::VALUE_OPTIONAL ,'contactEmail')
-            ->addOption('adminpassword',null,InputOption::VALUE_OPTIONAL ,'Adminpassword')
-            ->addOption('directory',null,InputOption::VALUE_OPTIONAL ,'Install directory');
+            ->addOption('psVersion', null, InputOption::VALUE_OPTIONAL, 'Prestashop version')
+            ->addOption('domainName', null, InputOption::VALUE_OPTIONAL, 'domainName')
+            ->addOption('dbname', null, InputOption::VALUE_OPTIONAL, 'dbname')
+            ->addOption('dbuser', null, InputOption::VALUE_OPTIONAL, 'dbuser')
+            ->addOption('dbpassword', null, InputOption::VALUE_OPTIONAL, 'dbpassword')
+            ->addOption('contactEmail', null, InputOption::VALUE_OPTIONAL, 'contactEmail')
+            ->addOption('adminpassword', null, InputOption::VALUE_OPTIONAL, 'Adminpassword')
+            ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Install directory');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $helper = $this->getHelper('question');
 
         //Get options values if defined
-        foreach( $this->_options as $option){
+        foreach ($this->_options as $option) {
             ${$option} = $input->getOption($option);
         }
 
-        if ( !$psVersion) {
+        if (!$psVersion) {
             /**
              * First step : Select prestashop version
              */
@@ -104,10 +102,9 @@ class InstallCommand extends Command
             ));
             $psVersion->setErrorMessage('Option %s is invalid');
 
-            $installVersion = $helper->ask($input,$output,$psVersion);
+            $installVersion = $helper->ask($input, $output, $psVersion);
             $output->writeln('PS version '.$installVersion.' will be installed');
-        }
-        else {
+        } else {
             $installVersion = $psVersion;
         }
 
@@ -119,7 +116,7 @@ class InstallCommand extends Command
         $ch = curl_init();
         $source = "http://www.prestashop.com/download/old/prestashop_".$installVersion.".zip";
         curl_setopt($ch, CURLOPT_URL, $source);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $data = curl_exec($ch);
         $destination = "prestashop.zip";
         $file = fopen($destination, "w+");
@@ -131,34 +128,31 @@ class InstallCommand extends Command
          * Third Step extract archive
          * By default in directory "prestashop"
          */
-        if (function_exists('exec') &&  !strpos(ini_get("disable_functions"), "exec") ){
-            if ( !$directory ) {
-                $directoryQuestion = new Question("Install in a subdirectory (default: current directory)",".");
-                $directory = $helper->ask($input,$output,$directoryQuestion);
+        if (function_exists('exec') &&  !strpos(ini_get("disable_functions"), "exec")) {
+            if (!$directory) {
+                $directoryQuestion = new Question("Install in a subdirectory (default: current directory)", ".");
+                $directory = $helper->ask($input, $output, $directoryQuestion);
             }
-        }
-        else {
+        } else {
             $output->writeln("<info>Prestashop will be installed in directory 'prestashop' in current directory");
             $directory = ".";
         }
 
         $output->writeln("<info>Unziping file</info>");
         $zip = new \ZipArchive();
-        if ( $zip->open('prestashop.zip')){
+        if ($zip->open('prestashop.zip')) {
             $zip->extractTo($directory);
             $zip->close();
-        }
-        else {
+        } else {
             $output->writeln("<error>Unable to unzip downloaded archive</error>");
         }
         $output->writeln("<info>File unziped</info>");
 
-        if ( $directory != "."){
+        if ($directory != ".") {
             exec("mv ".$directory."/prestashop/* ".$directory."/");
             exec("rm -rf".$directory."/prestashop");
             $installPath = $directory;
-        }
-        else {
+        } else {
             $installPath = 'prestashop';
         }
 
@@ -166,13 +160,12 @@ class InstallCommand extends Command
          * Fourth Step : CLI install ( if possible )
          * @todo Factorize questions + deals with options params
          */
-        if (function_exists('exec') &&  !strpos(ini_get("disable_functions"), "exec") ){
-
+        if (function_exists('exec') &&  !strpos(ini_get("disable_functions"), "exec")) {
             $output->writeln("<info>Please give information for CLI install : </info>");
 
-            if ( !$domainName ) {
-                $domainNameQuestion = new Question("Domain name (default: ' ') "," ");
-                $domainName = $helper->ask($input,$output,$domainNameQuestion);
+            if (!$domainName) {
+                $domainNameQuestion = new Question("Domain name (default: ' ') ", " ");
+                $domainName = $helper->ask($input, $output, $domainNameQuestion);
             }
 
             if (!$dbname) {
@@ -185,19 +178,19 @@ class InstallCommand extends Command
                 $dbuser = $helper->ask($input, $output, $dbuserQuestion);
             }
 
-            if ( !$dbpassword ) {
-                $dbpasswordQuestion = new Question("Db passord : (default: root )" , "root");
-                $dbpassword = $helper->ask($input,$output,$dbpasswordQuestion);
+            if (!$dbpassword) {
+                $dbpasswordQuestion = new Question("Db passord : (default: root )", "root");
+                $dbpassword = $helper->ask($input, $output, $dbpasswordQuestion);
             }
 
-            if ( !$contactEmail ) {
-            $contactEmailQuestion = new Question("Admin email : (default: test@example.com )" , "test@example.com");
-            $contactEmail = $helper->ask($input,$output,$contactEmailQuestion);
+            if (!$contactEmail) {
+                $contactEmailQuestion = new Question("Admin email : (default: test@example.com )", "test@example.com");
+                $contactEmail = $helper->ask($input, $output, $contactEmailQuestion);
             }
 
-            if ( !$adminpassword ) {
-                $adminpassQuestion = new Question("Admin password : (default: test12345678 )" , "test12345678");
-                $adminpassword = $helper->ask($input,$output,$adminpassQuestion);
+            if (!$adminpassword) {
+                $adminpassQuestion = new Question("Admin password : (default: test12345678 )", "test12345678");
+                $adminpassword = $helper->ask($input, $output, $adminpassQuestion);
             }
 
             $output->writeln("<info>Starting CLI install</info>");
@@ -205,8 +198,7 @@ class InstallCommand extends Command
             $command = "php ".$installPath."/install/index_cli.php --domain=$domainName  --db_name=$dbname --db_user=$dbuser --db_password=$dbpassword --email=$contactEmail --password=$adminpassword";
             $command .= " 2>&1 >> install.log";
             exec($command);
-        }
-        else {
+        } else {
             $output->writeln("<error>Exec function is needed to install prestashop with CLI</error>");
             $output->writeln("<error>Please install it manually</error>");
             exit();
@@ -215,12 +207,11 @@ class InstallCommand extends Command
         //If install.log content == '-- Installation successfull! --' it means everything is ok
         $installResult = trim(file_get_contents('install.log'));
 
-        if ( $installResult == '-- Installation successfull! --' ) {
+        if ($installResult == '-- Installation successfull! --') {
             $output->writeln('<info>Installation successfull');
             unlink('prestashop.zip');
             unlink('install.log');
-        }
-        else {
+        } else {
             $output->writeln('<error>Errors occurs during installation</error>');
             $output->writeln("<error>".$installResult."</error>");
         }

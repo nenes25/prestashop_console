@@ -30,7 +30,7 @@ use Media;
  */
 class MediaCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
                 ->setName('cache:media')

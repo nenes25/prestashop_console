@@ -24,12 +24,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use Db;
 
 class ImportCommand extends Command
 {
-
     protected function configure()
     {
         $this
@@ -71,7 +68,5 @@ class ImportCommand extends Command
         $import = shell_exec($command);
         $output->writeln($import);
         $output->writeln('<info>Import ended</info>');
-
     }
-
 }

@@ -16,6 +16,8 @@
 
 namespace Hhennes\PrestashopConsole\Command\Dev;
 
+use PrestaShopDatabaseException;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -107,7 +109,7 @@ class AnonymizeCustomerCommand extends Command
 
         try {
             Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "customer SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlUpd . ' ' . $sqlCond);
-        } catch (\PrestaShopDatabaseException $e) {
+        } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
@@ -121,7 +123,6 @@ class AnonymizeCustomerCommand extends Command
      */
     protected function _anonymizeAddresses(InputInterface $input)
     {
-
         $sqlCond = '';
         if ($this->_excludedEmail) {
             $sqlCond .= 'WHERE id_customer NOT IN ( SELECT id_customer FROM ' . _DB_PREFIX_ . 'customer WHERE email IN (';
@@ -137,12 +138,11 @@ class AnonymizeCustomerCommand extends Command
 
         try {
             Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
-        } catch (\PrestaShopDatabaseException $e) {
+        } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
         return '<info>Addresses anonymized with success</info>';
-
     }
 
     /**
@@ -173,12 +173,11 @@ class AnonymizeCustomerCommand extends Command
 
         try {
             Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table . " SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlCond);
-        } catch (\PrestaShopDatabaseException $e) {
+        } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
         return '<info>Newsletter subscriber anonymized with success</info>';
-
     }
 
 
@@ -193,7 +192,7 @@ class AnonymizeCustomerCommand extends Command
         $cleanTypeQuestion->setAutocompleterValues($allowedTypes);
         $cleanTypeQuestion->setValidator(function ($answer) use ($allowedTypes) {
             if ($answer !== null && !in_array($answer, $allowedTypes)) {
-                throw new \RuntimeException('The field type must be part of the suggested');
+                throw new RuntimeException('The field type must be part of the suggested');
             }
         });
 
@@ -211,7 +210,7 @@ class AnonymizeCustomerCommand extends Command
             $allAnswers = explode(',', $answer);
             foreach ($allAnswers as $allAnswer) {
                 if (!empty($allAnswer) && !filter_var($allAnswer, FILTER_VALIDATE_EMAIL)) {
-                    throw  new \RuntimeException("Invalid email  in exclude email");
+                    throw  new RuntimeException("Invalid email  in exclude email");
                 }
             }
         });
@@ -223,7 +222,7 @@ class AnonymizeCustomerCommand extends Command
      * @param int $length
      * @return string
      */
-    function _randomString($length = 10)
+    public function _randomString($length = 10)
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
@@ -232,5 +231,4 @@ class AnonymizeCustomerCommand extends Command
         }
         return $randstring;
     }
-
 }

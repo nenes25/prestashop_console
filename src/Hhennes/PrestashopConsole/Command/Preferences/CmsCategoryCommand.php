@@ -40,9 +40,14 @@ class CmsCategoryCommand extends Command
             ->setName('preferences:cmscategory')
             ->setDescription('Disable or enable a specific cms category')
             ->addArgument(
-                'id', InputArgument::REQUIRED, 'cms category id'
+                'id',
+                InputArgument::REQUIRED,
+                'cms category id'
             )
-            ->addArgument('action', InputArgument::OPTIONAL, 'enable|disable(default)'
+            ->addArgument(
+                'action',
+                InputArgument::OPTIONAL,
+                'enable|disable(default)'
             );
     }
 
@@ -55,19 +60,19 @@ class CmsCategoryCommand extends Command
 
         $cmsCategory = new CMSCategory($id_cms);
 
-        if ( $cmsCategory->id == NULL ){
-            $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>",$id_cms));
+        if ($cmsCategory->id == null) {
+            $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>", $id_cms));
             return;
         }
 
-        switch ( $action ) {
+        switch ($action) {
             case 'enable':
                 $cmsCategory->active = 1;
-                $output->writeln(sprintf("<info>Enable cms category %d</info>",$id_cms));
+                $output->writeln(sprintf("<info>Enable cms category %d</info>", $id_cms));
                 break;
             case 'disable':
             default:
-                $output->writeln(sprintf("<info>Disable cms category %d</info>",$id_cms));
+                $output->writeln(sprintf("<info>Disable cms category %d</info>", $id_cms));
                 $cmsCategory->active = 0;
                 break;
         }

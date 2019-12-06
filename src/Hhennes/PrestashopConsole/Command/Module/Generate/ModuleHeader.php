@@ -16,13 +16,10 @@
 
 namespace Hhennes\PrestashopConsole\Command\Module\Generate;
 
-
 class ModuleHeader
 {
-
     public static function getHeader()
     {
-
         return
 '/**
  * 2007-2019 PrestaShop
@@ -51,7 +48,5 @@ class ModuleHeader
  * @copyright 2016-'.date('Y').' Hennes Hervé http://www.h-hennes.fr/blog/
  */
  ';
-
     }
-
 }

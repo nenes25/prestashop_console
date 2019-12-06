@@ -20,11 +20,13 @@
 
 namespace Hhennes\PrestashopConsole\Command\Dev\Clean;
 
+use Module;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class CleanCommandAbstract extends Command {
+abstract class CleanCommandAbstract extends Command
+{
 
     /** @var string Prestashop clean Module */
     protected $_cleanModuleName = 'pscleaner';
@@ -33,15 +35,14 @@ abstract class CleanCommandAbstract extends Command {
     protected $_cleanModuleInstance = null;
 
     /**
-     * 
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function initialize(InputInterface $input, OutputInterface $output) 
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        if ($module = \Module::getInstanceByName($this->_cleanModuleName)) {
-
-            if (!\Module::isInstalled($module->name) || !$module->active) {
+        if ($module = Module::getInstanceByName($this->_cleanModuleName)) {
+            if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed</error>');
                 return 0;
             }
@@ -50,5 +51,4 @@ abstract class CleanCommandAbstract extends Command {
             $output->writeln('<error>' . $this->_cleanModuleName . ' is not installed</error>');
         }
     }
-
 }

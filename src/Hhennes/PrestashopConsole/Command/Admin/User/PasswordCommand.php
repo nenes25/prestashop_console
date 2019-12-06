@@ -31,7 +31,7 @@ use Employee;
  */
 class PasswordCommand extends Command
 {
-     protected function configure()
+    protected function configure()
     {
         $this
             ->setName('admin:user:change-password')
@@ -42,24 +42,24 @@ class PasswordCommand extends Command
     {
         $helper = $this->getHelper('question');
 
-        $userQuestion = new Question('user email :',false);
-        $email = $helper->ask($input,$output,$userQuestion);
+        $userQuestion = new Question('user email :', false);
+        $email = $helper->ask($input, $output, $userQuestion);
 
-         //Error if no employee exists with email
-        if ( ! Employee::employeeExists($email)){
+        //Error if no employee exists with email
+        if (! Employee::employeeExists($email)) {
             $output->writeln("<error>Employee with this email not exists");
             return;
         }
 
-        $passwordQuestion = new Question('admin password :','admin123456');
+        $passwordQuestion = new Question('admin password :', 'admin123456');
         $passwordQuestion->setHidden(true);
-        $password = $helper->ask($input,$output,$passwordQuestion);
+        $password = $helper->ask($input, $output, $passwordQuestion);
 
-        $passwordConfirmQuestion = new Question('confirm admin password :','admin123456');
+        $passwordConfirmQuestion = new Question('confirm admin password :', 'admin123456');
         $passwordConfirmQuestion->setHidden(true);
-        $passwordConfirm = $helper->ask($input,$output,$passwordConfirmQuestion);
+        $passwordConfirm = $helper->ask($input, $output, $passwordConfirmQuestion);
 
-        if ( $password !== $passwordConfirm ) {
+        if ($password !== $passwordConfirm) {
             $output->writeln("<error>Password and password confirmation do not match");
             return;
         }
@@ -71,8 +71,8 @@ class PasswordCommand extends Command
         try {
             $employee->save();
         } catch (Exception $e) {
-             $output->writeln("<error>".$e->getMessage()."</error>");
-             return;
+            $output->writeln("<error>".$e->getMessage()."</error>");
+            return;
         }
         $output->writeln("<info>Password changed with success for user ".$email."</info>");
     }
