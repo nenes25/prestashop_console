@@ -20,9 +20,11 @@
 
 namespace Hhennes\PrestashopConsole\Command\Console;
 
+use http\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Class CreateCommand
@@ -53,6 +55,12 @@ class CreateCommand extends Command
             Command Domain
         */
 
+        $helper = $this->getHelper('question');
+
+        $commandName = $helper->ask($input, $output, $this->_getCommandNameQuestion());
+        $commandDescription = $helper->ask($input, $output, $this->_getCommandDescriptionQuestion());
+        $commandDomain = $helper->ask($input, $output, $this->_getCommandDomainQuestion());
+
         /*
          * Scenario :
          *
@@ -70,6 +78,68 @@ class CreateCommand extends Command
          */
     }
 
+
+    /**
+     * Get command name question
+     * @return Question
+     */
+    protected function _getCommandNameQuestion()
+    {
+        $question = new Question('<question>Command Name (ex domain:action or domain:subdomain:action )</question>');
+        $question->setNormalizer(function ($anwser) {
+            return $anwser ? trim($anwser) : null;
+        });
+        $question->setValidator(function ($answer) {
+            if ($answer === null || !preg_match('#^[a-z]+:[a-z]+(?::[a-z]+)?$#', $answer)) {
+                throw new RuntimeException('The command name is not valid, it must use a format like domain:action or domain:subdomain:action');
+            }
+            return $answer;
+        });
+
+        return $question;
+    }
+
+    /**
+     * Get command description question
+     * @return Question
+     */
+    protected function _getCommandDescriptionQuestion()
+    {
+        $question = new Question('<question>Command description</question>');
+        $question->setValidator(function ($answer) {
+            if ($answer === null) {
+                throw new RuntimeException('Please give a command description');
+            }
+            return $answer;
+        });
+
+        return $question;
+    }
+
+    /**
+     * Get command domain question
+     * @return Question
+     */
+    protected function _getCommandDomainQuestion()
+    {
+        $question = new Question('<question>Command Domain</question>');
+        $question->setNormalizer(function ($anwser) {
+            return $anwser ? trim($anwser) : null;
+        });
+        $question->setValidator(function ($answer) {
+            if ($answer === null) {
+                throw new RuntimeException('Please give a command domain');
+            }
+            return $answer;
+        });
+
+        return $question;
+    }
+
+    /**
+     * Get base command content
+     * @return string
+     */
     protected function getBaseCommandContent()
     {
         return '
@@ -116,7 +186,5 @@ class CreateCommand extends Command
      */
     protected function _getHeader()
     {
-
     }
-
 }
