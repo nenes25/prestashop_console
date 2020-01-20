@@ -72,6 +72,11 @@ PrestashopConsole 1.5.0
 * [`module:tab:remove`](#moduletabremove)
 * [`module:uninstall`](#moduleuninstall)
 
+**parameters:**
+
+* [`parameters:generate:htaccess`](#parametersgeneratehtaccess)
+* [`parameters:generate:robots`](#parametersgeneraterobots)
+
 **preferences:**
 
 * [`preferences:cmscategory`](#preferencescmscategory)
@@ -4142,6 +4147,167 @@ module name ( separate multiple with spaces )
 * Default: `array ()`
 
 ### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`parameters:generate:htaccess`
+------------------------------
+
+Generate the .htaccess file
+
+### Usage
+
+* `parameters:generate:htaccess`
+
+Generate the .htaccess file
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`parameters:generate:robots`
+----------------------------
+
+Generate the robots.txt file
+
+### Usage
+
+* `parameters:generate:robots [-e|--executeHook [EXECUTEHOOK]]`
+
+Generate the robots.txt file
+
+### Options
+
+#### `--executeHook|-e`
+
+Generate actionAdminMetaBeforeWriteRobotsFile hook ?
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
 
 #### `--help|-h`
 
