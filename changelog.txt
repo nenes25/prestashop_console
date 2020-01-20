@@ -24,6 +24,7 @@
 */
 
 2020-        - V 1.6.0 : Improve code quality
+                        New commands to generate htaccess and robots.txt files
 
 2019-12-01   - V 1.5.0 : New commands for db interactions
                        New command to list admin users
