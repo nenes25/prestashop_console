@@ -20,11 +20,13 @@
 
 namespace Hhennes\PrestashopConsole\Command\Console;
 
-use http\Exception\RuntimeException;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * Class CreateCommand
@@ -47,35 +49,87 @@ class CreateCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-
-        /*
-        Liste des arguments possible :
-            Command name :
-            Command description
-            Command Domain
-        */
+        //This command can only be launched in php mode
+        if ($this->getApplication()->getRunAs() == 'phar') {
+            $output->writeln('<error>This command can only be run in php mode</error>');
+            return;
+        }
 
         $helper = $this->getHelper('question');
 
         $commandName = $helper->ask($input, $output, $this->_getCommandNameQuestion());
         $commandDescription = $helper->ask($input, $output, $this->_getCommandDescriptionQuestion());
         $commandDomain = $helper->ask($input, $output, $this->_getCommandDomainQuestion());
+        $commandClass = $helper->ask($input, $output, $this->_getCommandClassQuestion());
 
-        /*
-         * Scenario :
-         *
-         *  Interactive mode : all data must be filled when console answer
-         *
-         *  Ask command name ( saisie libre + validation  )
-         *  Ask command description( saisie libre + validation )
-         *  Ask command domain ( liste des dossiers existants dans le dossier command + possibilité créé nouveau )
-         *
-         *  Proposer un nom de classe et un chemin de création
-         *  Si validation création du fichier + du dossier
-         *  Sinon ask className ( validation sans Command à la fin qui est rajouté automatique )
-         *  ask directory ( in src/Hhennes/PrestashopConsole/Command )
-         *
-         */
+        try {
+            $this->_createCommand(
+                $commandName,
+                $commandDescription,
+                $commandDomain,
+                $commandClass
+            );
+        } catch (RuntimeException $e) {
+            $output->writeln('<error>Unable to generate the command :' . $e->getMessage() . '</error>');
+            return 1;
+        }
+
+        $output->writeln('<info>Command Created with success</info>');
+
+        return 0;
+    }
+
+    /**
+     * Create the command file ( and directory if necessary )
+     * @param $commandName
+     * @param $commandDescription
+     * @param $commandDomain
+     * @param $commandClass
+     * @throws RuntimeException
+     */
+    protected function _createCommand($commandName, $commandDescription, $commandDomain, $commandClass)
+    {
+        $commandDir = str_replace('\\', '/', $commandDomain);
+        $fileSystem = new Filesystem();
+        $baseCommandPath = __DIR__ . '/../';
+        $path = $baseCommandPath . $commandDir;
+
+        // 1. check if the directory does not exists
+        if (!$fileSystem->exists($path)) {
+            try {
+                $fileSystem->mkdir($path, 0755);
+            } catch (IOException $e) {
+                throw new RuntimeException("Unable to create command directory");
+            }
+        }
+
+        // 2. Prepare the file content
+        $fileContent = $this->_getBaseCommandContent();
+        $fileContent = str_replace(
+            [
+                '{header}',
+                '{className}',
+                '{commandName}',
+                '{CommandDescription}',
+                '{commandDomain}',
+            ],
+            [
+                $this->_getHeader(),
+                $commandClass,
+                $commandName,
+                $commandDescription,
+                $commandDomain
+            ],
+            $fileContent
+        );
+
+        // 3. Create the file
+        $fileName = $path . '/' . $commandClass . 'Command.php';
+        try {
+            $fileSystem->appendToFile($fileName, $fileContent);
+        } catch (IOException $e) {
+            throw new RuntimeException("Unable to create command class file");
+        }
     }
 
 
@@ -122,7 +176,7 @@ class CreateCommand extends Command
      */
     protected function _getCommandDomainQuestion()
     {
-        $question = new Question('<question>Command Domain</question>');
+        $question = new Question('<question>Command Domain ( ex : Module\Generate ) </question>');
         $question->setNormalizer(function ($anwser) {
             return $anwser ? trim($anwser) : null;
         });
@@ -137,17 +191,45 @@ class CreateCommand extends Command
     }
 
     /**
+     * Get Command Class Name
+     * @return Question
+     */
+    protected function _getCommandClassQuestion()
+    {
+        $question = new Question('<question>Command Class ex:  Debug</question>');
+        $question->setNormalizer(function ($anwser) {
+            $cleanAnswer = ($anwser ? trim($anwser) : null);
+            if (null === $cleanAnswer) {
+                return $cleanAnswer;
+            }
+            //If command Class end with Command we remove it
+            if (preg_match('#Command$#', $cleanAnswer)) {
+                $cleanAnswer = str_ireplace('Command', '', $cleanAnswer);
+            }
+            return $cleanAnswer;
+        });
+        $question->setValidator(function ($answer) {
+            if ($answer === null) {
+                throw new RuntimeException('Please give a command class name');
+            }
+            return $answer;
+        });
+
+        return $question;
+    }
+
+    /**
      * Get base command content
      * @return string
      */
-    protected function getBaseCommandContent()
+    protected function _getBaseCommandContent()
     {
         return '
         <?php
         
          {header}
          
-         namespace Hhennes\PrestashopConsole\Command\{commandDir};
+         namespace Hhennes\PrestashopConsole\Command\{commandDomain};
          
         use Symfony\Component\Console\Command\Command;
         use Symfony\Component\Console\Input\InputInterface;
@@ -165,8 +247,8 @@ class CreateCommand extends Command
             protected function configure()
             {
                 $this
-                    ->setName({commandName})
-                    ->setDescription({CommandDescription});
+                    ->setName(\'{commandName}\')
+                    ->setDescription(\'{CommandDescription}\');
             }
         
             /**
@@ -186,5 +268,25 @@ class CreateCommand extends Command
      */
     protected function _getHeader()
     {
+        return "
+        /**
+         * 2007-2019 Hennes Hervé
+         *
+         * NOTICE OF LICENSE
+         *
+         * This source file is subject to the Open Software License (OSL 3.0)
+         * that is bundled with this package in the file LICENSE.txt.
+         * It is also available through the world-wide-web at this URL:
+         * https://opensource.org/licenses/OSL-3.0
+         * If you did not receive a copy of the license and are unable to
+         * obtain it through the world-wide-web, please send an email
+         * to contact@h-hennes.fr so we can send you a copy immediately.
+         *
+         * @author    Hennes Hervé <contact@h-hennes.fr>
+         * @copyright 2007-" . date('Y') . " Hennes Hervé
+         * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+         * http://www.h-hennes.fr/blog/
+         */
+         ";
     }
 }
