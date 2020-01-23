@@ -224,8 +224,7 @@ class CreateCommand extends Command
      */
     protected function _getBaseCommandContent()
     {
-        return '
-        <?php
+        return '<?php
         
          {header}
          
@@ -260,7 +259,7 @@ class CreateCommand extends Command
                 $output->writeln("it works");
             }
        
-        ';
+        }';
     }
 
     /**
