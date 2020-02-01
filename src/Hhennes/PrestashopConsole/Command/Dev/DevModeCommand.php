@@ -105,6 +105,7 @@ class DevModeCommand extends Command
             $output->writeln("<comment>{$this->getWarningText()}</comment>");
         } catch (\Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
+            return 1;
         }
     }
 

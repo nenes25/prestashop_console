@@ -57,11 +57,11 @@ class UninstallCommand extends Command
                         try {
                             if (!$module->uninstall()) {
                                 $output->writeln("<error>Cannot uninstall module: '$moduleName'</error>");
-                                return;
+                                return 1;
                             }
                         } catch (PrestashopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
-                            return;
+                            return 1;
                         }
                         $output->writeln("<info>Module '$moduleName' uninstalled with success</info>");
                     } else {
@@ -69,6 +69,7 @@ class UninstallCommand extends Command
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
+                    return 1;
                 }
             }
         }

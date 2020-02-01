@@ -48,7 +48,7 @@ class ImportCommand extends Command
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
-            return false;
+            return 1;
         }
 
         $file = $input->getOption('file');
@@ -56,7 +56,7 @@ class ImportCommand extends Command
 
         if (!is_file($file)) {
             $output->writeln('<error>The import file does not exists</error>');
-            return false;
+            return 1;
         }
 
         if (null !== $gzip) {

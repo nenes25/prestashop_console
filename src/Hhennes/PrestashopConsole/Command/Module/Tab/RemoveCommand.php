@@ -64,17 +64,19 @@ class RemoveCommand extends Command
                         $tabObject->delete();
                     } catch (\Exception $e) {
                         $output->writeln('<error>' . $e->getMessage() . '</error>');
-                        return;
+                        return 1;
                     }
                     $output->writeln('<info>Tab ' . $tab . ' removed with success');
                 } else {
                     $output->writeln('<error>Tab ' . $tab . ' does not exists</error>');
+                    return 1;
                 }
             } else {
                 $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
             }
         } catch (\Exception $e) {
             $output->writeln('<error>Error unable to get information about ' . $moduleName . '</error>');
+            return 1;
         }
     }
 }

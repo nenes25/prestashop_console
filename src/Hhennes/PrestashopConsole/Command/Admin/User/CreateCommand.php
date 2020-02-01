@@ -81,7 +81,7 @@ class CreateCommand extends Command
         //Error if employee with same email already exists
         if (Employee::employeeExists($email)) {
             $output->writeln("<error>Employee with this email already exists");
-            return;
+            return 1;
         }
 
         $employee = new Employee();
@@ -99,7 +99,7 @@ class CreateCommand extends Command
             $employee->save();
         } catch (PrestaShopException $e) {
             $output->writeln("<error>".$e->getMessage()."</error>");
-            return;
+            return 1;
         }
 
         $output->writeln("<info>New user ".$email." created</info>");

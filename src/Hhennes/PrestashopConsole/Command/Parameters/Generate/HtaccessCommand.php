@@ -33,6 +33,7 @@ class HtaccessCommand extends Command
             $output->writeln("<info>.htaccess file generated with success</info>");
         } else {
             $output->writeln("<error>An error occurs while generating .htaccess file</error>");
+            return 1;
         }
     }
 }

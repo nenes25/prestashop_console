@@ -65,6 +65,7 @@ class ListCommand extends Command
             $table->render();
         } else {
             $output->writeln('<error>No admin user on this shop</error>');
+            return 1;
         }
     }
 }

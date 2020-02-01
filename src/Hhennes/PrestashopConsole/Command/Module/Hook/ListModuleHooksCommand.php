@@ -73,6 +73,7 @@ class ListModuleHooksCommand extends Command
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+            return 1;
         }
     }
 }

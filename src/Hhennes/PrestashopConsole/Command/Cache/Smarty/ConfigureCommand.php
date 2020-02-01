@@ -60,10 +60,12 @@ class ConfigureCommand extends Command
 
         if (!array_key_exists($name, $this->_allowedNames)) {
             $output->writeln("<error>Name not allowed</error>");
+            return 1;
         } else {
             //Vérification de la valeur
             if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
                 $output->writeln("<error>Value not allowed for configuration " . $name."</error>");
+                return 1;
             } else {
                 Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
                 $output->writeln("<info>Update configuration " . $name . " with " . $value."</info>");

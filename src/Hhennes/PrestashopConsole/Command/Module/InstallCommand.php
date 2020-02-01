@@ -51,11 +51,11 @@ class InstallCommand extends Command
                         try {
                             if (!$module->install()) {
                                 $output->writeln("<error>Cannot install module: '$moduleName'</error>");
-                                return;
+                                return 1;
                             }
                         } catch (PrestashopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->displayMessage()</error>");
-                            return;
+                            return 1;
                         }
                         $output->writeln("<info>Module '$moduleName' installed with success</info>");
                     } else {
@@ -63,6 +63,7 @@ class InstallCommand extends Command
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
+                    return 1;
                 }
             }
         }

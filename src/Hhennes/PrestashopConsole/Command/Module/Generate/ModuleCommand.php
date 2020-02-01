@@ -63,7 +63,7 @@ class ModuleCommand extends Command
                 $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $moduleName, 0775);
             } catch (IOException $e) {
                 $output->writeln('<error>Unable to creat controller directories</error>');
-                return false;
+                return 1;
             }
         }
 

@@ -54,7 +54,7 @@ class ExportCommand extends Command
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
-            return false;
+            return 1;
         }
 
         $type = $input->getOption('type');
@@ -62,7 +62,7 @@ class ExportCommand extends Command
 
         if (!in_array($type, $this->_allowedTypes)) {
             $output->writeln('<error>Unknow type option for export</error>');
-            return false;
+            return 1;
         }
 
         $output->writeln('<info>Export started</info>');

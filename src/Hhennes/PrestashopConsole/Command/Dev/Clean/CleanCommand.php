@@ -49,7 +49,7 @@ class CleanCommand extends CleanCommandAbstract
             $lock = $factory->createLock($this->getName());
             if (!$lock->acquire()) {
                 $output->writeln('<error>The command is already running in another process.</error>');
-                return 0;
+                return 1;
             }
 
             switch ($type) {
@@ -69,6 +69,7 @@ class CleanCommand extends CleanCommandAbstract
                     break;
                 default:
                     $output->writeln('<error>Unknow clean type</error>');
+                    return 1;
                     break;
             }
         }

@@ -84,12 +84,15 @@ class ResetCommand extends Command
                         }
                         if (!$error) {
                             $output->writeln("<info>Module '$moduleName' reset with success</info>");
+                        } else {
+                            return 1;
                         }
                     } else {
                         $output->writeln("<comment>Module '$moduleName' is uninstalled</comment>");
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
+                    return 1;
                 }
             }
         }

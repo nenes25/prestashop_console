@@ -49,7 +49,7 @@ class RunCronCommand extends Command
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
-                return;
+                return 1;
             }
 
             $cronjob_id = $input->getArgument('id_cronjob');

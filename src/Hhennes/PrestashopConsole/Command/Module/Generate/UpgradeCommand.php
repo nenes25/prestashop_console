@@ -54,20 +54,20 @@ class UpgradeCommand extends Command
 
         if (!$this->_isValidModuleVersion($moduleVersion)) {
             $output->writeln('<error>Module version is not valid</error>');
-            return false;
+            return 1;
         }
         $convertedVersion = str_replace('.', '_', $moduleVersion);
 
         if (!is_dir(_PS_MODULE_DIR_ . $moduleName)) {
             $output->writeln('<error>Module not exists</error>');
-            return false;
+            return 1;
         }
 
         try {
             $this->_createDirectories();
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat ugrade directory</error>');
-            return false;
+            return 1;
         }
 
         $defaultContent = $this->_getDefaultContent();
@@ -80,7 +80,7 @@ class UpgradeCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat upgrade file</error>');
-            return false;
+            return 1;
         }
 
         $output->writeln('<info>Update file generated</info>');

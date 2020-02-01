@@ -53,6 +53,7 @@ class ClearAllCommand extends Command
             $output->writeln("<info>All cache cleared with success</info>");
         } else {
             $output->writeln("<error>This command is only available for Prestashop > 1.7.0.0 </error>");
+            return 1;
         }
     }
 }

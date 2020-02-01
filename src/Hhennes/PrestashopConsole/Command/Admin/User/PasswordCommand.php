@@ -61,7 +61,7 @@ class PasswordCommand extends Command
 
         if ($password !== $passwordConfirm) {
             $output->writeln("<error>Password and password confirmation do not match");
-            return;
+            return 1;
         }
 
         $employee = new Employee();
@@ -72,7 +72,7 @@ class PasswordCommand extends Command
             $employee->save();
         } catch (Exception $e) {
             $output->writeln("<error>".$e->getMessage()."</error>");
-            return;
+            return 1;
         }
         $output->writeln("<info>Password changed with success for user ".$email."</info>");
     }

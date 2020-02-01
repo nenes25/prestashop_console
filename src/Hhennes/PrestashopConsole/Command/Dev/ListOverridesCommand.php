@@ -50,6 +50,7 @@ class ListOverridesCommand extends Command
             }
         } catch (Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
+            return 1;
         }
         if ($outputString == '') {
             $outputString = 'No class or controllers overrides on this project';

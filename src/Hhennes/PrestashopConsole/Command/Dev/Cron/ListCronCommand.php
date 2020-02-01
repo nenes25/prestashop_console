@@ -44,7 +44,7 @@ class ListCronCommand extends Command
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
-                return;
+                return 1;
             }
             
             $output->writeln('<info>Configured cron jobs</info>');
@@ -70,6 +70,7 @@ class ListCronCommand extends Command
             $table->render();
         } else {
             $output->writeln('<error>' . $this->_cronModuleName . ' is not installed');
+            return 1;
         }
     }
 }

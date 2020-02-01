@@ -104,7 +104,7 @@ class MassCommand extends Command
             }
         } else {
             $output->writeln("<error>Yaml definition file: '$yamlFile' doesnt exist!</error>");
-            return;
+            return 1;
         }
 
         $output->writeln("<info>Definitions from file '$yamlFile' processed successfully!</info>");

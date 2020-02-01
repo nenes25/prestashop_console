@@ -85,11 +85,12 @@ class AddCommand extends Command
                 $tab->save();
             } catch (Exception $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
-                return '';
+                return 1;
             }
             $output->writeln('<info>Tab ' . $tabClass . ' added with success');
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+            return 1;
         }
     }
 }

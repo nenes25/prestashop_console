@@ -59,6 +59,7 @@ class IdeClassNamesCommand extends Command
             $output->writeln('<info>File '.self::CLASS_NAME_FILE.' download with success</info>');
         } else {
             $output->writeln('<error>Unable to create file'.self::CLASS_NAME_FILE.'</error>');
+            return 1;
         }
     }
 }

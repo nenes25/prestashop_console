@@ -62,7 +62,7 @@ class CmsCategoryCommand extends Command
 
         if ($cmsCategory->id == null) {
             $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>", $id_cms));
-            return;
+            return 1;
         }
 
         switch ($action) {
@@ -81,6 +81,7 @@ class CmsCategoryCommand extends Command
             $cmsCategory->save();
         } catch (Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
+            return 1;
         }
     }
 }

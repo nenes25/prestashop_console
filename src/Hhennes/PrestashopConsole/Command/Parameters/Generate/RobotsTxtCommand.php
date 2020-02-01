@@ -43,6 +43,7 @@ class RobotsTxtCommand extends Command
             $output->writeln("<info>robots.txt file generated with success</info>");
         } else {
             $output->writeln("<error>An error occurs while generating robots.txt file</error>");
+            return 1;
         }
     }
 }

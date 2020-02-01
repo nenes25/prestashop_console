@@ -49,7 +49,7 @@ class QueryCommand extends Command
         $query = $input->getOption('query');
         if (null === $query) {
             $output->writeln('<error>No query given</error>');
-            return false;
+            return 1;
         }
 
         $query = trim($query);
@@ -73,9 +73,11 @@ class QueryCommand extends Command
                 }
             } catch (PrestaShopDatabaseException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
+                return 1;
             }
         } else {
             $output->writeln('<error>Only SELECT query are managed for now</error>');
+            return 1;
         }
     }
 }

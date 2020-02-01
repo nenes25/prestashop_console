@@ -81,12 +81,12 @@ class ControllerCommand extends Command
 
         if (!is_dir(_PS_MODULE_DIR_ . $this->_moduleName)) {
             $output->writeln('<error>Module not exists</error>');
-            return false;
+            return 1;
         }
 
         if (!in_array($this->_controllerType, $this->_allowedControllerTypes)) {
             $output->writeln('<error>Unknown controller type</error>');
-            return false;
+            return 1;
         }
 
         //Create all module directories
@@ -94,7 +94,7 @@ class ControllerCommand extends Command
             $this->_createDirectories();
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat controller directories</error>');
-            return false;
+            return 1;
         }
         $controllerClass = ucfirst($this->_moduleName) . ucfirst($this->_controllerName);
         if ($this->_controllerType == 'admin') {
@@ -118,7 +118,7 @@ class ControllerCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat controller directories</error>');
-            return false;
+            return 1;
         }
 
         echo $output->writeln('<info>Controller ' . $this->_controllerName . ' created with sucess');

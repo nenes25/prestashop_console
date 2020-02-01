@@ -62,7 +62,7 @@ class CmsCommand extends Command
 
         if ($cms->id == null) {
             $output->writeln(sprintf("<error>Error Cms page %d doesn't exists</error>", $id_cms));
-            return;
+            return 1;
         }
 
         switch ($action) {
@@ -81,6 +81,7 @@ class CmsCommand extends Command
             $cms->save();
         } catch (Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
+            return 1;
         }
     }
 }
