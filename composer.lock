@@ -281,16 +281,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.36",
+            "version": "v3.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "1ee23b3b659b06c622f2bd2492a229e416eb4586"
+                "reference": "7c5bdd346f9d90a2d22d4e1fe61e02dc19b98f12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/1ee23b3b659b06c622f2bd2492a229e416eb4586",
-                "reference": "1ee23b3b659b06c622f2bd2492a229e416eb4586",
+                "url": "https://api.github.com/repos/symfony/console/zipball/7c5bdd346f9d90a2d22d4e1fe61e02dc19b98f12",
+                "reference": "7c5bdd346f9d90a2d22d4e1fe61e02dc19b98f12",
                 "shasum": ""
             },
             "require": {
@@ -349,20 +349,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-01T10:04:45+00:00"
+            "time": "2020-01-10T07:52:48+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.36",
+            "version": "v3.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "f72e33fdb1170b326e72c3157f0cd456351dd086"
+                "reference": "70dd18e93bb8bdf3c4db7fde832619fef9828cf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/f72e33fdb1170b326e72c3157f0cd456351dd086",
-                "reference": "f72e33fdb1170b326e72c3157f0cd456351dd086",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/70dd18e93bb8bdf3c4db7fde832619fef9828cf8",
+                "reference": "70dd18e93bb8bdf3c4db7fde832619fef9828cf8",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +405,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-10-24T15:33:53+00:00"
+            "time": "2020-01-08T16:36:15+00:00"
         },
         {
             "name": "symfony/filesystem",
