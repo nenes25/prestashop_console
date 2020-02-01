@@ -409,16 +409,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.36",
+            "version": "v3.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "00cdad0936d06fab136944bc2342b762b1c3a4a2"
+                "reference": "0a0d3b4bda11aa3a0464531c40e681e184e75628"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/00cdad0936d06fab136944bc2342b762b1c3a4a2",
-                "reference": "00cdad0936d06fab136944bc2342b762b1c3a4a2",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/0a0d3b4bda11aa3a0464531c40e681e184e75628",
+                "reference": "0a0d3b4bda11aa3a0464531c40e681e184e75628",
                 "shasum": ""
             },
             "require": {
@@ -455,7 +455,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-25T16:36:22+00:00"
+            "time": "2020-01-17T08:50:08+00:00"
         },
         {
             "name": "symfony/finder",
