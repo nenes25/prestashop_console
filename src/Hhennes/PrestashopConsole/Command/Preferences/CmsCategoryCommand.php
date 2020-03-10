@@ -79,7 +79,7 @@ class CmsCategoryCommand extends Command
 
         try {
             $cmsCategory->save();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
             return 1;
         }

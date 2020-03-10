@@ -48,7 +48,7 @@ class ListOverridesCommand extends Command
             foreach ($finder as $file) {
                 $outputString.= $file->getRelativePathname()."\n";
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
             return 1;
         }

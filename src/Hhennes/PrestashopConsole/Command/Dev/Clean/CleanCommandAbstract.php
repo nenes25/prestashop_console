@@ -43,7 +43,7 @@ abstract class CleanCommandAbstract extends Command
     {
         if ($module = Module::getInstanceByName($this->_cleanModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
-                $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed</error>');
+                $output->writeln('<error>' . $this->_cleanModuleName . ' is not active or installed</error>');
                 return 0;
             }
             $this->_cleanModuleInstance = $module;
