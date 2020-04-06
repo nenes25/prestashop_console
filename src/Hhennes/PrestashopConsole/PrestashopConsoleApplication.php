@@ -86,6 +86,10 @@ class PrestashopConsoleApplication extends BaseApplication
      */
     protected function _getPharPath()
     {
-        return 'phar://'.getcwd().DIRECTORY_SEPARATOR .self::APP_NAME.'.phar'.DIRECTORY_SEPARATOR .$this->_commandsDir;
+        $paths = explode(DIRECTORY_SEPARATOR, __DIR__);
+        $paths = array_reverse($paths);
+        $pharName = $paths[3]; //3 First items : PrestashopConsole/Hhennes/src/
+
+        return 'phar://'.getcwd().DIRECTORY_SEPARATOR .$pharName.DIRECTORY_SEPARATOR .$this->_commandsDir;
     }
 }
