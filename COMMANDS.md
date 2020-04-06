@@ -54,6 +54,14 @@ PrestashopConsole 1.5.0
 * [`hook:list`](#hooklist)
 * [`hook:modules`](#hookmodules)
 
+**images:**
+
+* [`images:generate:categories`](#imagesgeneratecategories)
+* [`images:generate:manufacturers`](#imagesgeneratemanufacturers)
+* [`images:generate:products`](#imagesgenerateproducts)
+* [`images:generate:stores`](#imagesgeneratestores)
+* [`images:generate:suppliers`](#imagesgeneratesuppliers)
+
 **install:**
 
 * [`install:info`](#installinfo)
@@ -2619,6 +2627,481 @@ List all hooks with hooked modules
 List all hooks with hooked modules
 
 ### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:generate:categories`
+----------------------------
+
+Regenerate categories thumbnails
+
+### Usage
+
+* `images:generate:categories [-f|--force] [--] [<format>]...`
+
+Regenerate categories thumbnails
+
+### Arguments
+
+#### `format`
+
+images formats separated by a space
+
+* Is required: no
+* Is array: yes
+* Default: `array (  0 => 'all',)`
+
+### Options
+
+#### `--force|-f`
+
+Force delete of currents thumbnails
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:generate:manufacturers`
+-------------------------------
+
+Regenerate manufacturers thumbnails
+
+### Usage
+
+* `images:generate:manufacturers [-f|--force] [--] [<format>]...`
+
+Regenerate manufacturers thumbnails
+
+### Arguments
+
+#### `format`
+
+images formats separated by a space
+
+* Is required: no
+* Is array: yes
+* Default: `array (  0 => 'all',)`
+
+### Options
+
+#### `--force|-f`
+
+Force delete of currents thumbnails
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:generate:products`
+--------------------------
+
+Regenerate products thumbnails
+
+### Usage
+
+* `images:generate:products [-f|--force] [--] [<format>]...`
+
+Regenerate products thumbnails
+
+### Arguments
+
+#### `format`
+
+images formats separated by a space
+
+* Is required: no
+* Is array: yes
+* Default: `array (  0 => 'all',)`
+
+### Options
+
+#### `--force|-f`
+
+Force delete of currents thumbnails
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:generate:stores`
+------------------------
+
+Regenerate stores thumbnails
+
+### Usage
+
+* `images:generate:stores [-f|--force] [--] [<format>]...`
+
+Regenerate stores thumbnails
+
+### Arguments
+
+#### `format`
+
+images formats separated by a space
+
+* Is required: no
+* Is array: yes
+* Default: `array (  0 => 'all',)`
+
+### Options
+
+#### `--force|-f`
+
+Force delete of currents thumbnails
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`images:generate:suppliers`
+---------------------------
+
+Regenerate suppliers thumbnails
+
+### Usage
+
+* `images:generate:suppliers [-f|--force] [--] [<format>]...`
+
+Regenerate suppliers thumbnails
+
+### Arguments
+
+#### `format`
+
+images formats separated by a space
+
+* Is required: no
+* Is array: yes
+* Default: `array (  0 => 'all',)`
+
+### Options
+
+#### `--force|-f`
+
+Force delete of currents thumbnails
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
 
 #### `--help|-h`
 
