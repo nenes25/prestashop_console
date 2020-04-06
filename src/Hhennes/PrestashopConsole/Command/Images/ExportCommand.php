@@ -83,7 +83,6 @@ class ExportCommand extends Command
         $this->_type = $input->getOption('type');
 
         if ($input->getOption('interactive')) {
-
             $questionHelper = $this->getHelper('question');
             $imagesTypes = $this->_types;
             $typeQuestion = new Question('<question>Image Type :</question>');
@@ -99,7 +98,6 @@ class ExportCommand extends Command
         }
 
         $this->_exportImages($output);
-
     }
 
     /**
@@ -132,24 +130,20 @@ class ExportCommand extends Command
         $exportPath = _PS_IMG_DIR_ . $directory;
 
         if (is_dir($exportPath)) {
-
-
-            $fileName = date('YmdHi') . '-export-images' . $this->_type;
+            $filePath = _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . date('YmdHi') . '-export-images' . $this->_type . '.' . $this->_archiveFormat;
 
             if ($this->_archiveFormat == 'tar.gz') {
-                $command = 'tar czvf ' . _PS_ROOT_DIR_.$fileName . '.tar.gz *';
+                $command = 'tar czf ' . $filePath . ' *';
             } else {
-                $command = 'zip -r ' ._PS_ROOT_DIR_. $fileName . ' *';
+                $command = 'zip -qr ' . $filePath . ' *';
             }
 
             $output->writeln('<info>Images export started</info>');
-            $export = shell_exec("cd " . $exportPath .' && '.$command);
+            $export = shell_exec("cd " . $exportPath . ' && ' . $command);
             $output->writeln($export);
-            $output->writeln('<info>Images export ended</info>');
-
+            $output->writeln('<info>Images export ended in path ' . $filePath . '</info>');
         } else {
             $output->writeln('<error>The path ' . $exportPath . ' does not exists</error>');
         }
     }
-
 }
