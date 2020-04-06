@@ -263,13 +263,13 @@ class CreateCommand extends Command
     }
 
     /**
-     * @todo Stocker les éléments de génération dans un dossier à part
+     * Get Command Header
      */
     protected function _getHeader()
     {
         return "
         /**
-         * 2007-2019 Hennes Hervé
+         * 2007-2020 Hennes Hervé
          *
          * NOTICE OF LICENSE
          *

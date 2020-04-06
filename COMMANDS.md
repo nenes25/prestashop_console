@@ -49,10 +49,6 @@ PrestashopConsole 1.5.0
 * [`dev:list-overrides`](#devlist-overrides)
 * [`dev:mode`](#devmode)
 
-**hook:**
-
-* [`hook:modules`](#hookmodules)
-
 **install:**
 
 * [`install:info`](#installinfo)
@@ -2459,82 +2455,6 @@ Be sure to include "include(__DIR__. '/debug_mode.php');" in config/defines.inc.
 * Is required: yes
 * Is array: no
 * Default: `NULL`
-
-### Options
-
-#### `--help|-h`
-
-Display this help message
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--quiet|-q`
-
-Do not output any message
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--verbose|-v|-vv|-vvv`
-
-Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--version|-V`
-
-Display this application version
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--ansi`
-
-Force ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--no-ansi`
-
-Disable ANSI output
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--no-interaction|-n`
-
-Do not ask any interactive question
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-`hook:modules`
---------------
-
-List all hooks with hooked modules
-
-### Usage
-
-* `hook:modules`
-
-List all hooks with hooked modules
 
 ### Options
 
