@@ -76,7 +76,7 @@ class AddIndexFilesCommand extends Command
                 }
                 $i++;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
         }
         $output->writeln("<info>Index files added with success</info>");

@@ -70,7 +70,7 @@ class PasswordCommand extends Command
 
         try {
             $employee->save();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $output->writeln("<error>".$e->getMessage()."</error>");
             return 1;
         }
