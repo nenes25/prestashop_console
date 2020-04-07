@@ -2,13 +2,16 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f72aeabcce684a8ca888cd53a954212e)](https://app.codacy.com/app/nenes25/prestashop_console?utm_source=github.com&utm_medium=referral&utm_content=nenes25/prestashop_console&utm_campaign=Badge_Grade_Dashboard)
 
-Prestashop cli tools based on Symphony2 Console
+Prestashop cli tools based on Symfony Console component   
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
+
+# Releases
+You can download all the versions of the console (since 1.5 ) from the release page https://github.com/nenes25/prestashop_console/releases  
 
 
 # Phar version
 
-download the file from github in your prestashop root directory  
+download the file from github in your prestashop root directory ( or from the release page )   
  ```bash
 wget https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar
  ```
