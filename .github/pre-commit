@@ -9,8 +9,10 @@ echo "Php 7.1 linter"
 PHP71VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php7.1 -l -n {} \; | (! grep -v "No syntax errors detected"))
 echo "Php 7.2 linter"
 PHP72VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php7.2 -l -n {} \; | (! grep -v "No syntax errors detected"))
+echo "Php 7.3 linter"
+PHP73VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php7.3 -l -n {} \; | (! grep -v "No syntax errors detected"))
 
-if [ ! -z "$PHP56VALID" ] || [ ! -z "$PHP70VALID" ] || [ ! -z "$PHP71VALID" ] || [ ! -z "$PHP70VALID" ]
+if [ ! -z "$PHP56VALID" ] || [ ! -z "$PHP70VALID" ] || [ ! -z "$PHP71VALID" ] || [ ! -z "$PHP72VALID" ] || [ ! -z "$PHP73VALID" ]
 then
   echo "Error in php syntax stop commit"
 
@@ -32,10 +34,16 @@ then
     echo $PHP71VALID
   fi
 
-   if [ ! -z "$PHP72VALID" ]
+  if [ ! -z "$PHP72VALID" ]
   then
     echo "Php7.2 errors"
     echo $PHP72VALID
+  fi
+
+  if [ ! -z "$PHP73VALID" ]
+  then
+    echo "Php7.3 errors"
+    echo $PHP73VALID
   fi
 
   exit 1
