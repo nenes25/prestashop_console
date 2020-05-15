@@ -1,5 +1,46 @@
 #!/bin/sh
 
+#Lint php files
+echo "Php 5.6 linter"
+PHP56VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php5.6 -l -n {} \; | (! grep -v "No syntax errors detected"))
+echo "Php 7.0 linter"
+PHP70VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php7.0 -l -n {} \; | (! grep -v "No syntax errors detected"))
+echo "Php 7.1 linter"
+PHP71VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php7.1 -l -n {} \; | (! grep -v "No syntax errors detected"))
+echo "Php 7.2 linter"
+PHP72VALID=$(find . -type f -name '*.php' ! -path "./src/vendor/*" ! -path "./tests/*" -exec php7.2 -l -n {} \; | (! grep -v "No syntax errors detected"))
+
+if [ ! -z "$PHP56VALID" ] || [ ! -z "$PHP70VALID" ] || [ ! -z "$PHP71VALID" ] || [ ! -z "$PHP70VALID" ]
+then
+  echo "Error in php syntax stop commit"
+
+  if [ ! -z "$PHP56VALID" ]
+  then
+    echo "Php5.6 errors"
+    echo $PHP56VALID
+  fi
+
+  if [ ! -z "$PHP70VALID" ]
+  then
+    echo "Php7.0 errors"
+    echo $PHP70VALID
+  fi
+
+  if [ ! -z "$PHP71VALID" ]
+  then
+    echo "Php7.1 errors"
+    echo $PHP71VALID
+  fi
+
+   if [ ! -z "$PHP72VALID" ]
+  then
+    echo "Php7.2 errors"
+    echo $PHP72VALID
+  fi
+
+  exit 1
+fi
+
 #Dev file not versionned
 devFile="console_dev.php"
 echo "Automatical actions before commit"
