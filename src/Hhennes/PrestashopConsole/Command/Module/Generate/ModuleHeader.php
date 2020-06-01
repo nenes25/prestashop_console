@@ -32,7 +32,7 @@ class ModuleHeader
  * http://opensource.org/licenses/afl-3.0.php
  *
  *
- * @author    
+ * @author    yourName
  * @copyright 2007-'.date('Y').' 
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * 
