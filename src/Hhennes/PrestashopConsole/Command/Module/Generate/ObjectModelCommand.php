@@ -263,11 +263,12 @@ class {object} extends ObjectModel
      */
     protected function _getObjectDefinition(array $params)
     {
+        $hasLang = false;
         $defStr = 'public static $definition = [';
         $defStr .= "
         'table' => '" . $params['table_name'] . "',
         'primary' => '" . $params['primary'] . "',
-        'fields' => [";
+        'fields' => [ \n";
         foreach ($params['fields'] as $field) {
             $type = $this->_getObjectModelFieldType($field['type']);
             $defStr .= "'" . $field['name'] . "' => [ 'type' => self::" . $type . ",";
@@ -278,9 +279,13 @@ class {object} extends ObjectModel
                 $defStr .= "'length' => " . $field['length'] . ", ";
             }
             if ($field['lang'] == true) {
+                $hasLang = true;
                 $defStr .= "'lang' => true,";
             }
-            $defStr .= "], \n";
+            $defStr .= "]\n";
+            if ( $hasLang) {
+                $defStr .= ",'multilang' => true \n";
+            }
         }
         $defStr = rtrim($defStr, ',');
         $defStr .= ']
@@ -304,11 +309,13 @@ class {object} extends ObjectModel
          * Model Sql installation
          * Add it in your module installation if necessary
          */ 
-        public function installSql(){'."\n";
+        public static function installSql(){'."\n";
 
         foreach ($sqlQueries as $query) {
             if ($query != '') {
-                $installStr .= "\n".' Db::getInstance()->execute("'.$query.'");'."\n";
+                $installStr .= "\n".' Db::getInstance()->execute(
+                "'.$query.'"
+                );'."\n";
             }
         }
         $installStr .= '}';
@@ -321,19 +328,6 @@ class {object} extends ObjectModel
      */
     protected function _generateSql(array $params)
     {
-
-        /**
-         * $sql[] = ' CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'psgdpr_consent` (
-         * `id_gdpr_consent` int(10) unsigned NOT NULL AUTO_INCREMENT,
-         * `id_module` int(10) unsigned NOT NULL,
-         * `active` int(10) NOT NULL,
-         * `error` int(10),
-         * `error_message` text,
-         * `date_add` datetime NOT NULL,
-         * `date_upd` datetime NOT NULL,
-         * PRIMARY KEY (`id_gdpr_consent`, `id_module`)
-         * ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=UTF8;';
-         */
 
         $hasLang = false;
         $sqlQueryString = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . $params['table_name'] . '`(' . "\n";
