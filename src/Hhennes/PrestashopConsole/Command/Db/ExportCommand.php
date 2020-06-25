@@ -24,9 +24,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+use Db;
 
 class ExportCommand extends Command
 {
+
+    /** @var string[] */
     protected $_allowedTypes = [
         'all',
         'customers',
@@ -34,13 +38,17 @@ class ExportCommand extends Command
         'catalog',
     ];
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
             ->setName('db:export')
             ->setDescription('Create db export ')
             ->addOption('type', 't', InputOption::VALUE_OPTIONAL, 'allowed values all|customers|orders|catalog', 'all')
-            ->addOption('gzip', 'g', InputOption::VALUE_OPTIONAL, 'gzip ')
+            ->addOption('gzip', 'g', InputOption::VALUE_OPTIONAL, 'compress export in gzip')
+            ->addOption('filename', 'f', InputOption::VALUE_OPTIONAL, 'custom file name for export')
             ->setHelp('This command will export current prestashop database using mysqldump shell command');
     }
 
@@ -59,6 +67,7 @@ class ExportCommand extends Command
 
         $type = $input->getOption('type');
         $gzip = $input->getOption('gzip');
+        $fileName = $input->getOption('filename');
 
         if (!in_array($type, $this->_allowedTypes)) {
             $output->writeln('<error>Unknow type option for export</error>');
@@ -79,12 +88,26 @@ class ExportCommand extends Command
             $command .= implode(" ", $tables);
         }
 
+        //Get export fileName
+        if (null !== $fileName) {
+            $fileName = $this->_cleanFileName($fileName);
+            if (false === $fileName) {
+                $output->writeln('<error>Incorrect export filename</error>');
+                return 1;
+            }
+        }
+        //Defaut export file name
+        if (null === $fileName) {
+            $fileName = date('YmdHi') . '-dump' . ($type ? '-' . $type : '');
+        }
+
         ($gzip !== null) ? $command .= ' | gzip ' : '';
-        $command .= '> ' . date('YmdHi') . '-dump' . ($type ? '-' . $type : '') . '.sql';
+        $command .= '> ' . $fileName . '.sql';
         ($gzip !== null) ? $command .= '.gz' : '';
         $export = shell_exec($command);
         $output->writeln('<info>' . $export . '</info>');
         $output->writeln('<info>Export ended</info>');
+
     }
 
 
@@ -208,5 +231,20 @@ class ExportCommand extends Command
             'specific_price_rule_condition_group',
             'warehouse',
         ];
+    }
+
+    /**
+     * Clean fileName to avoid error and Xss injection
+     * @param $fileName
+     * @return string|bool
+     */
+    protected function _cleanFileName($fileName)
+    {
+        $fileName = trim($fileName);
+        $fileName = str_replace(['.sql','.gz'], '', $fileName);
+        if (preg_match('/[^a-z_\-0-9]/i', $fileName)) {
+            return false;
+        }
+        return $fileName;
     }
 }
