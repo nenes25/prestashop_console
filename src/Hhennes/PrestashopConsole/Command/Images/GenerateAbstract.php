@@ -95,7 +95,7 @@ abstract class GenerateAbstract extends Command
             if (count($this->errors)) {
                 $warningMessages = array_merge($warningMessages, $this->errors);
             }
-            $output->writeln('<error>'.$warningMessages.'</error>');
+            $output->writeln('<error>'.implode("\n", array_unique($warningMessages)).'</error>');
 
             return 1;
         }

@@ -1602,7 +1602,7 @@ Create db export
 
 ### Usage
 
-* `db:export [-t|--type [TYPE]] [-g|--gzip [GZIP]]`
+* `db:export [-t|--type [TYPE]] [-g|--gzip [GZIP]] [-f|--filename [FILENAME]]`
 
 This command will export current prestashop database using mysqldump shell command
 
@@ -1619,7 +1619,16 @@ allowed values all|customers|orders|catalog
 
 #### `--gzip|-g`
 
-gzip 
+compress export in gzip
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--filename|-f`
+
+custom file name for export
 
 * Accept value: yes
 * Is value required: no
