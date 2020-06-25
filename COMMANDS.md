@@ -1,4 +1,4 @@
-PrestashopConsole 1.6.0
+PrestashopConsole 1.6.1
 =======================
 
 * [`help`](#help)
