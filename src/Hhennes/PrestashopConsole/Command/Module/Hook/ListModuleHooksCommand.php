@@ -24,6 +24,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use Module;
 
 /**
@@ -61,13 +62,22 @@ class ListModuleHooksCommand extends Command
 
             foreach ($possibleHooksList as $hook) {
                 $isHooked = (int)$module->getPosition($hook['id_hook']);
-
                 if ($isHooked != 0) {
-                    $moduleHooks[] = $hook['name'];
+                    $moduleHooks[] = [
+                        'name' => $hook['name'] ,
+                        'position' => $isHooked
+                    ];
                 }
             }
-            if (sizeof($moduleHooks)) {
-                $output->writeln('<info>The module ' . $moduleName . ' is linked on the folowing hooks :' . rtrim(implode(', ', $moduleHooks), ', ') . '</info>');
+
+            if (count($moduleHooks)) {
+                $output->writeln('<info>The module ' . $moduleName . ' is linked on the folowing hooks :</info>');
+                $table = new Table($output);
+                $table->setHeaders(['Hook Name','Position']);
+                foreach ($moduleHooks as $moduleHook) {
+                    $table->addRow([$moduleHook['name'],$moduleHook['position']]);
+                }
+                $table->render();
             } else {
                 $output->writeln('<info>The module is not hooked</info>');
             }
