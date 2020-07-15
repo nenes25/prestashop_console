@@ -12,4 +12,4 @@ jobs:
       - name: PHP syntax checker 7.3
         uses: prestashop/github-action-php-lint/7.3@master
       - name: PHP syntax checker 7.4
-          uses: prestashop/github-action-php-lint/7.4@master
+        uses: prestashop/github-action-php-lint/7.4@master
