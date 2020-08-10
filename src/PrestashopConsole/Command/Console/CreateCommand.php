@@ -228,7 +228,7 @@ class CreateCommand extends Command
         
          {header}
          
-         namespace Hhennes\PrestashopConsole\Command\{commandDomain};
+         namespace PrestashopConsole\Command\{commandDomain};
          
         use Symfony\Component\Console\Command\Command;
         use Symfony\Component\Console\Input\InputInterface;
