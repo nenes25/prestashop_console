@@ -144,7 +144,7 @@ class CreateCommand extends Command
             return $anwser ? trim($anwser) : null;
         });
         $question->setValidator(function ($answer) {
-            if ($answer === null || !preg_match('#^[a-z]+:[a-z]+(?::[a-z]+)?$#', $answer)) {
+            if ($answer === null || !preg_match('#^[a-z-]+:[a-z-]+(?::[a-z-]+)?$#', $answer)) {
                 throw new RuntimeException('The command name is not valid, it must use a format like domain:action or domain:subdomain:action');
             }
             return $answer;
