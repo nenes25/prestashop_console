@@ -34,6 +34,7 @@ PrestashopConsole 1.6.1
 
 **customer:**
 
+* [`customer:change-customer-password`](#customerchange-customer-password)
 * [`customer:create`](#customercreate)
 
 **db:**
@@ -1599,6 +1600,100 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
+`customer:change-customer-password`
+-----------------------------------
+
+Change frontend customer password
+
+### Usage
+
+* `customer:change-customer-password [--email [EMAIL]] [--password [PASSWORD]]`
+
+Change frontend customer password
+
+### Options
+
+#### `--email`
+
+customer email
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--password`
+
+customer password
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
 `customer:create`
 -----------------
 
@@ -1606,11 +1701,56 @@ Create a new frontend customer
 
 ### Usage
 
-* `customer:create`
+* `customer:create [--email [EMAIL]] [--password [PASSWORD]] [--firstname [FIRSTNAME]] [--lastname [LASTNAME]] [--id_shop [ID_SHOP]]`
 
 Create a new frontend customer
 
 ### Options
+
+#### `--email`
+
+customer email
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--password`
+
+customer password
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--firstname`
+
+customer firstname
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--lastname`
+
+customer lastname
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--id_shop`
+
+customer shop id
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `1`
 
 #### `--help|-h`
 
