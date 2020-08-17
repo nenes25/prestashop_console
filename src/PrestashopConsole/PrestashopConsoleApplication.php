@@ -88,7 +88,7 @@ class PrestashopConsoleApplication extends BaseApplication
     {
         $paths = explode(DIRECTORY_SEPARATOR, __DIR__);
         $paths = array_reverse($paths);
-        $pharName = $paths[3]; //3 First items : PrestashopConsole/Hhennes/src/
+        $pharName = $paths[2]; //2 First items : PrestashopConsole/src/
 
         return 'phar://'.getcwd().DIRECTORY_SEPARATOR .$pharName.DIRECTORY_SEPARATOR .$this->_commandsDir;
     }

@@ -1,7 +1,7 @@
 {
     "chmod": "0755",
     "directories": [
-        "src/Hhennes"
+        "src/PrestashopConsole"
     ],
     "finder": [
         {
