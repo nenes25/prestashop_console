@@ -74,6 +74,12 @@ class CreateCommand extends Command
         }
         if (null === $password || empty($password)) {
             $password = $questionHelper->ask($input, $output, $this->_getPasswordQuestion());
+            if (version_compare(_PS_VERSION_, 1.7, '<')) {
+                $password = Tools::encrypt($password);
+            } else {
+                $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
+                $password = $hashing->hash($password);
+            }
         }
         if (null === $firstname || !Validate::isCustomerName($firstname)) {
             $firstname = $questionHelper->ask($input, $output, $this->_getFirstnameQuestion());
@@ -93,6 +99,7 @@ class CreateCommand extends Command
             $customer->firstname = $firstname;
             $customer->lastname = $lastname;
             $customer->id_shop = $id_shop;
+            $customer->save();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>Unable to create customer');
             return 1;

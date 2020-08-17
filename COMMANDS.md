@@ -34,7 +34,7 @@ PrestashopConsole 1.6.1
 
 **customer:**
 
-* [`customer:change-customer-password`](#customerchange-customer-password)
+* [`customer:change-password`](#customerchange-password)
 * [`customer:create`](#customercreate)
 
 **db:**
@@ -1600,14 +1600,14 @@ Do not ask any interactive question
 * Is multiple: no
 * Default: `false`
 
-`customer:change-customer-password`
------------------------------------
+`customer:change-password`
+--------------------------
 
 Change frontend customer password
 
 ### Usage
 
-* `customer:change-customer-password [--email [EMAIL]] [--password [PASSWORD]]`
+* `customer:change-password [--email [EMAIL]] [--password [PASSWORD]]`
 
 Change frontend customer password
 
