@@ -28,12 +28,11 @@ class PrestashopConsoleApplication extends BaseApplication
     const APP_NAME = 'prestashopConsole';
     // Execution of the console from a phar archive
     const EXECUTION_MODE_PHAR = "phar";
+    // Namespace of the Commands classes
+    const COMMANDS_NAMESPACE = 'Hhennes\\PrestashopConsole\\Command';
 
     /** @var string php|phar Console run mod */
     protected $_runAs = 'php';
-
-    /** @var string Commands directory */
-    protected $_commandsDir = 'src/Hhennes/PrestashopConsole/Command';
 
     /** @var string Phar archive root location */
     protected $_pharArchiveRootLocation = NULL;
@@ -80,22 +79,49 @@ class PrestashopConsoleApplication extends BaseApplication
     }
 
     /**
-     * Automatically Detect Registered commands
+     * Automatically register all existing commands
      */
     public function getDeclaredCommands()
     {
+        $this->registerCommands();
+    }
+
+    /**
+     * Register only the installation commands.
+     */
+    public function registerInstallCommands()
+    {
+        $this->registerCommands("install");
+    }
+
+    /**
+     * Register commands in the application with an optionnal filter on the namespace.
+     * At the moment, the namespace is an actual file namespace (The directory in which the commands scripts are declared)
+     * 
+     * @param string $commandNamespace : (OPTIONNAL) The name of the namespace for the commands to register
+     */
+    protected function registerCommands($commandNamespace = NULL)
+    {
         // The root of the search depends on the run mode
         $dir = ($this->_runAs == PrestashopConsoleApplication::EXECUTION_MODE_PHAR) ? $this->_pharArchiveRootLocation : getcwd();
-        // Command directory
-        $dir .= DIRECTORY_SEPARATOR.$this->_commandsDir;
+        // Source directory
+        $dir .= DIRECTORY_SEPARATOR . "src";
 
-        $finder = new Finder();
-        $commands = $finder->files()->name('*Command.php')->in($dir);
-        $customCommands = array();
-        if (sizeof($commands)) {
-            foreach ($commands as $command) {
-                $classPath = 'Hhennes\\PrestashopConsole\\Command\\' . str_replace(
-                    '/',
+        $commandsSearchNamespace = PrestashopConsoleApplication::COMMANDS_NAMESPACE;
+        // Add the namespace to the search directory path
+        if (NULL !== $commandNamespace) {
+            $commandsSearchNamespace .= '\\' . ucwords($commandNamespace);
+        }
+        
+        $commandFilepaths = Finder::create()->files()
+            ->name('*Command.php')
+            ->in($dir. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $commandsSearchNamespace));
+
+        if (sizeof($commandFilepaths)) {
+            $customCommands = array();
+            foreach ($commandFilepaths as $command) {
+                $classPath = $commandsSearchNamespace .'\\'. str_replace(
+                    DIRECTORY_SEPARATOR,
                     "\\",
                     $command->getRelativePathname()
                 );

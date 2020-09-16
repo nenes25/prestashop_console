@@ -37,10 +37,7 @@ if ( is_file('config/config.inc.php')) {
 }
 //If no prestashop conf find, only allow to install Prestashop
 else {
-    $configuration['commands'] = array(
-        'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
-        'Hhennes\PrestashopConsole\Command\Install\InfoCommand'
-        );
+    $app->registerInstallCommands();
     $app->setDefaultCommand('install:info');
 }
 
