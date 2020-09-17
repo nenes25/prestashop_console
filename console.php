@@ -19,7 +19,7 @@
  * http://www.h-hennes.fr/blog/
  */
 
-use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
+use PrestashopConsole\PrestashopConsoleApplication;
 
 //Autoload Composer
 require_once 'src/vendor/autoload.php';
