@@ -19,7 +19,7 @@
  * http://www.h-hennes.fr/blog/
  */
 
-use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
+use PrestashopConsole\PrestashopConsoleApplication;
 
 //Autoload Composer
 require_once 'src/vendor/autoload.php';
@@ -36,10 +36,11 @@ if ( is_file('config/config.inc.php')) {
 }
 //If no prestashop conf find, only allow to install Prestashop
 else {
-    $configuration['commands'] = array(
-        'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
-        'Hhennes\PrestashopConsole\Command\Install\InfoCommand'
-        );
+    $commands = [
+        new PrestashopConsole\Command\Install\InstallCommand(),
+        new PrestashopConsole\Command\Install\InfoCommand()
+    ];
+    $app->addCommands($commands);
     $app->setDefaultCommand('install:info');
 }
 

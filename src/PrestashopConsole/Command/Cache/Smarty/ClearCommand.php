@@ -1,10 +1,4 @@
-If you want to add new functionnalities it's quite simple :
-
-Create your new command in the path :
-src/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php
-You can use the folowing code as an example:
-
-<pre>
+<?php
 /**
  * 2007-2019 Hennes Hervé
  *
@@ -19,45 +13,35 @@ You can use the folowing code as an example:
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
  * @author    Hennes Hervé <contact@h-hennes.fr>
- * @copyright 2007-2020 Hennes Hervé
+ * @copyright 2007-2019 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
-
-namespace PrestashopConsole\Command\; //Complete the path here
+namespace PrestashopConsole\Command\Cache\Smarty;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tools;
 
 /**
- * Describe command action
- *
- * @author : Put your name here
- *
+ * Commande qui permet de supprimer tout le cache smarty
+ * (Fichiers compilés + cache)
+ * Pour l'instant nécessite la function exec
+ * @todo Optmimiser pour ne pas supprimer le fichier index.php + gérer le mode SQL
  */
 class ClearCommand extends Command
 {
-
-    // Configure your command
     protected function configure()
     {
+        $this
+                ->setName('cache:smarty:clear')
+                ->setDescription('Clear smarty cache');
     }
 
-    //Execute your command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        Tools::clearSmartyCache();
+        $output->writeln('<info>Smarty Cache and compiled dir cleaned</info>');
     }
-
 }
-</pre>
-
-For example if your command deals with modules you can create it in :
-src/Prestashop/Command/Module/SampleCommand.php
-
-Your command then will be find automatically
-
-Then everything should works
-
