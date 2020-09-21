@@ -3,20 +3,21 @@
  * Prestashop Console
  * Configuration File
  */
-$configuration = array();
+$configuration = [];
 
 /**
  * Application Information
  * Do not touch
  */
-$configuration['application'] = array(
+$configuration['application'] = [
     'name' => 'PrestashopConsole',
-    'version' => '1.6.1',
+    'version' => '1.6.2',
     'author' => 'hhennes <contact@h-hennes.fr>',
-    'contributors' => array(
+    'contributors' => [
         'okom3pom',
         'lutek',
-        'SebSept'
-    )
-);
+        'SebSept',
+        'm3uusi'
+    ]
+];
 
