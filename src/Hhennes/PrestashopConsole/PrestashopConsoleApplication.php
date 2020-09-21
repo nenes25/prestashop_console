@@ -26,12 +26,17 @@ use Symfony\Component\Finder\Finder;
 class PrestashopConsoleApplication extends BaseApplication
 {
     const APP_NAME = 'prestashopConsole';
+    // Execution of the console from a phar archive
+    const EXECUTION_MODE_PHAR = "phar";
 
     /** @var string php|phar Console run mod */
     protected $_runAs = 'php';
 
     /** @var string Commands directory */
     protected $_commandsDir = 'src/Hhennes/PrestashopConsole/Command';
+
+    /** @var string Phar archive root location */
+    protected $_pharArchiveRootLocation = NULL;
 
     /**
      * Set RunAs Mode
@@ -52,15 +57,37 @@ class PrestashopConsoleApplication extends BaseApplication
     }
 
     /**
+     * Initialize the console application for an execution in phar mode.
+     * 
+     * @param string $archiveLocation : The location of the phar archive currently executed.
+     * 
+     * @throws Exception 
+     */
+    public function initializeForPharExecution($archiveLocation)
+    {
+        // Assert that the given path is a file in the file system.
+        if (!file_exists($archiveLocation)) {
+            throw new \Exception("The given phar archive location is not a file : ".$archiveLocation);
+        }
+        // Assert that the location starts with the PHAR prefix
+        if (0 !== strpos($archiveLocation, "phar://")) {
+            throw new \Exception(
+                "The given phar archive location is not a phar archive path (It must start with phar://) : ".$archiveLocation
+            );
+        }
+        $this->_runAs = PrestashopConsoleApplication::EXECUTION_MODE_PHAR;
+        $this->_pharArchiveRootLocation = $archiveLocation;
+    }
+
+    /**
      * Automatically Detect Registered commands
      */
     public function getDeclaredCommands()
     {
-        if ($this->getRunAs() == 'phar') {
-            $dir = $this->_getPharPath();
-        } else {
-            $dir = getcwd().DIRECTORY_SEPARATOR.$this->_commandsDir;
-        }
+        // The root of the search depends on the run mode
+        $dir = ($this->_runAs == PrestashopConsoleApplication::EXECUTION_MODE_PHAR) ? $this->_pharArchiveRootLocation : getcwd();
+        // Command directory
+        $dir .= DIRECTORY_SEPARATOR.$this->_commandsDir;
 
         $finder = new Finder();
         $commands = $finder->files()->name('*Command.php')->in($dir);
@@ -86,10 +113,6 @@ class PrestashopConsoleApplication extends BaseApplication
      */
     protected function _getPharPath()
     {
-        $paths = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $paths = array_reverse($paths);
-        $pharName = $paths[3]; //3 First items : PrestashopConsole/Hhennes/src/
-
-        return 'phar://'.getcwd().DIRECTORY_SEPARATOR .$pharName.DIRECTORY_SEPARATOR .$this->_commandsDir;
+        return $this->_pharArchiveRootLocation.DIRECTORY_SEPARATOR .$this->_commandsDir;
     }
 }
