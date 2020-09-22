@@ -37,6 +37,9 @@ class PrestashopConsoleApplication extends BaseApplication
     /** @var string Phar archive root location */
     protected $_pharArchiveRootLocation = NULL;
 
+    /** @var string Phar archive root location */
+    protected $_pharArchiveRootLocation = NULL;
+
     /**
      * Set RunAs Mode
      * @param string $mode
