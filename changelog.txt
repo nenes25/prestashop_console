@@ -22,7 +22,8 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  http://www.h-hennes.fr/blog/
 */
-2020-09-    - V 1.6.2 : #142 Error when try to start by prestashopConsole command
+2020-11-    - V 1.6.2 : #142 Error when try to start by prestashopConsole command
+                        Branch 1.6 is the last branch which deals with Prestashop 1.6 and Php < 7.2
 2020-06-25  - V 1.6.1 : #106 Error in generate Images commands
                         #107 Improve module:hook:list command
                         #108 Update licence header for generated code

@@ -35,10 +35,7 @@ class PrestashopConsoleApplication extends BaseApplication
     protected $_runAs = 'php';
 
     /** @var string Phar archive root location */
-    protected $_pharArchiveRootLocation = NULL;
-
-    /** @var string Phar archive root location */
-    protected $_pharArchiveRootLocation = NULL;
+    protected $_pharArchiveRootLocation = null;
 
     /**
      * Set RunAs Mode
@@ -60,10 +57,10 @@ class PrestashopConsoleApplication extends BaseApplication
 
     /**
      * Initialize the console application for an execution in phar mode.
-     * 
+     *
      * @param string $archiveLocation : The location of the phar archive currently executed.
-     * 
-     * @throws Exception 
+     *
+     * @throws Exception
      */
     public function initializeForPharExecution($archiveLocation)
     {
@@ -100,10 +97,10 @@ class PrestashopConsoleApplication extends BaseApplication
     /**
      * Register commands in the application with an optionnal filter on the namespace.
      * At the moment, the namespace is an actual file namespace (The directory in which the commands scripts are declared)
-     * 
+     *
      * @param string $commandNamespace : (OPTIONNAL) The name of the namespace for the commands to register
      */
-    protected function registerCommands($commandNamespace = NULL)
+    protected function registerCommands($commandNamespace = null)
     {
         // The root of the search depends on the run mode
         $dir = ($this->_runAs == PrestashopConsoleApplication::EXECUTION_MODE_PHAR) ? $this->_pharArchiveRootLocation : getcwd();
@@ -112,7 +109,7 @@ class PrestashopConsoleApplication extends BaseApplication
 
         $commandsSearchNamespace = PrestashopConsoleApplication::COMMANDS_NAMESPACE;
         // Add the namespace to the search directory path
-        if (NULL !== $commandNamespace) {
+        if (null !== $commandNamespace) {
             $commandsSearchNamespace .= '\\' . ucwords($commandNamespace);
         }
         
