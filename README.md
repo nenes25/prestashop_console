@@ -11,8 +11,34 @@ You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-pres
 # Releases
 You can download all the versions of the console (since 1.5 ) from the release page https://github.com/nenes25/prestashop_console/releases  
 
+#Compatibility
 
-# Phar version
+| Prestashop Version | Compatible |
+| ------------------ | -----------|
+| 1.5.x | :x: |
+| 1.6.x | :x: |
+| 1.6.1.x | :heavy_check_mark: (somme commands are not available)|
+| 1.7.0.x | :heavy_check_mark: |
+| 1.7.1.x | :heavy_check_mark: |
+| 1.7.2.x | :heavy_check_mark: |
+| 1.7.3.x | :heavy_check_mark: |
+| 1.7.4.x | :heavy_check_mark: |
+| 1.7.5.x | :heavy_check_mark: |
+| 1.7.6.x | :heavy_check_mark: |
+| 1.7.6.x | :heavy_check_mark: |
+| 1.7.7.x | :interrobang: Not yet tested |
+
+| Php Version | Compatible |
+| ------ | -----------|
+| 5.6 | :heavy_check_mark:|
+| 7.0 | :heavy_check_mark: |
+| 7.1 | :heavy_check_mark: |
+| 7.2 | :heavy_check_mark: |
+| 7.3| :heavy_check_mark: |
+| 7.4 | :interrobang: Not yet tested |
+| 8.0 | :interrobang: Not yet tested |
+
+# How to use it
 
 download the file from github in your prestashop root directory ( or from the release page )   
  ```bash
@@ -40,27 +66,5 @@ sudo mv prestashopConsole.phar /user/local/bin/prestashopConsole
 prestashopConsole
  ```
 
-# Php Version
-
-## Requires
-Composer
-Git
-
-## How to install it
-Login to your hosting with ssh and go the root directory of your prestashop
-
-Clone the github repository in the directory console
- ```bash
-git clone https://github.com/nenes25/prestashop_console.git console
- ```
-Go into the directory and run composer install
- ```bash
-cd console
-composer install
- ```
-Then everything is installed and you can run the console with
- ```bash
-php console.php
- ```
-To get all the command list, please see COMMANDS.md
-If you want to contribute, please see how in CONTRIBUTE.md
+You can check the list of commands here : [a relative link](COMMANDS.md)
+If you want to contribute please see: [a relative link](CONTRIBUTE.md)
