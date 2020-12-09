@@ -8,6 +8,8 @@
 Prestashop cli tools based on Symfony Console component   
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
 
+![PrestashopConsole](console.png?raw=true "Prestashop console")
+
 # Releases
 You can download all the versions of the console (since 1.5 ) from the release page https://github.com/nenes25/prestashop_console/releases  
 
@@ -66,5 +68,6 @@ sudo mv prestashopConsole.phar /user/local/bin/prestashopConsole
 prestashopConsole
  ```
 
-You can check the list of commands here : [commands](COMMANDS.md)
-If you want to contribute please see: [contribute](CONTRIBUTE.md)
+You can check the list of commands here : [commands](COMMANDS.md)  
+
+If you want to contribute please see : [contribute](CONTRIBUTE.md)
