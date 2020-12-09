@@ -66,5 +66,5 @@ sudo mv prestashopConsole.phar /user/local/bin/prestashopConsole
 prestashopConsole
  ```
 
-You can check the list of commands here : [a relative link](COMMANDS.md)
-If you want to contribute please see: [a relative link](CONTRIBUTE.md)
+You can check the list of commands here : [commands](COMMANDS.md)
+If you want to contribute please see: [contribute](CONTRIBUTE.md)
