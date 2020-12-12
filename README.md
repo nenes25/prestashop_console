@@ -13,7 +13,7 @@ You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-pres
 # Releases
 You can download all the versions of the console (since 1.5 ) from the release page https://github.com/nenes25/prestashop_console/releases  
 
-#Compatibility
+# Compatibility
 
 | Prestashop Version | Compatible |
 | ------------------ | -----------|
