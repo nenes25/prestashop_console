@@ -35,35 +35,35 @@ use Module;
  */
 class ListCommand extends Command
 {
+    const AVAILABLE_FILTERS = [
+        "active",
+        "installed",
+        "native",
+        "trusted"
+    ];
+
     protected function configure()
     {
         $this
             ->setName('module:list')
-            ->setDescription('Get modules list')
-            ->addOption(
-                'active',
+            ->setDescription('Get modules list');
+        // Add all filters as 2 different options : 
+        // One to filter only the modules with the filter attribute (named as the filter)
+        // One to filter only the modules with the filter attribute as false (named as the 'no-filter')
+        foreach (ListCommand::AVAILABLE_FILTERS as $filter) {
+            $this->addOption(
+                $filter,
                 null,
                 InputOption::VALUE_NONE,
-                'List only active modules'
+                sprintf('List only %s modules', $filter)
             )
             ->addOption(
-                'no-active',
+                'no-' . $filter,
                 null,
                 InputOption::VALUE_NONE,
-                'List only not active modules'
-            )
-            ->addOption(
-                'installed',
-                null,
-                InputOption::VALUE_NONE,
-                'List only installed modules'
-            )
-            ->addOption(
-                'no-installed',
-                null,
-                InputOption::VALUE_NONE,
-                'List only not installed modules'
+                sprintf('List only not %s modules', $filter)
             );
+        };
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -92,29 +92,27 @@ class ListCommand extends Command
             [enable_device] => 7
          */
 
-        //sort by module name
+        // Add the filter parameter native with a specific condition (PrestaShop must be in the author of the module)
+        // We consider here that this loop will not cost a lot in terms of performance and the code is much cleaner with it.
+        foreach ($modules as $module) {
+            $module->native = (false !== strpos($module->author, "PrestaShop"));
+        }
+
+        // Apply filters for each found option
+        foreach (ListCommand::AVAILABLE_FILTERS as $filter) {
+            if ($input->getOption($filter)) {
+                $modules = array_filter($modules, function ($module) use($filter) {
+                    return (bool)$module->{$filter};
+                });
+            }
+            if ($input->getOption("no-" . $filter)) {
+                $modules = array_filter($modules, function ($module) use($filter) {
+                    return ! (bool)$module->{$filter};
+                });
+            }
+        }
+        // sort by module name
         usort($modules, array($this, "cmp"));
-        // apply filters
-        if ($input->getOption('active')) {
-            $modules = array_filter($modules, function ($module) {
-                return (bool)($module->active);
-            });
-        }
-        if ($input->getOption('no-active')) {
-            $modules = array_filter($modules, function ($module) {
-                return !($module->active);
-            });
-        }
-        if ($input->getOption('installed')) {
-            $modules = array_filter($modules, function ($module) {
-                return (bool)($module->installed);
-            });
-        }
-        if ($input->getOption('no-installed')) {
-            $modules = array_filter($modules, function ($module) {
-                return !($module->installed);
-            });
-        }
 
         $output->writeln("<info>Currently module on disk:</info>");
 

@@ -27,6 +27,16 @@ require_once 'src/vendor/autoload.php';
 //Console Application
 require_once 'config.php';
 
+// Only allow execution from the console script directory (To have use of the current path to get to the prestashop instance)
+// We consider that the console directory must be located at the root of the prestashop instance so we can get to the root by 
+// going one lever upper (../ <- Root of prestashop instance if exists)
+if (getcwd() !== __DIR__) {
+    echo "Error :\n";
+    echo "This script must be executed only from its directory to have correct behaviour in php mode.\n";
+    echo "Please change directory to " . __DIR__ . " and execute the script again.\n";
+    exit(1);
+}
+
 $app = new PrestashopConsoleApplication($configuration['application']['name'], $configuration['application']['version']);
 
 //Autoload Prestashop
@@ -38,10 +48,7 @@ if ( is_file('../config/config.inc.php')) {
 }
 //If no prestashop conf find, only allow to install Prestashop
 else {
-    $configuration['commands'] = array(
-        'Hhennes\PrestashopConsole\Command\Install\InstallCommand',
-        'Hhennes\PrestashopConsole\Command\Install\InfoCommand'
-        );
+    $app->registerInstallCommands();
     $app->setDefaultCommand('install:info');
 }
 

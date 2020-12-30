@@ -45,6 +45,9 @@ class InstallCommand extends Command
         'directory'
     );
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -60,8 +63,15 @@ class InstallCommand extends Command
             ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Install directory');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        $output->writeln('<info>This command is currently disabled, see version 1.6.1 if needed</info>');
+        return 1;
+
         $helper = $this->getHelper('question');
 
         //Get options values if defined
