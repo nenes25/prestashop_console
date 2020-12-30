@@ -43,7 +43,7 @@ You can download all the versions of the console (since 1.5 ) from the release p
 
 download the file from github in your prestashop root directory ( or from the release page )   
  ```bash
-wget https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar
+wget https://github.com/nenes25/prestashop_console/releases/latest/download/prestashopConsole.phar
  ```
 
 Add execution mode  
