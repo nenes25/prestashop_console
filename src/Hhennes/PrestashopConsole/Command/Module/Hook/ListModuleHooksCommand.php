@@ -71,7 +71,7 @@ class ListModuleHooksCommand extends Command
             }
 
             if (count($moduleHooks)) {
-                $output->writeln('<info>The module ' . $moduleName . ' is linked on the folowing hooks :</info>');
+                $output->writeln('<info>The module ' . $moduleName . ' is linked on the following hooks :</info>');
                 $table = new Table($output);
                 $table->setHeaders(['Hook Name','Position']);
                 foreach ($moduleHooks as $moduleHook) {
