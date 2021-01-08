@@ -20,7 +20,7 @@
  */
 
 
-namespace Hhennes\PrestashopConsole\Command\Webservice;
+namespace PrestashopConsole\Command\Webservice;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

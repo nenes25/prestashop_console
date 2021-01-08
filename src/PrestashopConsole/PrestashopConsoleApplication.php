@@ -40,8 +40,9 @@ class PrestashopConsoleApplication extends BaseApplication
     /**
      * Set RunAs Mode
      * @param string $mode
+     * @return void
      */
-    public function setRunAs($mode)
+    public function setRunAs($mode) :void
     {
         $this->_runAs = $mode;
     }
@@ -60,9 +61,10 @@ class PrestashopConsoleApplication extends BaseApplication
      *
      * @param string $archiveLocation : The location of the phar archive currently executed.
      *
+     * @return void
      * @throws Exception
      */
-    public function initializeForPharExecution($archiveLocation)
+    public function initializeForPharExecution($archiveLocation) : void
     {
         // Assert that the given path is a file in the file system.
         if (!file_exists($archiveLocation)) {
@@ -80,16 +82,18 @@ class PrestashopConsoleApplication extends BaseApplication
 
     /**
      * Automatically register all existing commands
+     * @return void
      */
-    public function getDeclaredCommands()
+    public function getDeclaredCommands() : void
     {
         $this->registerCommands();
     }
 
     /**
      * Register only the installation commands.
+     * @return void
      */
-    public function registerInstallCommands()
+    public function registerInstallCommands() : void
     {
         $this->registerCommands("install");
     }
@@ -99,8 +103,9 @@ class PrestashopConsoleApplication extends BaseApplication
      * At the moment, the namespace is an actual file namespace (The directory in which the commands scripts are declared)
      *
      * @param string $commandNamespace : (OPTIONNAL) The name of the namespace for the commands to register
+     * @return void
      */
-    protected function registerCommands($commandNamespace = null)
+    protected function registerCommands($commandNamespace = null) : void
     {
         // The root of the search depends on the run mode
         $dir = ($this->_runAs == PrestashopConsoleApplication::EXECUTION_MODE_PHAR) ? $this->_pharArchiveRootLocation : getcwd();
@@ -131,14 +136,5 @@ class PrestashopConsoleApplication extends BaseApplication
 
             $this->addCommands($customCommands);
         }
-    }
-
-    /**
-     * Get Phar path
-     * @return string
-     */
-    protected function _getPharPath()
-    {
-        return $this->_pharArchiveRootLocation.DIRECTORY_SEPARATOR .$this->_commandsDir;
     }
 }

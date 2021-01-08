@@ -32,6 +32,7 @@ use Symfony\Component\Console\Exception\RuntimeException;
 use Customer;
 use PrestaShopException;
 use Validate;
+use Tools;
 
 /**
  * Class Create

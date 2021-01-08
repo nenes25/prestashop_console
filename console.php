@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- * 2007-2018 Hennes Hervé
+ * 2007-2020 Hennes Hervé
  *
  * NOTICE OF LICENSE
  *
@@ -19,7 +19,7 @@
  * http://www.h-hennes.fr/blog/
  */
 
-use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
+use PrestashopConsole\PrestashopConsoleApplication;
 
 //Autoload Composer
 require_once 'src/vendor/autoload.php';
