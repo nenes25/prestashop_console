@@ -19,10 +19,10 @@
  * http://www.h-hennes.fr/blog/
  */
 
+use PrestashopConsole\PrestashopConsoleApplication;
+
 //Autoload Composer
 require_once 'src/vendor/autoload.php';
-
-use Hhennes\PrestashopConsole\PrestashopConsoleApplication;
 
 //Console Application
 require_once 'config.php';

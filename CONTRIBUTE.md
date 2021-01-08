@@ -18,7 +18,7 @@ php console.php
  ```
 
 Create your new command in the path :
-src/Hhennes/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php
+src/Prestashop/Command/PSFUNCTIONNALITY/SampleCommand.php
 You can use the following code as an example:
 
 <pre>
@@ -35,13 +35,13 @@ You can use the following code as an example:
  * obtain it through the world-wide-web, please send an email
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
- * @author    Yourname
- * @copyright 2007-2020 Yourname
+ * @author    Hennes Hervé <contact@h-hennes.fr>
+ * @copyright 2007-2020 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console
  */
 
-namespace Hhennes\PrestashopConsole\Command\; //Complete the path here
+namespace PrestashopConsole\Command\; //Complete the path here
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -72,7 +72,7 @@ class ClearCommand extends Command
 </pre>
 
 For example if your command deals with modules you can create it in :
-src/Hhennes/Prestashop/Command/Module/SampleCommand.php
+src/Prestashop/Command/Module/SampleCommand.php
 
 Your command then will be find automatically and then you can work on it.
 
