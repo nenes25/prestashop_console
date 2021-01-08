@@ -25,7 +25,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Module;
-use PrestashopException;
+use PrestaShopException;
 
 /**
  * Commande qui permet d'activer un module
@@ -55,7 +55,7 @@ class DisableCommand extends Command
                     if (Module::isInstalled($module->name)) {
                         try {
                             $module->disable();
-                        } catch (PrestashopException $e) {
+                        } catch (PrestaShopException $e) {
                             $outputString = '<error>Error : module ' . $moduleName . ' ' . $e->getMessage() . "<error>";
                             $output->writeln($outputString);
                             return;

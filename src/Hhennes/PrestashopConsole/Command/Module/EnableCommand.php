@@ -25,7 +25,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Module;
-use PrestashopException;
+use PrestaShopException;
 
 /**
  * Commande qui permet d'activer un module
@@ -56,7 +56,7 @@ class EnableCommand extends Command
                         // Exécution de l'action du module
                         try {
                             $module->enable();
-                        } catch (PrestashopException $e) {
+                        } catch (PrestaShopException $e) {
                             $outputString = '<error>module ' . $moduleName . ' ' . $e->getMessage() . "</error>";
                             $output->writeln($outputString);
                             return;

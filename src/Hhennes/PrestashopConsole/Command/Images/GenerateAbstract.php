@@ -38,6 +38,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class GenerateAbstract extends Command
 {
+
+    /** @var type string Override by subclasses */
+    const IMAGE_TYPE = 'categories';
+
     /** @var array */
     protected $errors = [];
 

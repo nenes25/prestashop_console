@@ -132,13 +132,4 @@ class PrestashopConsoleApplication extends BaseApplication
             $this->addCommands($customCommands);
         }
     }
-
-    /**
-     * Get Phar path
-     * @return string
-     */
-    protected function _getPharPath()
-    {
-        return $this->_pharArchiveRootLocation.DIRECTORY_SEPARATOR .$this->_commandsDir;
-    }
 }

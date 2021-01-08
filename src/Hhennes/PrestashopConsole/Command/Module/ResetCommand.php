@@ -26,7 +26,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Module;
-use PrestashopException;
+use PrestaShopException;
 
 class ResetCommand extends Command
 {
@@ -78,7 +78,7 @@ class ResetCommand extends Command
                                     }
                                     break;
                             }
-                        } catch (\Exception $e) {
+                        } catch (PrestaShopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
                             $error = true;
                         }

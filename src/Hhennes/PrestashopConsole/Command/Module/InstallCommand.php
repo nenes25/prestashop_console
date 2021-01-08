@@ -25,7 +25,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Module;
-use PrestashopException;
+use PrestaShopException;
 
 class InstallCommand extends Command
 {
@@ -53,7 +53,7 @@ class InstallCommand extends Command
                                 $output->writeln("<error>Cannot install module: '$moduleName'</error>");
                                 return 1;
                             }
-                        } catch (PrestashopException $e) {
+                        } catch (PrestaShopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->displayMessage()</error>");
                             return 1;
                         }

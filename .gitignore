@@ -1,6 +1,7 @@
-config.xml
+/config.xml
 /vendor/
 /src/vendor/
 /nbproject/
 /.github/config.php
-console_dev.php
+/console_dev.php
+/phpstan.neon

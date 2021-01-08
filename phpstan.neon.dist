@@ -1,0 +1,11 @@
+parameters:
+  paths:
+    - ./src/
+  excludes_analyse:
+    - ./src/vendor/
+  reportUnmatchedIgnoredErrors: false
+  level: 0
+  scanDirectories:
+    - path/to/prestashop/root
+  ignoreErrors:
+    - '#Class PrestaShop\\PrestaShop\\Adapter\\Cache\\CacheClearer constructor invoked with 0 parameters, 4 required.#'

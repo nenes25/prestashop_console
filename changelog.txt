@@ -26,6 +26,7 @@
                         #170 Create Webservice key command
                         #173 Change link in readme
                         #175 New Command Webservice:key:delete
+                        #182 Fix PhpStan Errors
                         Disable the install command which will be refactored in next version
                         Branch 1.6 is the last branch which deals with Prestashop 1.6 and Php < 7.2
 2020-06-25  - V 1.6.1 : #106 Error in generate Images commands
