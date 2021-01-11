@@ -62,7 +62,7 @@ class PrestashopConsoleApplication extends BaseApplication
      * @param string $archiveLocation : The location of the phar archive currently executed.
      *
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function initializeForPharExecution($archiveLocation) : void
     {

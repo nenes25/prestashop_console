@@ -21,7 +21,7 @@
 namespace PrestashopConsole\Command\Dev\Clean;
 
 use Module;
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -35,16 +35,14 @@ abstract class CleanCommandAbstract extends Command
     protected $_cleanModuleInstance = null;
 
     /**
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @inheritDoc
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cleanModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cleanModuleName . ' is not active or installed</error>');
-                return 0;
+                return self::RESPONSE_SUCCESS;;
             }
             $this->_cleanModuleInstance = $module;
         } else {

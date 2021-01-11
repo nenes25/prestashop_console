@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,5 +64,6 @@ class OverrideCommand extends Command
                 Configuration::updateValue('PS_DISABLE_OVERRIDES', 1);
                 break;
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

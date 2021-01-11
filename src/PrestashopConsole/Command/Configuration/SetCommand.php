@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Configuration;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,11 +41,13 @@ class SetCommand extends Command
                 ->addArgument('value', InputArgument::REQUIRED, 'configuration value');
     }
 
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
         $value = $input->getArgument('value');
         Configuration::updateValue($name, $value);
         $output->writeln("<info>Update configuration ".$name." with ".$value."</info>");
+        return self::RESPONSE_SUCCESS;
     }
 }

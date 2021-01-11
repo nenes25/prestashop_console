@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Configuration;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,8 +33,12 @@ use Db;
  */
 class GetAllCommand extends Command
 {
+    /** @var int  */
     const MAX_LENGTH_CONFIGURATION_VALUE = 130;
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -42,6 +46,9 @@ class GetAllCommand extends Command
                 ->setDescription('get all configuration values');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Load All Configurations
@@ -62,5 +69,6 @@ class GetAllCommand extends Command
 
         $table->render();
         $output->writeln("(*) : Value truncated");
+        return self::RESPONSE_SUCCESS;
     }
 }

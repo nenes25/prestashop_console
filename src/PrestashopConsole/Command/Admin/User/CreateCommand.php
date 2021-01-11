@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Admin\User;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -81,7 +81,7 @@ class CreateCommand extends Command
         //Error if employee with same email already exists
         if (Employee::employeeExists($email)) {
             $output->writeln("<error>Employee with this email already exists");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $employee = new Employee();
@@ -99,9 +99,11 @@ class CreateCommand extends Command
             $employee->save();
         } catch (PrestaShopException $e) {
             $output->writeln("<error>".$e->getMessage()."</error>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln("<info>New user ".$email." created</info>");
+
+        return self::RESPONSE_SUCCESS;
     }
 }

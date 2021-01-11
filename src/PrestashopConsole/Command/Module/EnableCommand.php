@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Module;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,6 +33,9 @@ use PrestaShopException;
  */
 class EnableCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this->setName('module:enable')
@@ -44,6 +47,9 @@ class EnableCommand extends Command
                 );
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
@@ -59,7 +65,7 @@ class EnableCommand extends Command
                         } catch (PrestaShopException $e) {
                             $outputString = '<error>module ' . $moduleName . ' ' . $e->getMessage() . "</error>";
                             $output->writeln($outputString);
-                            return;
+                            return self::RESPONSE_ERROR;
                         }
                         $outputString = '<info>Module ' . $moduleName . ' enable with sucess' . "</info>";
                     } else {
@@ -71,5 +77,6 @@ class EnableCommand extends Command
                 $output->writeln($outputString);
             }
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PrestashopConsole\Command\Module\Generate;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,6 +27,9 @@ class ModuleCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -47,9 +50,7 @@ class ModuleCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|void|null
+     * @inheritDoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -64,7 +65,7 @@ class ModuleCommand extends Command
                 $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $moduleName, 0775);
             } catch (IOException $e) {
                 $output->writeln('<error>Unable to creat controller directories</error>');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
         }
 
@@ -150,6 +151,7 @@ class ModuleCommand extends Command
 
         $this->_fileSystem->dumpFile(_PS_MODULE_DIR_ . $moduleName . '/' . $moduleName . '.php', $defaultContent);
         $output->writeln('<info>Module generated with success</info>');
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
@@ -209,7 +211,7 @@ public function install()
 
     /**
      * Add Widget Functions
-     * @param $defaultContent
+     * @param string $defaultContent
      * @return mixed
      */
     protected function _replaceWidgetContent($defaultContent)
@@ -241,7 +243,7 @@ public function install()
      * Add Hook Contents
      * @param mixed $defaultContent
      * @param mixed $hookList comma separated list of module hooks
-     * @param $generateTemplates bool
+     * @param bool $generateTemplates
      * @return mixed
      */
     protected function _replaceHookContent($defaultContent, $hookList, $generateTemplates)
@@ -280,9 +282,10 @@ public function hook' . ucfirst($hook) . '($params){
 
     /**
      * Generate displayHooks Templates
-     * @param $hookName
+     * @param string $hookName
+     * @return void
      */
-    protected function _generateTemplate($hookName)
+    protected function _generateTemplate($hookName) :void
     {
         $this->_createDirectories();
 
@@ -294,9 +297,9 @@ public function hook' . ucfirst($hook) . '($params){
     /**
      * Create module controllers directories
      * @Todo : generate index.php files
-     * @param $moduleName
+     * @return void
      */
-    protected function _createDirectories()
+    protected function _createDirectories() :void
     {
         if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook')) {
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook', 0775);

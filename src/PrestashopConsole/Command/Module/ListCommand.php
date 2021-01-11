@@ -22,7 +22,7 @@
 
 namespace PrestashopConsole\Command\Module;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -131,8 +131,14 @@ class ListCommand extends Command
 
         $table->render();
         $output->writeln("<info>Total modules on disk: $nr</info>");
+        return self::RESPONSE_SUCCESS;
     }
 
+    /**
+     * @param Module $a
+     * @param Module $b
+     * @return int
+     */
     private function cmp($a, $b)
     {
         return strcmp($a->name, $b->name);

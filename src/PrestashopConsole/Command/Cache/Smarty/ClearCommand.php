@@ -19,7 +19,7 @@
  */
 namespace PrestashopConsole\Command\Cache\Smarty;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tools;
@@ -32,6 +32,9 @@ use Tools;
  */
 class ClearCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -39,9 +42,13 @@ class ClearCommand extends Command
                 ->setDescription('Clear smarty cache');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         Tools::clearSmartyCache();
         $output->writeln('<info>Smarty Cache and compiled dir cleaned</info>');
+        return self::RESPONSE_SUCCESS;
     }
 }

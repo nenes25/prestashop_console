@@ -21,7 +21,7 @@
 
 namespace PrestashopConsole\Command\Dev;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,10 +37,16 @@ class DevModeCommand extends Command
      */
     private $allowed_command_states = ['enable', 'disable', 'toggle'];
 
+    /** @var string  */
     private $enable_code  = '<?php define(\'_PS_MODE_DEV_\', true);';
+    /** @var string  */
     private $disable_code = '<?php define(\'_PS_MODE_DEV_\', false);';
+    /** @var string  */
     private $debug_file_name = 'debug_mode.php';
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -84,7 +90,7 @@ class DevModeCommand extends Command
             if ((_PS_MODE_DEV_ && $requested_state === 'enable')  || (!_PS_MODE_DEV_ && $requested_state === 'disable')) {
                 $output->writeln('<comment>Already in requested mode (_PS_MODE_DEV_ = '.(_PS_MODE_DEV_ ? 'true' : 'false').')</comment>');
                 $output->writeln("<comment>{$this->getWarningText()}</comment>");
-                return;
+                return self::RESPONSE_ERROR;
             }
 
             // create custom file if needed
@@ -105,10 +111,14 @@ class DevModeCommand extends Command
             $output->writeln("<comment>{$this->getWarningText()}</comment>");
         } catch (\Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+        return self::RESPONSE_SUCCESS;
     }
 
+    /**
+     * @return string
+     */
     final private function getWarningText()
     {
         return 'Be sure to include "include(__DIR__. \'/'.$this->debug_file_name.'\');" in config/defines.inc.php for this feature to run.';

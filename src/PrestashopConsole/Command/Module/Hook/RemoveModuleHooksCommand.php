@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Module\Hook;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,18 +64,19 @@ class RemoveModuleHooksCommand extends Command
                 foreach ($hooks as $hook) {
                     if (!$module->unregisterHook($hook)) {
                         $output->writeln('<error>Error during hook remove from hook '.$hook.'</error>');
-                        return 1;
+                        return self::RESPONSE_ERROR;
                     } else {
                         $output->writeln('<info>Module remove from hook '.$hook.' with success</info>');
                     }
                 }
             } else {
                 $output->writeln('<error>Not hooks given for ' . $moduleName . '</error>');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

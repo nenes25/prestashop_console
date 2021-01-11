@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Cache\Smarty;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -60,16 +60,17 @@ class ConfigureCommand extends Command
 
         if (!array_key_exists($name, $this->_allowedNames)) {
             $output->writeln("<error>Name not allowed</error>");
-            return 1;
+            return self::RESPONSE_ERROR;
         } else {
             //Vérification de la valeur
             if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
                 $output->writeln("<error>Value not allowed for configuration " . $name."</error>");
-                return 1;
+                return self::RESPONSE_ERROR;
             } else {
                 Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
                 $output->writeln("<info>Update configuration " . $name . " with " . $value."</info>");
             }
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

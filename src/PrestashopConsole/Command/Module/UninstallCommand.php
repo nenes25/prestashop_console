@@ -26,7 +26,7 @@
 
 namespace PrestashopConsole\Command\Module;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -57,11 +57,11 @@ class UninstallCommand extends Command
                         try {
                             if (!$module->uninstall()) {
                                 $output->writeln("<error>Cannot uninstall module: '$moduleName'</error>");
-                                return 1;
+                                return self::RESPONSE_ERROR;
                             }
                         } catch (PrestaShopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
-                            return 1;
+                            return self::RESPONSE_ERROR;
                         }
                         $output->writeln("<info>Module '$moduleName' uninstalled with success</info>");
                     } else {
@@ -69,9 +69,10 @@ class UninstallCommand extends Command
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
-                    return 1;
+                    return self::RESPONSE_ERROR;
                 }
             }
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

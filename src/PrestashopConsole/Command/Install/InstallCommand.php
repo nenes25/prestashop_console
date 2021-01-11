@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Install;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -70,7 +70,7 @@ class InstallCommand extends Command
     {
 
         $output->writeln('<info>This command is currently disabled, see version 1.6.1 if needed</info>');
-        return 1;
+        return self::RESPONSE_ERROR;
 
         $helper = $this->getHelper('question');
 

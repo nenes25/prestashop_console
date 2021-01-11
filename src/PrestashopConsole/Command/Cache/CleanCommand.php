@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Cache;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,6 +33,9 @@ use Cache;
  */
 class CleanCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -41,6 +44,9 @@ class CleanCommand extends Command
                 ->addArgument('key', InputArgument::OPTIONAL, 'key name | default *');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $key = $input->getArgument('key');
@@ -53,5 +59,6 @@ class CleanCommand extends Command
         $cache->clean($key);
 
         $output->writeln('<info>Cache cleaned</info>');
+        return self::RESPONSE_SUCCESS;
     }
 }

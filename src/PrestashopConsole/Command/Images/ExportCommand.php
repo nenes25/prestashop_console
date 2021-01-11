@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Images;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,9 +46,14 @@ class ExportCommand extends Command
         'zip',
     ];
 
+    /** @var string */
     protected $_type;
+    /** @var string */
     protected $_archiveFormat;
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -60,11 +65,7 @@ class ExportCommand extends Command
     }
 
     /**
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return bool | void
-     * @throws \Exception
+     * @inheritDoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -73,7 +74,7 @@ class ExportCommand extends Command
         //@Todo make it optionnal and do it also with php ( symfony finder )
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
-            return false;
+            return self::RESPONSE_ERROR;
         }
 
         $this->_archiveFormat = $input->getOption('archive');
@@ -98,13 +99,15 @@ class ExportCommand extends Command
         }
 
         $this->_exportImages($output);
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Export images
      * @param OutputInterface $output
+     * @return void
      */
-    protected function _exportImages(OutputInterface $output)
+    protected function _exportImages(OutputInterface $output) :void
     {
         switch ($this->_type) {
 

@@ -21,7 +21,7 @@
 namespace PrestashopConsole\Command\Console;
 
 use RuntimeException;
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -52,7 +52,7 @@ class CreateCommand extends Command
         //This command can only be launched in php mode
         if ($this->getApplication()->getRunAs() == 'phar') {
             $output->writeln('<error>This command can only be run in php mode</error>');
-            return;
+            return self::RESPONSE_ERROR;
         }
 
         $helper = $this->getHelper('question');
@@ -71,21 +71,22 @@ class CreateCommand extends Command
             );
         } catch (RuntimeException $e) {
             $output->writeln('<error>Unable to generate the command :' . $e->getMessage() . '</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Command Created with success</info>');
 
-        return 0;
+        return self::RESPONSE_SUCCESS;;
     }
 
     /**
      * Create the command file ( and directory if necessary )
-     * @param $commandName
-     * @param $commandDescription
-     * @param $commandDomain
-     * @param $commandClass
+     * @param string $commandName
+     * @param string $commandDescription
+     * @param string $commandDomain
+     * @param string $commandClass
      * @throws RuntimeException
+     * @return void
      */
     protected function _createCommand($commandName, $commandDescription, $commandDomain, $commandClass)
     {
@@ -230,7 +231,7 @@ class CreateCommand extends Command
          
          namespace PrestashopConsole\Command\{commandDomain};
          
-        use Symfony\Component\Console\Command\Command;
+        use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
         use Symfony\Component\Console\Input\InputInterface;
         use Symfony\Component\Console\Output\OutputInterface;
 
@@ -264,6 +265,7 @@ class CreateCommand extends Command
 
     /**
      * Get Command Header
+     * @return string
      */
     protected function _getHeader()
     {

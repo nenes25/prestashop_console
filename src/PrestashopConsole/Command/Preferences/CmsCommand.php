@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,7 +53,7 @@ class CmsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $id_cms = $input->getArgument('id');
+        $id_cms = (int)$input->getArgument('id');
         $action = $input->getArgument('action');
 
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
@@ -62,18 +62,18 @@ class CmsCommand extends Command
 
         if ($cms->id == null) {
             $output->writeln(sprintf("<error>Error Cms page %d doesn't exists</error>", $id_cms));
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         switch ($action) {
             case 'enable':
-                $cms->active = 1;
+                $cms->active = true;
                 $output->writeln(sprintf("<info>Enable cms page %d</info>", $id_cms));
                 break;
             case 'disable':
             default:
                 $output->writeln(sprintf("<info>Disable cms page %d</info>", $id_cms));
-                $cms->active = 0;
+                $cms->active = false;
                 break;
         }
 
@@ -81,7 +81,8 @@ class CmsCommand extends Command
             $cms->save();
         } catch (\Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

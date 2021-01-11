@@ -29,7 +29,7 @@ use ImageManager;
 use ImageType;
 use Language;
 use Module;
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -101,7 +101,7 @@ abstract class GenerateAbstract extends Command
             }
             $output->writeln('<error>'.implode("\n", array_unique($warningMessages)).'</error>');
 
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Thumbnails generated with success for ' . static::IMAGE_TYPE.'</info>');
@@ -239,8 +239,8 @@ abstract class GenerateAbstract extends Command
     /**
      * Regenerate images.
      *
-     * @param $dir
-     * @param $type
+     * @param string $dir
+     * @param array $type
      * @param bool $productsImages
      *
      * @return bool|string
@@ -338,9 +338,9 @@ abstract class GenerateAbstract extends Command
     /**
      * Regenerate no-pictures images.
      *
-     * @param $dir
-     * @param $type
-     * @param $languages
+     * @param string $dir
+     * @param array $type
+     * @param array $languages
      *
      * @return bool
      */
@@ -372,7 +372,11 @@ abstract class GenerateAbstract extends Command
         return $errors;
     }
 
-    /* Hook watermark optimization */
+    /**
+     * @param string $dir
+     * @param string|null $type
+     * @throws \PrestaShopDatabaseException
+     */
     protected function regenerateWatermark($dir, $type = null)
     {
         $result = Db::getInstance()->executeS('

@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Module\Tab;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,19 +64,20 @@ class RemoveCommand extends Command
                         $tabObject->delete();
                     } catch (\Exception $e) {
                         $output->writeln('<error>' . $e->getMessage() . '</error>');
-                        return 1;
+                        return self::RESPONSE_ERROR;
                     }
                     $output->writeln('<info>Tab ' . $tab . ' removed with success');
                 } else {
                     $output->writeln('<error>Tab ' . $tab . ' does not exists</error>');
-                    return 1;
+                    return self::RESPONSE_ERROR;
                 }
             } else {
                 $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
             }
         } catch (\Exception $e) {
             $output->writeln('<error>Error unable to get information about ' . $moduleName . '</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

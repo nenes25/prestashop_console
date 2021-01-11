@@ -21,7 +21,7 @@
 namespace PrestashopConsole\Command\Customer;
 
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,8 +31,6 @@ use PrestaShopException;
 use Customer;
 use Validate;
 use Tools;
-
-;
 
 /**
  * Class ChangeCustomerPassword
@@ -60,7 +58,6 @@ class ChangePasswordCommand extends Command
         $email =  $input->getOption('email');
         $password = $input->getOption('password');
 
-        /** @var $questionHelper $questionHelper */
         $questionHelper = $this->getHelper('question');
 
         if (null === $email || empty($email) || !Validate::isEmail($email)) {
@@ -71,14 +68,14 @@ class ChangePasswordCommand extends Command
         $customer->getByEmail($email);
         if (!Validate::isLoadedObject($customer)) {
             $output->writeln('<error>There is no account registered for this email.</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         if (null === $password || empty($password)) {
             $password = $questionHelper->ask($input, $output, $this->_getPasswordQuestion());
         }
 
-        if (version_compare(_PS_VERSION_, 1.7, '<')) {
+        if (version_compare(_PS_VERSION_, '1.7', '<')) {
             $password = Tools::encrypt($password);
         } else {
             $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
@@ -90,11 +87,11 @@ class ChangePasswordCommand extends Command
             $customer->save();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>Unable to update customer password.</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Customer password updated with success</info>');
-        return 0;
+        return self::RESPONSE_SUCCESS;
     }
 
 

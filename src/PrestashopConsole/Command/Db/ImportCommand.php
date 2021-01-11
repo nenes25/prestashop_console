@@ -20,13 +20,16 @@
 
 namespace PrestashopConsole\Command\Db;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -38,9 +41,7 @@ class ImportCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return bool|void
+     * @inheritDoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -48,7 +49,7 @@ class ImportCommand extends Command
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $file = $input->getOption('file');
@@ -56,7 +57,7 @@ class ImportCommand extends Command
 
         if (!is_file($file)) {
             $output->writeln('<error>The import file does not exists</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         if (null !== $gzip) {
@@ -68,5 +69,7 @@ class ImportCommand extends Command
         $import = shell_exec($command);
         $output->writeln($import);
         $output->writeln('<info>Import ended</info>');
+
+        return self::RESPONSE_SUCCESS;
     }
 }

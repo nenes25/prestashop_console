@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Cache;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Media;
@@ -30,6 +30,9 @@ use Media;
  */
 class MediaCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -37,9 +40,13 @@ class MediaCommand extends Command
                 ->setDescription('Clean media cache directory');
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         Media::clearCache();
         $output->writeln('<info>Media cache cleared</info>');
+        return self::RESPONSE_SUCCESS;
     }
 }

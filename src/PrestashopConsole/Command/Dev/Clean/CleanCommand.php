@@ -30,6 +30,9 @@ class CleanCommand extends CleanCommandAbstract
 {
     protected $_allowedCleanType = ['all','catalog','sales'];
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -38,6 +41,9 @@ class CleanCommand extends CleanCommandAbstract
                 ->addArgument('type', InputArgument::REQUIRED, 'data types. Possibles values '. implode(', ', $this->_allowedCleanType));
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($this->_cleanModuleInstance) {
@@ -49,7 +55,7 @@ class CleanCommand extends CleanCommandAbstract
             $lock = $factory->createLock($this->getName());
             if (!$lock->acquire()) {
                 $output->writeln('<error>The command is already running in another process.</error>');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
 
             switch ($type) {
@@ -69,9 +75,11 @@ class CleanCommand extends CleanCommandAbstract
                     break;
                 default:
                     $output->writeln('<error>Unknow clean type</error>');
-                    return 1;
+                    return self::RESPONSE_ERROR;
                     break;
             }
         }
+
+        return self::RESPONSE_SUCCESS;
     }
 }

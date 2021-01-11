@@ -4,3 +4,4 @@ config.xml
 /nbproject/
 /.github/config.php
 console_dev.php
+/phpstan.neon

@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Configuration;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,6 +32,9 @@ use Configuration;
  */
 class GetCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -44,10 +47,14 @@ class GetCommand extends Command
                 );
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
         $value = Configuration::get($name);
         $output->writeln('<info>'.$value.'</info>');
+        return self::RESPONSE_SUCCESS;
     }
 }

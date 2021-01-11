@@ -2,7 +2,7 @@
 
 namespace PrestashopConsole\Command\Customer;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,8 +13,6 @@ use Customer;
 use Validate;
 use Mail;
 use Context;
-
-;
 
 /**
  * Class SendCustomerForgotPasswordCommand
@@ -39,8 +37,6 @@ class SendCustomerForgotPasswordCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $email = $input->getOption('email');
-
-        /** @var $questionHelper $questionHelper */
         $questionHelper = $this->getHelper('question');
 
         if (null === $email || empty($email) || !Validate::isEmail($email)) {
@@ -51,12 +47,12 @@ class SendCustomerForgotPasswordCommand extends Command
         $customer->getByEmail($email);
         if (!Validate::isLoadedObject($customer)) {
             $output->writeln('<error>There is no account registered for this email.</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         if (!$this->_sendForgotEmail($customer)) {
             $output->writeln('<error>Unable to send forgot email</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         try {
@@ -64,11 +60,12 @@ class SendCustomerForgotPasswordCommand extends Command
             $customer->update();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>Unable to update customer</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Customer forgot password send with success</info>');
-        return 0;
+        return self::RESPONSE_SUCCESS;
+        ;
     }
 
 

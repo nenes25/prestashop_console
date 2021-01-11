@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Dev;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
@@ -31,6 +31,9 @@ use Symfony\Component\Finder\Finder;
  */
 class ListOverridesCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -38,6 +41,9 @@ class ListOverridesCommand extends Command
             ->setDescription('List overrides of classes and controllers in the project');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $outputString = '';
@@ -50,11 +56,12 @@ class ListOverridesCommand extends Command
             }
         } catch (\Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
         if ($outputString == '') {
             $outputString = 'No class or controllers overrides on this project';
         }
         $output->writeln("<info>".$outputString."</info>");
+        return self::RESPONSE_SUCCESS;
     }
 }

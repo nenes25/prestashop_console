@@ -2,7 +2,7 @@
 
 namespace PrestashopConsole\Command\Parameters\Generate;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tools;
@@ -33,7 +33,9 @@ class HtaccessCommand extends Command
             $output->writeln("<info>.htaccess file generated with success</info>");
         } else {
             $output->writeln("<error>An error occurs while generating .htaccess file</error>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+
+        return self::RESPONSE_SUCCESS;
     }
 }

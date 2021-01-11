@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,7 +62,7 @@ class CmsCategoryCommand extends Command
 
         if ($cmsCategory->id == null) {
             $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>", $id_cms));
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         switch ($action) {
@@ -81,7 +81,8 @@ class CmsCategoryCommand extends Command
             $cmsCategory->save();
         } catch (\Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+        return  self::RESPONSE_SUCCESS;
     }
 }

@@ -22,7 +22,7 @@
 
 namespace PrestashopConsole\Command\Webservice;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -77,11 +77,11 @@ class CreateKeyCommand extends Command
         if (null !== $apiKey) {
             if (!$this->_validateWebserviceKey($apiKey)) {
                 $output->writeln('<error>The api key is invalid ( 32 characters required)</error>');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
             if (WebserviceKey::keyExists(pSQL($apiKey))) {
                 $output->writeln('<error>The api key already exists</error>');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
         }
 
@@ -94,13 +94,13 @@ class CreateKeyCommand extends Command
             WebserviceKey::setPermissionForAccount($webserviceKey->id, $this->_getPermissions());
         } catch (PrestaShopException $e) {
             $output->writeln('<error>An error occurs while saving webservice key</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln("<info>Webservice key created with success</info>", OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln($webserviceKey->key);
 
-        return 0;
+        return self::RESPONSE_SUCCESS;;
     }
 
     /**

@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Dev\Cron;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
@@ -32,6 +32,9 @@ class ListCronCommand extends Command
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -39,12 +42,15 @@ class ListCronCommand extends Command
                 ->setDescription('List cron tasks configured with the module cronjobs');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
             
             $output->writeln('<info>Configured cron jobs</info>');
@@ -70,7 +76,9 @@ class ListCronCommand extends Command
             $table->render();
         } else {
             $output->writeln('<error>' . $this->_cronModuleName . ' is not installed');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+
+        return self::RESPONSE_SUCCESS;
     }
 }

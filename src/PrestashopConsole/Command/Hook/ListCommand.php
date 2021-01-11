@@ -22,7 +22,7 @@
 
 namespace PrestashopConsole\Command\Hook;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
@@ -70,13 +70,15 @@ class ListCommand extends Command
 
         //Display result
         $table->render();
+
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Function to sort hook by name
-     * @param $a
-     * @param $b
-     * @return int|\lt
+     * @param string $a
+     * @param string $b
+     * @return int
      */
     private function cmp($a, $b)
     {

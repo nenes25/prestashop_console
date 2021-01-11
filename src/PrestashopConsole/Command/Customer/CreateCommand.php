@@ -23,7 +23,7 @@
 
 namespace PrestashopConsole\Command\Customer;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -67,7 +67,6 @@ class CreateCommand extends Command
         $lastname = $input->getOption('lastname');
         $id_shop = $input->getOption('id_shop');
 
-        /** @var $questionHelper $questionHelper */
         $questionHelper = $this->getHelper('question');
 
         if (null === $email || !Validate::isEmail($email)) {
@@ -75,7 +74,7 @@ class CreateCommand extends Command
         }
         if (null === $password || empty($password)) {
             $password = $questionHelper->ask($input, $output, $this->_getPasswordQuestion());
-            if (version_compare(_PS_VERSION_, 1.7, '<')) {
+            if (version_compare(_PS_VERSION_, '1.7', '<')) {
                 $password = Tools::encrypt($password);
             } else {
                 $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
@@ -103,11 +102,11 @@ class CreateCommand extends Command
             $customer->save();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>Unable to create customer');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>new customer '.$email.' created with success</info>');
-        return 0;
+        return self::RESPONSE_SUCCESS;
     }
 
     /**

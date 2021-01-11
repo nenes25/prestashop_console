@@ -2,7 +2,7 @@
 
 namespace PrestashopConsole\Command\Parameters\Generate;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,7 +43,9 @@ class RobotsTxtCommand extends Command
             $output->writeln("<info>robots.txt file generated with success</info>");
         } else {
             $output->writeln("<error>An error occurs while generating robots.txt file</error>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+
+        return self::RESPONSE_SUCCESS;
     }
 }

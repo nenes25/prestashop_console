@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Admin\User;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
@@ -29,6 +29,9 @@ use Db;
 
 class ListCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -37,6 +40,9 @@ class ListCommand extends Command
             ->setHelp('List admin users registered in employee table');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Function Employee::getEmployees() has not enough information , use db query instead
@@ -65,7 +71,9 @@ class ListCommand extends Command
             $table->render();
         } else {
             $output->writeln('<error>No admin user on this shop</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+
+        return self::RESPONSE_SUCCESS;
     }
 }

@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Dev;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -78,8 +78,10 @@ class AddIndexFilesCommand extends Command
             }
         } catch (\Exception $e) {
             $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
+            return self::RESPONSE_ERROR;
         }
         $output->writeln("<info>Index files added with success</info>");
+        return self::RESPONSE_SUCCESS;
     }
 
     /**

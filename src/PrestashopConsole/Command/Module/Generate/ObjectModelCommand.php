@@ -21,7 +21,7 @@
 namespace PrestashopConsole\Command\Module\Generate;
 
 use http\Exception\RuntimeException;
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,7 +42,7 @@ class ObjectModelCommand extends Command
     protected $_fileSystem;
 
     /**
-     * Configure command
+     * @inheritDoc
      */
     protected function configure()
     {
@@ -54,10 +54,7 @@ class ObjectModelCommand extends Command
     }
 
     /**
-     * Execute command
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return bool|int|void|null
+     * @inheritDoc
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -193,10 +190,11 @@ class ObjectModelCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to create model file</error>');
-            return false;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Model file generated</info>');
+        return self::RESPONSE_SUCCESS;
     }
 
 
@@ -233,6 +231,7 @@ class {object} extends ObjectModel
     /**
      * Create directories
      * @todo Add index.php files
+     * @return void
      */
     protected function _createDirectories()
     {
@@ -290,7 +289,8 @@ class {object} extends ObjectModel
 
     /**
      * Construct object sql install
-     * @param $sqlQueries
+     * @param array $sqlQueries
+     * @return string
      */
     protected function _getObjectInstall(array $sqlQueries)
     {
@@ -399,7 +399,7 @@ class {object} extends ObjectModel
 
     /**
      * Get ObjectModelField Type constant Key
-     * @param $type
+     * @param string $type
      * @return mixed
      */
     protected function _getObjectModelFieldType($type)
@@ -419,7 +419,7 @@ class {object} extends ObjectModel
 
     /**
      * Get field validation functions
-     * @param $fieldType
+     * @param string|null $fieldType
      * @return array
      * @todo Manage by field type if possible
      */

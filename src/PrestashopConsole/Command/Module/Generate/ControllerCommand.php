@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Module\Generate;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -54,6 +54,9 @@ class ControllerCommand extends Command
     protected $_fileSystem;
 
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -66,10 +69,7 @@ class ControllerCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return bool|int|void|null
-     * @throws \Exception
+     * @inheritDoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -81,12 +81,12 @@ class ControllerCommand extends Command
 
         if (!is_dir(_PS_MODULE_DIR_ . $this->_moduleName)) {
             $output->writeln('<error>Module not exists</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         if (!in_array($this->_controllerType, $this->_allowedControllerTypes)) {
             $output->writeln('<error>Unknown controller type</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         //Create all module directories
@@ -94,7 +94,7 @@ class ControllerCommand extends Command
             $this->_createDirectories();
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat controller directories</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
         $controllerClass = ucfirst($this->_moduleName) . ucfirst($this->_controllerName);
         if ($this->_controllerType == 'admin') {
@@ -118,10 +118,11 @@ class ControllerCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat controller directories</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
-        echo $output->writeln('<info>Controller ' . $this->_controllerName . ' created with sucess');
+        $output->writeln('<info>Controller ' . $this->_controllerName . ' created with sucess');
+        return self::RESPONSE_SUCCESS;
     }
 
 
@@ -129,6 +130,7 @@ class ControllerCommand extends Command
      * Generate controller directories
      * @throws \Exception
      * @todo Add add index.php security files
+     * @return void
      */
     protected function _createDirectories()
     {
@@ -208,6 +210,7 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
 
     /**
      * Generate Template for front Controller
+     * @return void
      */
     protected function _generateTemplate()
     {

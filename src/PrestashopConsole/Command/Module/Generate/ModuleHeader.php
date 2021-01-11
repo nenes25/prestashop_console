@@ -18,6 +18,9 @@ namespace PrestashopConsole\Command\Module\Generate;
 
 class ModuleHeader
 {
+    /**
+     * @return string
+     */
     public static function getHeader()
     {
         return

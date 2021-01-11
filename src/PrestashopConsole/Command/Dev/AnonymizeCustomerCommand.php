@@ -18,7 +18,7 @@ namespace PrestashopConsole\Command\Dev;
 
 use PrestaShopDatabaseException;
 use RuntimeException;
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -67,6 +67,7 @@ class AnonymizeCustomerCommand extends Command
         $method = '_anonymize' . ucfirst(strtolower($type));
         $message = $this->$method($input);
         $output->writeln($message);
+        return self::RESPONSE_SUCCESS;
     }
 
     /**

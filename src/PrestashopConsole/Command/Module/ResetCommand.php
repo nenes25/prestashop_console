@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Module;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -85,16 +85,17 @@ class ResetCommand extends Command
                         if (!$error) {
                             $output->writeln("<info>Module '$moduleName' reset with success</info>");
                         } else {
-                            return 1;
+                            return self::RESPONSE_ERROR;
                         }
                     } else {
                         $output->writeln("<comment>Module '$moduleName' is uninstalled</comment>");
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
-                    return 1;
+                    return self::RESPONSE_ERROR;
                 }
             }
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

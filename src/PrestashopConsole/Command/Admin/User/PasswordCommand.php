@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Admin\User;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -31,6 +31,9 @@ use Employee;
  */
 class PasswordCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -38,6 +41,9 @@ class PasswordCommand extends Command
             ->setDescription('Change admin user password');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
@@ -48,7 +54,7 @@ class PasswordCommand extends Command
         //Error if no employee exists with email
         if (! Employee::employeeExists($email)) {
             $output->writeln("<error>Employee with this email not exists");
-            return;
+            return self::RESPONSE_ERROR;
         }
 
         $passwordQuestion = new Question('admin password :', 'admin123456');
@@ -61,7 +67,7 @@ class PasswordCommand extends Command
 
         if ($password !== $passwordConfirm) {
             $output->writeln("<error>Password and password confirmation do not match");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $employee = new Employee();
@@ -72,8 +78,10 @@ class PasswordCommand extends Command
             $employee->save();
         } catch (\Exception $e) {
             $output->writeln("<error>".$e->getMessage()."</error>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
         $output->writeln("<info>Password changed with success for user ".$email."</info>");
+
+        return self::RESPONSE_SUCCESS;
     }
 }

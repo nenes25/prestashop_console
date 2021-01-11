@@ -44,5 +44,6 @@ class InfoCommand extends ListCommand
         $output->writeln("<error>No prestashop installation detected, please install it or place the console in the right place.</error>");
         $output->writeln("<error>Or run install:install to install a new prestashop website.</error>");
         $output->writeln("<error>All console commands will be available once a prestashop installation will be detected</error>");
+        return 1;
     }
 }

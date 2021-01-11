@@ -27,17 +27,19 @@
 
 namespace PrestashopConsole\Command\Cache;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PrestaShop\PrestaShop\Adapter\Cache\CacheClearer;
-use Tools;
 
 /**
  * Clear all caches commands
  */
 class ClearAllCommand extends Command
 {
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -45,15 +47,14 @@ class ClearAllCommand extends Command
                 ->setDescription('Clear all cache');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Tools::version_compare(_PS_VERSION_, '1.7.0.0', '>=')) {
-            $cacheClearer = new CacheClearer();
-            $cacheClearer->clearAllCaches();
-            $output->writeln("<info>All cache cleared with success</info>");
-        } else {
-            $output->writeln("<error>This command is only available for Prestashop > 1.7.0.0 </error>");
-            return 1;
-        }
+        $cacheClearer = new CacheClearer();
+        $cacheClearer->clearAllCaches();
+        $output->writeln("<info>All cache cleared with success</info>");
+        return self::RESPONSE_SUCCESS;
     }
 }

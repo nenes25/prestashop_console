@@ -20,12 +20,10 @@
 
 namespace PrestashopConsole\Command\Db;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use Db;
 
 class ExportCommand extends Command
 {
@@ -53,16 +51,14 @@ class ExportCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return bool|void
+     * @inheritDoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $type = $input->getOption('type');
@@ -71,7 +67,7 @@ class ExportCommand extends Command
 
         if (!in_array($type, $this->_allowedTypes)) {
             $output->writeln('<error>Unknow type option for export</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Export started</info>');
@@ -93,7 +89,7 @@ class ExportCommand extends Command
             $fileName = $this->_cleanFileName($fileName);
             if (false === $fileName) {
                 $output->writeln('<error>Incorrect export filename</error>');
-                return 1;
+                return self::RESPONSE_ERROR;
             }
         }
         //Defaut export file name
@@ -108,6 +104,7 @@ class ExportCommand extends Command
         $output->writeln('<info>' . $export . '</info>');
         $output->writeln('<info>Export ended</info>');
 
+        return self::RESPONSE_SUCCESS;
     }
 
 
@@ -235,7 +232,7 @@ class ExportCommand extends Command
 
     /**
      * Clean fileName to avoid error and Xss injection
-     * @param $fileName
+     * @param string $fileName
      * @return string|bool
      */
     protected function _cleanFileName($fileName)

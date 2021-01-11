@@ -16,7 +16,7 @@
 
 namespace PrestashopConsole\Command\Module\Generate;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,6 +36,9 @@ class UpgradeCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -45,6 +48,9 @@ class UpgradeCommand extends Command
             ->addArgument('moduleVersion', InputArgument::REQUIRED, 'module version');
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $moduleName = $input->getArgument('moduleName');
@@ -54,20 +60,20 @@ class UpgradeCommand extends Command
 
         if (!$this->_isValidModuleVersion($moduleVersion)) {
             $output->writeln('<error>Module version is not valid</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
         $convertedVersion = str_replace('.', '_', $moduleVersion);
 
         if (!is_dir(_PS_MODULE_DIR_ . $moduleName)) {
             $output->writeln('<error>Module not exists</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         try {
             $this->_createDirectories();
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat ugrade directory</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $defaultContent = $this->_getDefaultContent();
@@ -80,15 +86,16 @@ class UpgradeCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat upgrade file</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Update file generated</info>');
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Check if module version is in correct format
-     * @param $moduleVersion
+     * @param string $moduleVersion
      * @return bool
      */
     protected function _isValidModuleVersion($moduleVersion)
@@ -124,6 +131,7 @@ function upgrade_module_{version}($module)
     /**
      * Create upgrade directories
      * @todo Add index.php files
+     * @return void
      */
     protected function _createDirectories()
     {

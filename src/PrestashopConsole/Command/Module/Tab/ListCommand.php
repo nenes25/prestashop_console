@@ -20,7 +20,7 @@
 
 namespace PrestashopConsole\Command\Module\Tab;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -70,7 +70,8 @@ class ListCommand extends Command
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
-            return 1;
+            return self::RESPONSE_ERROR;
         }
+        return self::RESPONSE_SUCCESS;
     }
 }

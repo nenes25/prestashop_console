@@ -26,7 +26,7 @@
 
 namespace PrestashopConsole\Command\Configuration;
 
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,6 +38,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class MassCommand extends Command
 {
+    /** @var array */
     protected $allowedCalls = [
         'Configuration' => [
             'updateValue',
@@ -47,6 +48,9 @@ class MassCommand extends Command
         ]];
 
 
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
@@ -55,6 +59,9 @@ class MassCommand extends Command
             ->addOption('config', null, InputOption::VALUE_REQUIRED, 'Yaml definition file');
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $yamlFile = $input->getOption('config');
@@ -101,12 +108,14 @@ class MassCommand extends Command
                 }
             } else {
                 $output->writeln("<error>Object '$callObjName' is not allowed</error>");
+                return self::RESPONSE_ERROR;
             }
         } else {
             $output->writeln("<error>Yaml definition file: '$yamlFile' doesnt exist!</error>");
-            return 1;
+            return self::RESPONSE_ERROR;
         }
 
         $output->writeln("<info>Definitions from file '$yamlFile' processed successfully!</info>");
+        return self::RESPONSE_SUCCESS;
     }
 }
