@@ -3652,7 +3652,7 @@ Generate module controller file
 
 ### Usage
 
-* `module:generate:controller [-t|--template TEMPLATE] [--] <moduleName> <controllerName> <controllerType>`
+* `module:generate:controller [-t|--template TEMPLATE] [-m|--model MODEL] [--] <moduleName> <controllerName> <controllerType>`
 
 Generate module controller file
 
@@ -3692,6 +3692,15 @@ generate template
 * Is value required: yes
 * Is multiple: no
 * Default: `true`
+
+#### `--model|-m`
+
+Model for admin controller
+
+* Accept value: yes
+* Is value required: yes
+* Is multiple: no
+* Default: `NULL`
 
 #### `--help|-h`
 
