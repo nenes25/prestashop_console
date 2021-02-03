@@ -3,5 +3,6 @@ config.xml
 /src/vendor/
 /nbproject/
 /.github/config.php
+/.github/*.sh
 console_dev.php
 /phpstan.neon

@@ -72,7 +72,7 @@ class CreateCommand extends Command
         if (null === $email || !Validate::isEmail($email)) {
             $email = $questionHelper->ask($input, $output, $this->_getEmailQuestion());
         }
-        if (null === $password || empty($password)) {
+        if (null === $password || empty($password) || !Validate::isPlaintextPassword($password)) {
             $password = $questionHelper->ask($input, $output, $this->_getPasswordQuestion());
             if (version_compare(_PS_VERSION_, '1.7', '<')) {
                 $password = Tools::encrypt($password);
@@ -81,10 +81,10 @@ class CreateCommand extends Command
                 $password = $hashing->hash($password);
             }
         }
-        if (null === $firstname || !Validate::isCustomerName($firstname)) {
+        if (null === $firstname || !$this->validateCustomerName($firstname)) {
             $firstname = $questionHelper->ask($input, $output, $this->_getFirstnameQuestion());
         }
-        if (null === $lastname || !Validate::isCustomerName($lastname)) {
+        if (null === $lastname || !$this->validateCustomerName($lastname)) {
             $lastname = $questionHelper->ask($input, $output, $this->_getLastNameQuestion());
         }
 
@@ -105,7 +105,7 @@ class CreateCommand extends Command
             return self::RESPONSE_ERROR;
         }
 
-        $output->writeln('<info>new customer '.$email.' created with success</info>');
+        $output->writeln('<info>new customer ' . $email . ' created with success</info>');
         return self::RESPONSE_SUCCESS;
     }
 
@@ -135,8 +135,8 @@ class CreateCommand extends Command
         $question = new Question('<question>customer password :</question>');
         $question->setHidden(true);
         $question->setValidator(function ($answer) {
-            if (null === $answer) {
-                throw new RuntimeException("Invalid email");
+            if (null === $answer || !Validate::isPlaintextPassword($answer) ) {
+                throw new RuntimeException("Invalid password");
             }
             return $answer;
         });
@@ -151,7 +151,7 @@ class CreateCommand extends Command
     {
         $question = new Question('<question>customer firstname :</question>');
         $question->setValidator(function ($answer) {
-            if (null !== $answer && !Validate::isCustomerName($answer)) {
+            if (null !== $answer && !$this->validateCustomerName($answer)) {
                 throw new RuntimeException("Invalid firstname");
             }
             return $answer;
@@ -167,11 +167,23 @@ class CreateCommand extends Command
     {
         $question = new Question('<question>customer lastname :</question>');
         $question->setValidator(function ($answer) {
-            if (null !== $answer && !Validate::isCustomerName($answer)) {
+            if (null !== $answer && !$this->validateCustomerName($answer)) {
                 throw new RuntimeException("Invalid lastname");
             }
             return $answer;
         });
         return $question;
+    }
+
+    /**
+     * Validate customer name depending of available validate method
+     * Assure compatibility with prestashop 1.7.5
+     * @param string $name
+     * @return bool
+     */
+    protected function validateCustomerName($name)
+    {
+        return method_exists('Validate', 'isCustomerName') ?
+            Validate::isCustomerName($name) : Validate::isName($name);
     }
 }
