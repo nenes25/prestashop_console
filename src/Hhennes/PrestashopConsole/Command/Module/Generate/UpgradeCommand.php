@@ -109,6 +109,11 @@ if (!defined(\'_PS_VERSION_\')) {
     exit;
 }
 
+/**
+ * Upgrade module {version} description
+ * @param Module $module
+ * @return bool
+ */
 function upgrade_module_{version}($module)
 {
     //@Todo generate content
