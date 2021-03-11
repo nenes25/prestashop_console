@@ -27,17 +27,47 @@ use Db;
 
 class AnonymizeCustomerCommand extends Command
 {
-    protected $_allowedTypes = array('all', 'customers', 'addresses', 'newsletter');
+    /**
+     * @var array Allowed types of anonymizations
+     */
+    protected $_allowedTypes = array('all', 'customers', 'addresses', 'newsletter', 'customer_thread');
+
+    /**
+     * @var null|string List of email to not anonymize
+     */
     protected $_excludedEmail = null;
 
+    /**
+     * @var string Fake domain email
+     */
+    protected $_fakeEmailsDomain = 'anonymized-email.com';
+
+    /**
+     * @inheritDoc
+     */
     protected function configure()
     {
         $this
             ->setName('dev:anonymize:customer')
             ->setDescription('Anonymize Customer information')
-            ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'allowed values all|customers|addresses|newsletter')
-            ->addOption('exclude-emails', null, InputOption::VALUE_OPTIONAL, 'emails to exclude separated by commas')
-            ->addOption('names', null, InputOption::VALUE_OPTIONAL, 'anonymize names (default none ) use only for customers')
+            ->addOption(
+                'type',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'allowed values '.implode(' | ', $this->_allowedTypes)
+            )
+            ->addOption(
+                'exclude-emails',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'emails to exclude separated by commas'
+            )
+            ->addOption(
+                'names',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'anonymize names (default no ) use only for customers'
+            )
             ->setHelp('This command will anonymize customer related data (lastname,firstname,email ) without erasing them');
     }
 
@@ -64,7 +94,7 @@ class AnonymizeCustomerCommand extends Command
             $type = 'customers';
         }
 
-        $method = '_anonymize' . ucfirst(strtolower($type));
+        $method = '_anonymize' . ucfirst(strtolower(str_replace('_', '', $type)));
         $message = $this->$method($input);
         $output->writeln($message);
     }
@@ -77,9 +107,10 @@ class AnonymizeCustomerCommand extends Command
     protected function _anonymizeAll(InputInterface $input)
     {
         $message = '';
-        $message .= $this->_anonymizeCustomers($input)."\n";
-        $message .= $this->_anonymizeAddresses($input)."\n";
-        $message .= $this->_anonymizeNewsletter($input);
+        $message .= $this->_anonymizeCustomers($input) . "\n";
+        $message .= $this->_anonymizeAddresses($input) . "\n";
+        $message .= $this->_anonymizeNewsletter($input) . "\n";
+        $message .= $this->_anonymizeCustomerthread($input);
 
         return $message;
     }
@@ -128,7 +159,8 @@ class AnonymizeCustomerCommand extends Command
     {
         $sqlCond = '';
         if ($this->_excludedEmail) {
-            $sqlCond .= 'WHERE id_customer NOT IN ( SELECT id_customer FROM ' . _DB_PREFIX_ . 'customer WHERE email IN (';
+            $sqlCond .= 'WHERE id_customer NOT IN ( 
+            SELECT id_customer FROM ' . _DB_PREFIX_ . 'customer WHERE email IN (';
             $emails = explode(',', $this->_excludedEmail);
             foreach ($emails as $email) {
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -140,7 +172,11 @@ class AnonymizeCustomerCommand extends Command
         }
 
         try {
-            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
+            Db::getInstance()->execute(
+                "UPDATE " . _DB_PREFIX_ . "address 
+                    SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' "
+                . $sqlCond
+            );
         } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
@@ -175,12 +211,49 @@ class AnonymizeCustomerCommand extends Command
         }
 
         try {
-            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table . " SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlCond);
+            Db::getInstance()->execute(
+                "UPDATE " . _DB_PREFIX_ . $table . " 
+                    SET email = CONCAT(MD5(email),'@" . $this->_fakeEmailsDomain . "') "
+                . $sqlCond
+            );
         } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
 
         return '<info>Newsletter subscriber anonymized with success</info>';
+    }
+
+    /**
+     * Anonymize customerThread data
+     * @param InputInterface $input
+     * @return string
+     */
+    protected function _anonymizeCustomerthread(InputInterface $input)
+    {
+        $sqlCond = '';
+        if ($this->_excludedEmail) {
+            $sqlCond .= 'WHERE email NOT IN (';
+            $emails = explode(',', $this->_excludedEmail);
+            foreach ($emails as $email) {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $sqlCond .= "'" . pSQL($email) . "',";
+                }
+            }
+            $sqlCond = rtrim($sqlCond, ',');
+            $sqlCond .= ')';
+        }
+
+        try {
+            Db::getInstance()->execute(
+                "UPDATE " . _DB_PREFIX_ . "customer_thread 
+                    SET email = CONCAT(MD5(email),'@" . $this->_fakeEmailsDomain . "') "
+                . $sqlCond
+            );
+        } catch (PrestaShopDatabaseException $e) {
+            return '<error>' . strip_tags($e->getMessage()) . '</error>';
+        }
+
+        return '<info>Customer thread anonymized with success</info>';
     }
 
 
@@ -221,6 +294,17 @@ class AnonymizeCustomerCommand extends Command
         });
 
         return $emailQuestion;
+    }
+
+    /**
+     * Randomize email for db integration
+     * @param string $email
+     * @return string
+     */
+    protected function _randomizeEmail($email)
+    {
+        $randomEmail = md5(sha1($email) . $this->_randomString());
+        return $randomEmail . '@' . $this->_fakeEmailsDomain;
     }
 
     /**

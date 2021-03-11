@@ -1979,7 +1979,7 @@ This command will anonymize customer related data (lastname,firstname,email ) wi
 
 #### `--type`
 
-allowed values all|customers|addresses|newsletter
+allowed values all | customers | addresses | newsletter | customer_thread
 
 * Accept value: yes
 * Is value required: no
@@ -1997,7 +1997,7 @@ emails to exclude separated by commas
 
 #### `--names`
 
-anonymize names (default none ) use only for customers
+anonymize names (default no ) use only for customers
 
 * Accept value: yes
 * Is value required: no

@@ -46,7 +46,7 @@ then
     echo $PHP73VALID
   fi
 
-  exit 1
+  #exit 0
 fi
 
 #Dev file not versionned
