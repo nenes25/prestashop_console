@@ -26,6 +26,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class ControllerCommand
@@ -270,8 +272,16 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
      */
     protected function _getAdminModelContent()
     {
-        if ( is_file(_PS_MODULE_DIR_.$this->_moduleName.'/classes/'.$this->_model.'.php')){
+        if (is_file(_PS_MODULE_DIR_.$this->_moduleName.'/classes/'.$this->_model.'.php')) {
             include_once _PS_MODULE_DIR_.$this->_moduleName.'/classes/'.$this->_model.'.php';
+
+            $reflexionClass = new ReflectionClass($this->_model);
+            try {
+                $definition = $reflexionClass->getStaticPropertyValue('definition');
+                $fields = $definition['fields'];
+            } catch (ReflectionException $e) {
+                return '';
+            }
         } else {
             return '';
         }
@@ -280,9 +290,9 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         public function __construct(){
         
             $this->bootstrap  = true;
-            $this->table      = "'.$this->_model::$definition['table'].'";
-            $this->identifier = "'.$this->_model::$definition['primary'].'";
-            $this->className  = "'.$this->_model.'";
+            $this->table      = '.$this->_model.'::$definition[\'table\'];
+            $this->identifier = '.$this->_model.'::$definition[\'primary\'];
+            $this->className  = "'.$this->_model.'::class";
             $this->lang       = true; //@Todo Gerer ce param
             $this->context = Context::getContext();
             $this->addRowAction(\'edit\');
@@ -290,8 +300,8 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         
             $this->fields_list = [';
 
-        foreach ( $this->_model::$definition['fields'] as $key => $params){
-            ( isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
+        foreach ($fields as $key => $params) {
+            (isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
             $content .= ' "'.$key.'"=> [
                 "title" => $this->l("'.$key.'"),
                 "lang" => '.$lang.',
@@ -316,9 +326,9 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
              ],
              //@Todo : Automaticaly detect types
              "input" => [';
-        foreach ( $this->_model::$definition['fields'] as $key => $params){
-            ( isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
-            ( isset($params['required']) && $params['required'] === true) ? $required = 'true' : $required = 'false';
+        foreach ($fields as $key => $params) {
+            (isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
+            (isset($params['required']) && $params['required'] === true) ? $required = 'true' : $required = 'false';
             $content .= '
                [
                     "type" => "text",
@@ -371,6 +381,5 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         ';
 
         return $content;
-
     }
 }
