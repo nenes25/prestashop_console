@@ -1,0 +1,11 @@
+<phpunit
+        bootstrap="bootstrap.php"
+>
+    <php>
+    </php>
+    <testsuites>
+        <testsuite name="prestashopConsole">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

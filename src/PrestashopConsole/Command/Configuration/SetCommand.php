@@ -20,7 +20,9 @@
 
 namespace PrestashopConsole\Command\Configuration;
 
+use Context;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,8 +44,10 @@ class SetCommand extends Command
     }
 
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
+        Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
+
         $name = $input->getArgument('name');
         $value = $input->getArgument('value');
         Configuration::updateValue($name, $value);

@@ -6,3 +6,5 @@ config.xml
 /.github/*.sh
 console_dev.php
 /phpstan.neon
+/tests/.phpunit.result.cache
+/tests/phpunit.xml
