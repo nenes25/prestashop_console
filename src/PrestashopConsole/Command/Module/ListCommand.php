@@ -22,24 +22,23 @@
 
 namespace PrestashopConsole\Command\Module;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
 
 /**
  * Commande qui permet de récupérer la liste des modules installé
- *
  */
 class ListCommand extends Command
 {
     const AVAILABLE_FILTERS = [
-        "active",
-        "installed",
-        "native",
-        "trusted"
+        'active',
+        'installed',
+        'native',
+        'trusted',
     ];
 
     protected function configure()
@@ -47,7 +46,7 @@ class ListCommand extends Command
         $this
             ->setName('module:list')
             ->setDescription('Get modules list');
-        // Add all filters as 2 different options : 
+        // Add all filters as 2 different options :
         // One to filter only the modules with the filter attribute (named as the filter)
         // One to filter only the modules with the filter attribute as false (named as the 'no-filter')
         foreach (ListCommand::AVAILABLE_FILTERS as $filter) {
@@ -63,7 +62,7 @@ class ListCommand extends Command
                 InputOption::VALUE_NONE,
                 sprintf('List only not %s modules', $filter)
             );
-        };
+        }
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -95,26 +94,26 @@ class ListCommand extends Command
         // Add the filter parameter native with a specific condition (PrestaShop must be in the author of the module)
         // We consider here that this loop will not cost a lot in terms of performance and the code is much cleaner with it.
         foreach ($modules as $module) {
-            $module->native = (false !== strpos($module->author, "PrestaShop"));
+            $module->native = (false !== strpos($module->author, 'PrestaShop'));
         }
 
         // Apply filters for each found option
         foreach (ListCommand::AVAILABLE_FILTERS as $filter) {
             if ($input->getOption($filter)) {
-                $modules = array_filter($modules, function ($module) use($filter) {
-                    return (bool)$module->{$filter};
+                $modules = array_filter($modules, function ($module) use ($filter) {
+                    return (bool) $module->{$filter};
                 });
             }
-            if ($input->getOption("no-" . $filter)) {
-                $modules = array_filter($modules, function ($module) use($filter) {
-                    return ! (bool)$module->{$filter};
+            if ($input->getOption('no-' . $filter)) {
+                $modules = array_filter($modules, function ($module) use ($filter) {
+                    return !(bool) $module->{$filter};
                 });
             }
         }
         // sort by module name
-        usort($modules, array($this, "cmp"));
+        usort($modules, [$this, 'cmp']);
 
-        $output->writeln("<info>Currently module on disk:</info>");
+        $output->writeln('<info>Currently module on disk:</info>');
 
         $nr = 0;
         $table = new Table($output);
@@ -123,20 +122,22 @@ class ListCommand extends Command
             $table->addRow([
                 $module->name,
                 $module->version,
-                ((bool)($module->installed) ? 'true' : 'false'),
-                ((bool)($module->active) ? 'true' : 'false')
+                ((bool) ($module->installed) ? 'true' : 'false'),
+                ((bool) ($module->active) ? 'true' : 'false'),
             ]);
-            $nr++;
+            ++$nr;
         }
 
         $table->render();
         $output->writeln("<info>Total modules on disk: $nr</info>");
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * @param Module $a
      * @param Module $b
+     *
      * @return int
      */
     private function cmp($a, $b)

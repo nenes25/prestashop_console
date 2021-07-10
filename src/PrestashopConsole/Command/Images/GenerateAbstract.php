@@ -34,11 +34,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class GenerateAbstract extends Command
 {
-
     /** @var type string Override by subclasses */
     const IMAGE_TYPE = '';
 
@@ -99,12 +97,12 @@ abstract class GenerateAbstract extends Command
             if (count($this->errors)) {
                 $warningMessages = array_merge($warningMessages, $this->errors);
             }
-            $output->writeln('<error>'.implode("\n", array_unique($warningMessages)).'</error>');
+            $output->writeln('<error>' . implode("\n", array_unique($warningMessages)) . '</error>');
 
             return self::RESPONSE_ERROR;
         }
 
-        $output->writeln('<info>Thumbnails generated with success for ' . static::IMAGE_TYPE.'</info>');
+        $output->writeln('<info>Thumbnails generated with success for ' . static::IMAGE_TYPE . '</info>');
     }
 
     /**
@@ -375,6 +373,7 @@ abstract class GenerateAbstract extends Command
     /**
      * @param string $dir
      * @param string|null $type
+     *
      * @throws \PrestaShopDatabaseException
      */
     protected function regenerateWatermark($dir, $type = null)

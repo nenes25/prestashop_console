@@ -35,7 +35,10 @@
   },
   "scripts": {
     "header-stamp": [
-      "@php ./src/vendor/bin/header-stamp --exclude=src/vendor --extensions=php --license='./.devtools/licence.txt'"
+      "@php ./src/vendor/bin/header-stamp --exclude=\"src/vendor,.github,bin,examples\" --extensions=php --license='./.devtools/licence.txt'"
+    ],
+    "cs-fixer": [
+      "@php ./src/vendor/bin/php-cs-fixer fix"
     ],
     "test": [
       "@php -d date.timezone=UTC ./src/vendor/bin/phpunit -c tests/phpunit.xml tests/PrestashopConsole/"

@@ -20,13 +20,13 @@
 
 namespace PrestashopConsole\Command\Module;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
-use PrestaShopException;
 
 class ResetCommand extends Command
 {
@@ -92,10 +92,12 @@ class ResetCommand extends Command
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
+
                     return self::RESPONSE_ERROR;
                 }
             }
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

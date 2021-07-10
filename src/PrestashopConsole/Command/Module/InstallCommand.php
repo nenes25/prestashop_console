@@ -20,12 +20,12 @@
 
 namespace PrestashopConsole\Command\Module;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
-use PrestaShopException;
 
 class InstallCommand extends Command
 {
@@ -51,10 +51,12 @@ class InstallCommand extends Command
                         try {
                             if (!$module->install()) {
                                 $output->writeln("<error>Cannot install module: '$moduleName'</error>");
+
                                 return self::RESPONSE_ERROR;
                             }
                         } catch (PrestaShopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->displayMessage()</error>");
+
                             return self::RESPONSE_ERROR;
                         }
                         $output->writeln("<info>Module '$moduleName' installed with success</info>");
@@ -63,10 +65,12 @@ class InstallCommand extends Command
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
+
                     return self::RESPONSE_ERROR;
                 }
             }
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

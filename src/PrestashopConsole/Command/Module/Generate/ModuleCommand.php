@@ -17,9 +17,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
-
 
 namespace PrestashopConsole\Command\Module\Generate;
 
@@ -30,18 +28,17 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class ModuleCommand
  * This command will create a new module file
+ *
  * @todo : Validate each options + manage errors + security
- * @package Hhennes\PrestashopConsole\Command\Module\Generate
  */
 class ModuleCommand extends Command
 {
-
     /** @var string Module Name */
     protected $_moduleName;
 
@@ -49,7 +46,7 @@ class ModuleCommand extends Command
     protected $_fileSystem;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -71,7 +68,7 @@ class ModuleCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -86,6 +83,7 @@ class ModuleCommand extends Command
                 $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $moduleName, 0775);
             } catch (IOException $e) {
                 $output->writeln('<error>Unable to creat controller directories</error>');
+
                 return self::RESPONSE_ERROR;
             }
         }
@@ -103,13 +101,13 @@ class ModuleCommand extends Command
                 $output,
                 new ChoiceQuestion(
                     '<question>Implement widget Interface :</question>',
-                    array(
+                    [
                         'No',
                         'Yes',
-                    )
+                    ]
                 )
             );
-            $widgetAnswer == "No" ? $widget = null : $widget = true;
+            $widgetAnswer == 'No' ? $widget = null : $widget = true;
 
             if ($hookList) {
                 $templateAnswer = $helper->ask(
@@ -117,13 +115,13 @@ class ModuleCommand extends Command
                     $output,
                     new ChoiceQuestion(
                         '<question>Generate templates for content hooks :</question>',
-                        array(
+                        [
                             'No',
                             'Yes',
-                        )
+                        ]
                     )
                 );
-                $templateAnswer == "No" ? $templates = null : $templates = true;
+                $templateAnswer == 'No' ? $templates = null : $templates = true;
             } else {
                 $templates = null;
             }
@@ -140,20 +138,20 @@ class ModuleCommand extends Command
 
         //General Variables
         $defaultContent = str_replace(
-            array(
+            [
                 '{moduleName}',
                 '{moduleClassName}',
                 '{author}',
                 '{moduleDisplayName}',
                 '{moduleDescription}',
-            ),
-            array(
+            ],
+            [
                 $moduleName,
                 ucfirst($moduleName),
                 $author,
                 $displayName,
                 $description,
-            ),
+            ],
             $defaultContent
         );
 
@@ -161,30 +159,33 @@ class ModuleCommand extends Command
         if ($widget) {
             $defaultContent = $this->_replaceWidgetContent($defaultContent);
         } else {
-            $defaultContent = str_replace(array('{useWidget}', '{widgetImplement}', '{widgetFuctions}'), '', $defaultContent);
+            $defaultContent = str_replace(['{useWidget}', '{widgetImplement}', '{widgetFuctions}'], '', $defaultContent);
         }
 
         if ($hookList) {
             $defaultContent = $this->_replaceHookContent($defaultContent, $hookList, $templates);
         } else {
-            $defaultContent = str_replace(array('{registerHooks}', '{hookfunctions}'), '', $defaultContent);
+            $defaultContent = str_replace(['{registerHooks}', '{hookfunctions}'], '', $defaultContent);
         }
 
         $this->_fileSystem->dumpFile(_PS_MODULE_DIR_ . $moduleName . '/' . $moduleName . '.php', $defaultContent);
         $output->writeln('<info>Module generated with success</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Default module content file
+     *
      * @todo Format content
+     *
      * @return string
      */
     protected function _getDefaultContent()
     {
         return
 '<?php
-'.ModuleHeader::getHeader().'
+' . ModuleHeader::getHeader() . '
 if (!defined(\'_PS_VERSION_\')) {
     exit;
 }
@@ -232,18 +233,20 @@ public function install()
 
     /**
      * Add Widget Functions
+     *
      * @param string $defaultContent
+     *
      * @return mixed
      */
     protected function _replaceWidgetContent($defaultContent)
     {
         return str_replace(
-            array(
+            [
             '{useWidget}',
             '{widgetImplement}',
-            '{widgetFuctions}'
-        ),
-            array(
+            '{widgetFuctions}',
+        ],
+            [
                 'use PrestaShop\PrestaShop\Core\Module\WidgetInterface;',
                 'implements WidgetInterface',
                 ' public function renderWidget($hookName = null, array $configuration = [])
@@ -254,17 +257,19 @@ public function install()
     public function getWidgetVariables($hookName = null, array $configuration = [])
     {
      //@TODO Implements getWidgetVariables
-    }'
-            ),
+    }',
+            ],
             $defaultContent
         );
     }
 
     /**
      * Add Hook Contents
+     *
      * @param mixed $defaultContent
      * @param mixed $hookList comma separated list of module hooks
      * @param bool $generateTemplates
+     *
      * @return mixed
      */
     protected function _replaceHookContent($defaultContent, $hookList, $generateTemplates)
@@ -275,52 +280,56 @@ public function install()
             $hookFunctions = '';
             foreach ($hooks as $hook) {
                 if ($generateTemplates && preg_match('#^display#', $hook)) {
-                    $hookContent = 'return $this->display(__FILE__,"views/templates/hook/'.$hook.'.tpl");';
+                    $hookContent = 'return $this->display(__FILE__,"views/templates/hook/' . $hook . '.tpl");';
                     $this->_generateTemplate($hook);
                 } else {
                     $hookContent = '//@Todo implements function';
                 }
 
-
                 $hookFunctions .= '
 /**
- * Function '.$hook.'description 
+ * Function ' . $hook . 'description 
  * @param array $params
  * @return mixed
  */
 public function hook' . ucfirst($hook) . '($params){
-    '.$hookContent.'
+    ' . $hookContent . '
 }' . "\n\n";
             }
             $defaultContent = str_replace(
-                array('{registerHooks}', '{hookfunctions}'),
-                array($registerHook, $hookFunctions),
+                ['{registerHooks}', '{hookfunctions}'],
+                [$registerHook, $hookFunctions],
                 $defaultContent
             );
         }
+
         return $defaultContent;
     }
 
     /**
      * Generate displayHooks Templates
+     *
      * @param string $hookName
+     *
      * @return void
      */
-    protected function _generateTemplate($hookName) :void
+    protected function _generateTemplate($hookName): void
     {
         $this->_createDirectories();
 
-        $defaultContent = '<p>Content of hook '.$hookName.' generated by Prestashop Console</p>';
-        $fileName = _PS_MODULE_DIR_ . $this->_moduleName. '/views/templates/hook/'.$hookName.'.tpl';
+        $defaultContent = '<p>Content of hook ' . $hookName . ' generated by Prestashop Console</p>';
+        $fileName = _PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook/' . $hookName . '.tpl';
         $this->_fileSystem->dumpFile($fileName, $defaultContent);
     }
 
     /**
      * Create module controllers directories
+     *
      * @Todo : generate index.php files
+     *
      * @return void
      */
-    protected function _createDirectories() :void
+    protected function _createDirectories(): void
     {
         if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook')) {
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/hook', 0775);

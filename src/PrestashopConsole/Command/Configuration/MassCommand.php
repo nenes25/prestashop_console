@@ -17,7 +17,6 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
 
 namespace PrestashopConsole\Command\Configuration;
@@ -30,7 +29,6 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Commands: Mass configuration operations based on yaml definition
- *
  */
 class MassCommand extends Command
 {
@@ -40,12 +38,11 @@ class MassCommand extends Command
             'updateValue',
             'deleteByName',
             'updateGlobalValue',
-            'set'
-        ]];
-
+            'set',
+        ], ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -56,12 +53,11 @@ class MassCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $yamlFile = $input->getOption('config');
-        
 
         //check if file exist
         if (file_exists($yamlFile)) {
@@ -76,16 +72,13 @@ class MassCommand extends Command
                 $callObject = new $callObjName();
 
                 foreach ($definitions[$callObjName] as $method => $params) {
-
                     //check if method of object is allowed to call
                     if (in_array($method, array_values($this->allowedCalls[$callObjName]))) {
-
                         //check if configured method exist
                         if (method_exists($callObject, $method)) {
-
                             //if single params for one method convert to indexed array
                             if (isset($params['key'])) {
-                                $params = array($params);
+                                $params = [$params];
                             }
 
                             //call the same method with different params
@@ -93,7 +86,7 @@ class MassCommand extends Command
                                 $firstValue = reset($callParams);
                                 $firstKey = key($callParams);
                                 $output->writeln("<comment>Calling $callObjName.$method($firstKey => $firstValue [...])</comment>");
-                                call_user_func_array(array($callObject, $method), array_values($callParams));
+                                call_user_func_array([$callObject, $method], array_values($callParams));
                             }
                         } else {
                             $output->writeln("<error>Method '$callObjName.$method' doesnt exist</error>");
@@ -104,14 +97,17 @@ class MassCommand extends Command
                 }
             } else {
                 $output->writeln("<error>Object '$callObjName' is not allowed</error>");
+
                 return self::RESPONSE_ERROR;
             }
         } else {
             $output->writeln("<error>Yaml definition file: '$yamlFile' doesnt exist!</error>");
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln("<info>Definitions from file '$yamlFile' processed successfully!</info>");
+
         return self::RESPONSE_SUCCESS;
     }
 }

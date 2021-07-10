@@ -28,7 +28,6 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Commande qui permet d'ajouter des fichiers index.php dans les dossiers manquants
- *
  */
 class AddIndexFilesCommand extends Command
 {
@@ -45,47 +44,50 @@ class AddIndexFilesCommand extends Command
     }
 
     /**
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dir = $input->getArgument('dir');
         try {
-            if (!is_dir(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir)) {
+            if (!is_dir(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir)) {
                 throw new \Exception('directory doesn\'t exists');
             }
 
             $finder = new Finder();
 
             //List all directories
-            $directories = $finder->directories()->in(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir);
+            $directories = $finder->directories()->in(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir);
 
             $i = 0;
             foreach ($directories as $directory) {
                 ${$i} = new Finder();
                 //Check if index.php file exists in directory
-                $indexFile = ${$i}->files()->in((string)$directory)->depth('==0')->name('index.php');
+                $indexFile = ${$i}->files()->in((string) $directory)->depth('==0')->name('index.php');
                 //Create if if not
                 if (!sizeof($indexFile)) {
-                    $fp = fopen($directory.DIRECTORY_SEPARATOR.'index.php', 'w+');
+                    $fp = fopen($directory . DIRECTORY_SEPARATOR . 'index.php', 'w+');
                     fputs($fp, $this->_getIndexContent());
                     fclose($fp);
                 }
-                $i++;
+                ++$i;
             }
         } catch (\Exception $e) {
-            $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
+            $output->writeln('<info>ERROR:' . $e->getMessage() . '</info>');
+
             return self::RESPONSE_ERROR;
         }
-        $output->writeln("<info>Index files added with success</info>");
+        $output->writeln('<info>Index files added with success</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Get index.php content file
+     *
      * @return string
      */
     protected function _getIndexContent()

@@ -20,23 +20,22 @@
 
 namespace PrestashopConsole\Command\Dev\Cron;
 
+use Db;
+use Hook;
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
-use Db;
 use Tools;
-Use Hook;
 
 class RunCronCommand extends Command
 {
-
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -51,13 +50,14 @@ class RunCronCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
+
                 return self::RESPONSE_ERROR;
             }
 
@@ -65,32 +65,37 @@ class RunCronCommand extends Command
             $output->writeln($this->_runTask($cronjob_id));
         } else {
             $output->writeln('<error>' . $this->_cronModuleName . ' is not installed');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Run task
+     *
      * @param int $cronjob_id
+     *
      * @return string
+     *
      * @throws \PrestaShopException
      */
     protected function _runTask($cronjob_id)
     {
-        $cronJob = Db::getInstance()->getRow("SELECT id_module,task FROM " . _DB_PREFIX_ . "cronjobs WHERE id_cronjob=" . (int) $cronjob_id);
+        $cronJob = Db::getInstance()->getRow('SELECT id_module,task FROM ' . _DB_PREFIX_ . 'cronjobs WHERE id_cronjob=' . (int) $cronjob_id);
 
         if (!$cronJob) {
             return '<error>Unknow cronjob_id</error>';
         }
 
         if ($cronJob['id_module'] !== null) {
-            Hook::exec('actionCronJob', array(), $cronJob['id_module']);
+            Hook::exec('actionCronJob', [], $cronJob['id_module']);
         } else {
             Tools::file_get_contents(urldecode($cronJob['task']), false);
         }
 
-        Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "cronjobs SET `updated_at` = NOW() WHERE `id_cronjob` =" . (int) $cronjob_id);
+        Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . 'cronjobs SET `updated_at` = NOW() WHERE `id_cronjob` =' . (int) $cronjob_id);
 
         return '<info>Cron job run with success</info>';
     }

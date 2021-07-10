@@ -27,7 +27,7 @@ class PrestashopConsoleApplication extends BaseApplication
 {
     const APP_NAME = 'prestashopConsole';
     // Execution of the console from a phar archive
-    const EXECUTION_MODE_PHAR = "phar";
+    const EXECUTION_MODE_PHAR = 'phar';
     // Namespace of the Commands classes
     const COMMANDS_NAMESPACE = 'PrestashopConsole\\Command';
 
@@ -39,16 +39,19 @@ class PrestashopConsoleApplication extends BaseApplication
 
     /**
      * Set RunAs Mode
+     *
      * @param string $mode
+     *
      * @return void
      */
-    public function setRunAs($mode) :void
+    public function setRunAs($mode): void
     {
         $this->_runAs = $mode;
     }
 
     /**
      * Get RunAs
+     *
      * @return string
      */
     public function getRunAs()
@@ -59,22 +62,21 @@ class PrestashopConsoleApplication extends BaseApplication
     /**
      * Initialize the console application for an execution in phar mode.
      *
-     * @param string $archiveLocation : The location of the phar archive currently executed.
+     * @param string $archiveLocation : The location of the phar archive currently executed
      *
      * @return void
+     *
      * @throws \Exception
      */
-    public function initializeForPharExecution($archiveLocation) : void
+    public function initializeForPharExecution($archiveLocation): void
     {
         // Assert that the given path is a file in the file system.
         if (!file_exists($archiveLocation)) {
-            throw new \Exception("The given phar archive location is not a file : ".$archiveLocation);
+            throw new \Exception('The given phar archive location is not a file : ' . $archiveLocation);
         }
         // Assert that the location starts with the PHAR prefix
-        if (0 !== strpos($archiveLocation, "phar://")) {
-            throw new \Exception(
-                "The given phar archive location is not a phar archive path (It must start with phar://) : ".$archiveLocation
-            );
+        if (0 !== strpos($archiveLocation, 'phar://')) {
+            throw new \Exception('The given phar archive location is not a phar archive path (It must start with phar://) : ' . $archiveLocation);
         }
         $this->_runAs = PrestashopConsoleApplication::EXECUTION_MODE_PHAR;
         $this->_pharArchiveRootLocation = $archiveLocation;
@@ -82,20 +84,22 @@ class PrestashopConsoleApplication extends BaseApplication
 
     /**
      * Automatically register all existing commands
+     *
      * @return void
      */
-    public function getDeclaredCommands() : void
+    public function getDeclaredCommands(): void
     {
         $this->registerCommands();
     }
 
     /**
      * Register only the installation commands.
+     *
      * @return void
      */
-    public function registerInstallCommands() : void
+    public function registerInstallCommands(): void
     {
-        $this->registerCommands("install");
+        $this->registerCommands('install');
     }
 
     /**
@@ -103,14 +107,15 @@ class PrestashopConsoleApplication extends BaseApplication
      * At the moment, the namespace is an actual file namespace (The directory in which the commands scripts are declared)
      *
      * @param string $commandNamespace : (OPTIONNAL) The name of the namespace for the commands to register
+     *
      * @return void
      */
-    protected function registerCommands($commandNamespace = null) : void
+    protected function registerCommands($commandNamespace = null): void
     {
         // The root of the search depends on the run mode
         $dir = ($this->_runAs == PrestashopConsoleApplication::EXECUTION_MODE_PHAR) ? $this->_pharArchiveRootLocation : getcwd();
         // Source directory
-        $dir .= DIRECTORY_SEPARATOR . "src";
+        $dir .= DIRECTORY_SEPARATOR . 'src';
 
         $commandsSearchNamespace = PrestashopConsoleApplication::COMMANDS_NAMESPACE;
         // Add the namespace to the search directory path
@@ -120,14 +125,14 @@ class PrestashopConsoleApplication extends BaseApplication
 
         $commandFilepaths = Finder::create()->files()
             ->name('*Command.php')
-            ->in($dir. DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $commandsSearchNamespace));
+            ->in($dir . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $commandsSearchNamespace));
 
         if (sizeof($commandFilepaths)) {
-            $customCommands = array();
+            $customCommands = [];
             foreach ($commandFilepaths as $command) {
-                $classPath = $commandsSearchNamespace .'\\'. str_replace(
+                $classPath = $commandsSearchNamespace . '\\' . str_replace(
                     DIRECTORY_SEPARATOR,
-                    "\\",
+                    '\\',
                     $command->getRelativePathname()
                 );
                 $commandName = basename($classPath, '.php');

@@ -19,17 +19,16 @@
  * http://www.h-hennes.fr/blog/
  */
 
-
 namespace PrestashopConsole\Command\Webservice;
 
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use PrestaShopException;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Tools;
 use WebserviceKey;
 use WebserviceRequest;
-use Tools;
 
 /**
  * Class CreateKey
@@ -40,11 +39,11 @@ class CreateKeyCommand extends Command
     /** @var string Option Key */
     const OPTION_KEY = 'key';
 
-    /** @var string  Option description */
+    /** @var string Option description */
     const OPTION_DESCRIPTION = 'description';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -67,7 +66,7 @@ class CreateKeyCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -77,10 +76,12 @@ class CreateKeyCommand extends Command
         if (null !== $apiKey) {
             if (!$this->_validateWebserviceKey($apiKey)) {
                 $output->writeln('<error>The api key is invalid ( 32 characters required)</error>');
+
                 return self::RESPONSE_ERROR;
             }
             if (WebserviceKey::keyExists(pSQL($apiKey))) {
                 $output->writeln('<error>The api key already exists</error>');
+
                 return self::RESPONSE_ERROR;
             }
         }
@@ -94,24 +95,26 @@ class CreateKeyCommand extends Command
             WebserviceKey::setPermissionForAccount($webserviceKey->id, $this->_getPermissions());
         } catch (PrestaShopException $e) {
             $output->writeln('<error>An error occurs while saving webservice key</error>');
+
             return self::RESPONSE_ERROR;
         }
 
-        $output->writeln("<info>Webservice key created with success</info>", OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln('<info>Webservice key created with success</info>', OutputInterface::VERBOSITY_VERBOSE);
         $output->writeln($webserviceKey->key);
 
-        return self::RESPONSE_SUCCESS;;
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Get permission for webservice Key
      * For now the key will have all accesses
+     *
      * @return array
      */
     protected function _getPermissions()
     {
         $resources = WebserviceRequest::getResources();
-        $methods = array('GET', 'PUT', 'POST', 'DELETE', 'HEAD');
+        $methods = ['GET', 'PUT', 'POST', 'DELETE', 'HEAD'];
         $permissions = [];
         foreach ($resources as $resource => $params) {
             foreach ($methods as $method) {
@@ -121,11 +124,13 @@ class CreateKeyCommand extends Command
                 $permissions[$resource][$method] = 1;
             }
         }
+
         return $permissions;
     }
 
     /**
      * Get a random api key
+     *
      * @return string
      */
     protected function _generateWebserviceKey()
@@ -135,11 +140,13 @@ class CreateKeyCommand extends Command
 
     /**
      * Validate that provided key is valid
+     *
      * @param string $key
+     *
      * @return bool
      */
     protected function _validateWebserviceKey($key)
     {
-        return (bool)preg_match('/^[A-Z_0-9-]{32}$/', $key);
+        return (bool) preg_match('/^[A-Z_0-9-]{32}$/', $key);
     }
 }

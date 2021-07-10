@@ -19,14 +19,13 @@
  * http://www.h-hennes.fr/blog/
  */
 
-
 namespace PrestashopConsole\Command\Hook;
 
+use Hook;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Hook;
 
 /**
  * Class Module
@@ -35,7 +34,7 @@ use Hook;
 class ModuleCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -45,7 +44,7 @@ class ModuleCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -58,23 +57,21 @@ class ModuleCommand extends Command
         }, $hooks);
 
         //Sort hooks by name
-        usort($hooks, array($this, "cmp"));
+        usort($hooks, [$this, 'cmp']);
 
         //Init Table
         $table = new Table($output);
         $table->setHeaders(['Hook Name', 'Modules hooked']);
 
         foreach ($hooks as $hook) {
-
             //Get Modules hooked
             $hookModules = Hook::getHookModuleExecList($hook);
 
             if ($hookModules) {
-
                 //Add module information on hook
                 $hookModulesInformations = '';
                 foreach ($hookModules as $index => $hookModule) {
-                    $hookModulesInformations .= ($index+1).".".$hookModule['module'].", ";
+                    $hookModulesInformations .= ($index + 1) . '.' . $hookModule['module'] . ', ';
                 }
                 $table->addRow([$hook, trim($hookModulesInformations, ', ')]);
             }
@@ -88,8 +85,10 @@ class ModuleCommand extends Command
 
     /**
      * Function to sort hook by name
+     *
      * @param string $a
      * @param string $b
+     *
      * @return int
      */
     private function cmp($a, $b)

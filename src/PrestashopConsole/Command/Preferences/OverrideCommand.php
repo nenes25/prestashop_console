@@ -20,17 +20,16 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
+use Configuration;
+use Context;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Context;
-use Shop;
-use Configuration;
 
 /**
  * Commande qui permet d'activer / desactiver les override
- *
  */
 class OverrideCommand extends Command
 {
@@ -55,15 +54,16 @@ class OverrideCommand extends Command
         switch ($type) {
             case 'enable':
             case 1:
-                $output->writeln("<info>All override are enabled</info>");
+                $output->writeln('<info>All override are enabled</info>');
                 Configuration::updateValue('PS_DISABLE_OVERRIDES', 0);
                 break;
             case 'disable':
             default:
-                $output->writeln("<info>All override are disabled</info>");
+                $output->writeln('<info>All override are disabled</info>');
                 Configuration::updateValue('PS_DISABLE_OVERRIDES', 1);
                 break;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

@@ -20,18 +20,18 @@
 
 namespace PrestashopConsole\Command\Db;
 
+use Db;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopDatabaseException;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Db;
-use PrestaShopDatabaseException;
 
 class QueryCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -43,13 +43,14 @@ class QueryCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $query = $input->getOption('query');
         if (null === $query) {
             $output->writeln('<error>No query given</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -74,10 +75,12 @@ class QueryCommand extends Command
                 }
             } catch (PrestaShopDatabaseException $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
+
                 return self::RESPONSE_ERROR;
             }
         } else {
             $output->writeln('<error>Only SELECT query are managed for now</error>');
+
             return self::RESPONSE_ERROR;
         }
 

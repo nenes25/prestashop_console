@@ -20,14 +20,14 @@
 
 namespace PrestashopConsole\Command\Admin\User;
 
+use Configuration;
+use Employee;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Configuration;
-use Employee;
-use PrestaShopException;
 use Tools;
 
 /**
@@ -37,7 +37,7 @@ use Tools;
 class CreateCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -51,7 +51,7 @@ class CreateCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -80,7 +80,8 @@ class CreateCommand extends Command
 
         //Error if employee with same email already exists
         if (Employee::employeeExists($email)) {
-            $output->writeln("<error>Employee with this email already exists");
+            $output->writeln('<error>Employee with this email already exists');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -98,11 +99,12 @@ class CreateCommand extends Command
         try {
             $employee->save();
         } catch (PrestaShopException $e) {
-            $output->writeln("<error>".$e->getMessage()."</error>");
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+
             return self::RESPONSE_ERROR;
         }
 
-        $output->writeln("<info>New user ".$email." created</info>");
+        $output->writeln('<info>New user ' . $email . ' created</info>');
 
         return self::RESPONSE_SUCCESS;
     }

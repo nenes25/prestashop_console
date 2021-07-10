@@ -28,7 +28,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ImportCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -41,14 +41,14 @@ class ImportCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -57,6 +57,7 @@ class ImportCommand extends Command
 
         if (!is_file($file)) {
             $output->writeln('<error>The import file does not exists</error>');
+
             return self::RESPONSE_ERROR;
         }
 

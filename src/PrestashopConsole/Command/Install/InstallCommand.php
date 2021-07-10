@@ -29,12 +29,11 @@ use Symfony\Component\Console\Question\Question;
 
 /**
  * This commands allow to enable/disable cms categories
- *
  */
 class InstallCommand extends Command
 {
     /** @var array commands options */
-    protected $_options = array(
+    protected $_options = [
         'psVersion',
         'domainName',
         'dbname',
@@ -42,11 +41,11 @@ class InstallCommand extends Command
         'dbpassword',
         'contactEmail',
         'adminpassword',
-        'directory'
-    );
+        'directory',
+    ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -64,12 +63,12 @@ class InstallCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $output->writeln('<info>This command is currently disabled, see version 1.6.1 if needed</info>');
+
         return self::RESPONSE_ERROR;
 
         $helper = $this->getHelper('question');
@@ -83,7 +82,7 @@ class InstallCommand extends Command
             /**
              * First step : Select prestashop version
              */
-            $psVersion = new ChoiceQuestion('Please select the version to install ( Only compatible with ps 1.6.1 )', array(
+            $psVersion = new ChoiceQuestion('Please select the version to install ( Only compatible with ps 1.6.1 )', [
                 '1.6.1.0',
                 '1.6.1.1',
                 '1.6.1.2',
@@ -109,108 +108,107 @@ class InstallCommand extends Command
                 '1.6.1.22',
                 '1.6.1.23',
                 '1.6.1.24',
-            ));
+            ]);
             $psVersion->setErrorMessage('Option %s is invalid');
 
             $installVersion = $helper->ask($input, $output, $psVersion);
-            $output->writeln('PS version '.$installVersion.' will be installed');
+            $output->writeln('PS version ' . $installVersion . ' will be installed');
         } else {
             $installVersion = $psVersion;
         }
 
-
-        /**
+        /*
          * Second Step : Download prestashop archive
          */
-        $output->writeln("<info>Start downloading archive</info>");
+        $output->writeln('<info>Start downloading archive</info>');
         $ch = curl_init();
-        $source = "http://www.prestashop.com/download/old/prestashop_".$installVersion.".zip";
+        $source = 'http://www.prestashop.com/download/old/prestashop_' . $installVersion . '.zip';
         curl_setopt($ch, CURLOPT_URL, $source);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $data = curl_exec($ch);
-        $destination = "prestashop.zip";
-        $file = fopen($destination, "w+");
+        $destination = 'prestashop.zip';
+        $file = fopen($destination, 'w+');
         fputs($file, $data);
         fclose($file);
-        $output->writeln("<info>File downloaded</info>");
+        $output->writeln('<info>File downloaded</info>');
 
-        /**
+        /*
          * Third Step extract archive
          * By default in directory "prestashop"
          */
-        if (function_exists('exec') &&  !strpos(ini_get("disable_functions"), "exec")) {
+        if (function_exists('exec') && !strpos(ini_get('disable_functions'), 'exec')) {
             if (!$directory) {
-                $directoryQuestion = new Question("Install in a subdirectory (default: current directory)", ".");
+                $directoryQuestion = new Question('Install in a subdirectory (default: current directory)', '.');
                 $directory = $helper->ask($input, $output, $directoryQuestion);
             }
         } else {
             $output->writeln("<info>Prestashop will be installed in directory 'prestashop' in current directory");
-            $directory = ".";
+            $directory = '.';
         }
 
-        $output->writeln("<info>Unziping file</info>");
+        $output->writeln('<info>Unziping file</info>');
         $zip = new \ZipArchive();
         if ($zip->open('prestashop.zip')) {
             $zip->extractTo($directory);
             $zip->close();
         } else {
-            $output->writeln("<error>Unable to unzip downloaded archive</error>");
+            $output->writeln('<error>Unable to unzip downloaded archive</error>');
         }
-        $output->writeln("<info>File unziped</info>");
+        $output->writeln('<info>File unziped</info>');
 
-        if ($directory != ".") {
-            exec("mv ".$directory."/prestashop/* ".$directory."/");
-            exec("rm -rf".$directory."/prestashop");
+        if ($directory != '.') {
+            exec('mv ' . $directory . '/prestashop/* ' . $directory . '/');
+            exec('rm -rf' . $directory . '/prestashop');
             $installPath = $directory;
         } else {
             $installPath = 'prestashop';
         }
 
-        /**
+        /*
          * Fourth Step : CLI install ( if possible )
          * @todo Factorize questions + deals with options params
          */
-        if (function_exists('exec') &&  !strpos(ini_get("disable_functions"), "exec")) {
-            $output->writeln("<info>Please give information for CLI install : </info>");
+        if (function_exists('exec') && !strpos(ini_get('disable_functions'), 'exec')) {
+            $output->writeln('<info>Please give information for CLI install : </info>');
 
             if (!$domainName) {
-                $domainNameQuestion = new Question("Domain name (default: ' ') ", " ");
+                $domainNameQuestion = new Question("Domain name (default: ' ') ", ' ');
                 $domainName = $helper->ask($input, $output, $domainNameQuestion);
             }
 
             if (!$dbname) {
-                $dbnameQuestion = new Question("Db name : (default: prestashop_console )", "prestashop_console");
+                $dbnameQuestion = new Question('Db name : (default: prestashop_console )', 'prestashop_console');
                 $dbname = $helper->ask($input, $output, $dbnameQuestion);
             }
 
             if (!$dbuser) {
-                $dbuserQuestion = new Question("Db user : (default: root )", "root");
+                $dbuserQuestion = new Question('Db user : (default: root )', 'root');
                 $dbuser = $helper->ask($input, $output, $dbuserQuestion);
             }
 
             if (!$dbpassword) {
-                $dbpasswordQuestion = new Question("Db passord : (default: root )", "root");
+                $dbpasswordQuestion = new Question('Db passord : (default: root )', 'root');
                 $dbpassword = $helper->ask($input, $output, $dbpasswordQuestion);
             }
 
             if (!$contactEmail) {
-                $contactEmailQuestion = new Question("Admin email : (default: test@example.com )", "test@example.com");
+                $contactEmailQuestion = new Question('Admin email : (default: test@example.com )', 'test@example.com');
                 $contactEmail = $helper->ask($input, $output, $contactEmailQuestion);
             }
 
             if (!$adminpassword) {
-                $adminpassQuestion = new Question("Admin password : (default: test12345678 )", "test12345678");
+                $adminpassQuestion = new Question('Admin password : (default: test12345678 )', 'test12345678');
                 $adminpassword = $helper->ask($input, $output, $adminpassQuestion);
             }
 
-            $output->writeln("<info>Starting CLI install</info>");
+            $output->writeln('<info>Starting CLI install</info>');
 
-            $command = "php ".$installPath."/install/index_cli.php --domain=$domainName  --db_name=$dbname --db_user=$dbuser --db_password=$dbpassword --email=$contactEmail --password=$adminpassword";
-            $command .= " 2>&1 >> install.log";
+            $command = 'php ' . $installPath . "/install/index_cli.php --domain=$domainName  --db_name=$dbname --db_user=$dbuser --db_password=$dbpassword --email=$contactEmail --password=$adminpassword";
+            $command .= ' 2>&1 >> install.log';
             exec($command);
         } else {
-            $output->writeln("<error>Exec function is needed to install prestashop with CLI</error>");
-            $output->writeln("<error>Please install it manually</error>");
+            $output->writeln('<error>Exec function is needed to install prestashop with CLI</error>');
+            $output->writeln('<error>Please install it manually</error>');
             exit();
         }
 
@@ -223,7 +221,7 @@ class InstallCommand extends Command
             unlink('install.log');
         } else {
             $output->writeln('<error>Errors occurs during installation</error>');
-            $output->writeln("<error>".$installResult."</error>");
+            $output->writeln('<error>' . $installResult . '</error>');
         }
     }
 }

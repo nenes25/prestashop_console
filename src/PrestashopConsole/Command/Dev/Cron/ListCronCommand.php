@@ -20,20 +20,19 @@
 
 namespace PrestashopConsole\Command\Dev\Cron;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Module;
 
 class ListCronCommand extends Command
 {
-
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -43,23 +42,24 @@ class ListCronCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cronModuleName . ' is not active or installed');
+
                 return self::RESPONSE_ERROR;
             }
-            
+
             $output->writeln('<info>Configured cron jobs</info>');
 
             \CronJobsForms::init($module);
             $cronJobs = \CronJobsForms::getTasksListValues();
 
             $table = new Table($output);
-            $table->setHeaders(['id_cronjob','description', 'task', 'hour', 'day', 'month', 'week_day', 'last_execution', 'active']);
+            $table->setHeaders(['id_cronjob', 'description', 'task', 'hour', 'day', 'month', 'week_day', 'last_execution', 'active']);
             foreach ($cronJobs as $cronJob) {
                 $table->addRow([
                     $cronJob['id_cronjob'],
@@ -70,12 +70,13 @@ class ListCronCommand extends Command
                     $cronJob['month'],
                     $cronJob['week_day'],
                     $cronJob['last_execution'],
-                    $cronJob['active']
+                    $cronJob['active'],
                     ]);
             }
             $table->render();
         } else {
             $output->writeln('<error>' . $this->_cronModuleName . ' is not installed');
+
             return self::RESPONSE_ERROR;
         }
 

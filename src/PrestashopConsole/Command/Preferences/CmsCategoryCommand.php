@@ -20,17 +20,16 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
+use CMSCategory;
+use Context;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Context;
-use Shop;
-use CMSCategory;
 
 /**
  * This commands allow to enable/disable cms categories
- *
  */
 class CmsCategoryCommand extends Command
 {
@@ -62,17 +61,18 @@ class CmsCategoryCommand extends Command
 
         if ($cmsCategory->id == null) {
             $output->writeln(sprintf("<error>Error Cms category %d doesn't exists</error>", $id_cms));
+
             return self::RESPONSE_ERROR;
         }
 
         switch ($action) {
             case 'enable':
                 $cmsCategory->active = 1;
-                $output->writeln(sprintf("<info>Enable cms category %d</info>", $id_cms));
+                $output->writeln(sprintf('<info>Enable cms category %d</info>', $id_cms));
                 break;
             case 'disable':
             default:
-                $output->writeln(sprintf("<info>Disable cms category %d</info>", $id_cms));
+                $output->writeln(sprintf('<info>Disable cms category %d</info>', $id_cms));
                 $cmsCategory->active = 0;
                 break;
         }
@@ -80,9 +80,11 @@ class CmsCategoryCommand extends Command
         try {
             $cmsCategory->save();
         } catch (\Exception $e) {
-            $output->writeln('<error>'.$e->getMessage().'</error>');
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+
             return self::RESPONSE_ERROR;
         }
-        return  self::RESPONSE_SUCCESS;
+
+        return self::RESPONSE_SUCCESS;
     }
 }

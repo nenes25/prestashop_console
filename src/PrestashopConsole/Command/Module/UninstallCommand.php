@@ -17,17 +17,16 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
 
 namespace PrestashopConsole\Command\Module;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
-use PrestaShopException;
 
 class UninstallCommand extends Command
 {
@@ -53,10 +52,12 @@ class UninstallCommand extends Command
                         try {
                             if (!$module->uninstall()) {
                                 $output->writeln("<error>Cannot uninstall module: '$moduleName'</error>");
+
                                 return self::RESPONSE_ERROR;
                             }
                         } catch (PrestaShopException $e) {
                             $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
+
                             return self::RESPONSE_ERROR;
                         }
                         $output->writeln("<info>Module '$moduleName' uninstalled with success</info>");
@@ -65,10 +66,12 @@ class UninstallCommand extends Command
                     }
                 } else {
                     $output->writeln("<error>Unknow module name '$moduleName' </error>");
+
                     return self::RESPONSE_ERROR;
                 }
             }
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

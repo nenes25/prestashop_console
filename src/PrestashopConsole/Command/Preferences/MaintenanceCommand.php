@@ -17,18 +17,17 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
 
 namespace PrestashopConsole\Command\Preferences;
 
+use Configuration;
+use Context;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Context;
-use Shop;
-use Configuration;
 
 class MaintenanceCommand extends Command
 {
@@ -51,15 +50,16 @@ class MaintenanceCommand extends Command
 
         switch ($type) {
             case 'enable':
-                $output->writeln("<info>Shop is enabled</info>");
+                $output->writeln('<info>Shop is enabled</info>');
                 Configuration::updateValue('PS_SHOP_ENABLE', 1);
                 break;
             case 'disable':
             default:
-                $output->writeln("<info>Shop is disabled</info>");
+                $output->writeln('<info>Shop is disabled</info>');
                 Configuration::updateValue('PS_SHOP_ENABLE', 0);
                 break;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

@@ -20,14 +20,14 @@
 
 namespace PrestashopConsole\Command\Module\Tab;
 
+use Language;
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
 use Tab;
-use Language;
 
 /**
  * This command create new admin tab for given module
@@ -35,7 +35,7 @@ use Language;
 class AddCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -56,9 +56,8 @@ class AddCommand extends Command
             ->setHelp('Allow to add a new admin tab (controller )');
     }
 
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -73,7 +72,7 @@ class AddCommand extends Command
                 $tab = new Tab();
                 $tab->class_name = $tabClass;
                 $tab->module = $moduleName;
-                $tab->id_parent = (int)Tab::getIdFromClassName($parentTab);
+                $tab->id_parent = (int) Tab::getIdFromClassName($parentTab);
                 if (null !== $icon) {
                     $tab->icon = $icon;
                 }
@@ -85,13 +84,16 @@ class AddCommand extends Command
                 $tab->save();
             } catch (\Exception $e) {
                 $output->writeln('<error>' . $e->getMessage() . '</error>');
+
                 return self::RESPONSE_ERROR;
             }
             $output->writeln('<info>Tab ' . $tabClass . ' added with success');
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

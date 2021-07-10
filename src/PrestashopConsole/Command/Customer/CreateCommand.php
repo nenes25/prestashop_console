@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * 2007-2020 Hennes Hervé
  *
@@ -20,19 +19,18 @@
  * http://www.h-hennes.fr/blog/
  */
 
-
 namespace PrestashopConsole\Command\Customer;
 
+use Customer;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Exception\RuntimeException;
-use Customer;
-use PrestaShopException;
-use Validate;
 use Tools;
+use Validate;
 
 /**
  * Class Create
@@ -41,7 +39,7 @@ use Tools;
 class CreateCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -57,7 +55,7 @@ class CreateCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -102,15 +100,18 @@ class CreateCommand extends Command
             $customer->save();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>Unable to create customer');
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>new customer ' . $email . ' created with success</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Email Question
+     *
      * @return Question
      */
     protected function _getEmailQuestion()
@@ -118,16 +119,18 @@ class CreateCommand extends Command
         $question = new Question('<question>customer email :</question>');
         $question->setValidator(function ($answer) {
             if (null !== $answer && !Validate::isEmail($answer)) {
-                throw new RuntimeException("Invalid email");
+                throw new RuntimeException('Invalid email');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
-
     /**
      * Password Question
+     *
      * @return Question
      */
     protected function _getPasswordQuestion()
@@ -135,16 +138,19 @@ class CreateCommand extends Command
         $question = new Question('<question>customer password :</question>');
         $question->setHidden(true);
         $question->setValidator(function ($answer) {
-            if (null === $answer || !Validate::isPlaintextPassword($answer) ) {
-                throw new RuntimeException("Invalid password");
+            if (null === $answer || !Validate::isPlaintextPassword($answer)) {
+                throw new RuntimeException('Invalid password');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
     /**
      * Firstname question
+     *
      * @return Question
      */
     protected function _getFirstnameQuestion()
@@ -152,15 +158,18 @@ class CreateCommand extends Command
         $question = new Question('<question>customer firstname :</question>');
         $question->setValidator(function ($answer) {
             if (null !== $answer && !$this->validateCustomerName($answer)) {
-                throw new RuntimeException("Invalid firstname");
+                throw new RuntimeException('Invalid firstname');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
     /**
      * Lastname question
+     *
      * @return Question
      */
     protected function _getLastNameQuestion()
@@ -168,17 +177,21 @@ class CreateCommand extends Command
         $question = new Question('<question>customer lastname :</question>');
         $question->setValidator(function ($answer) {
             if (null !== $answer && !$this->validateCustomerName($answer)) {
-                throw new RuntimeException("Invalid lastname");
+                throw new RuntimeException('Invalid lastname');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
     /**
      * Validate customer name depending of available validate method
      * Assure compatibility with prestashop 1.7.5
+     *
      * @param string $name
+     *
      * @return bool
      */
     protected function validateCustomerName($name)

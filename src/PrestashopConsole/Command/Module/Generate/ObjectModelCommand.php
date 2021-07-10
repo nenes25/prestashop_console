@@ -26,15 +26,13 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Console\Question\Question;
-use \ObjectModel;
-use \Validate;
+use Validate;
 
 class ObjectModelCommand extends Command
 {
-
     /** @var string Module Name */
     protected $_moduleName;
 
@@ -42,7 +40,7 @@ class ObjectModelCommand extends Command
     protected $_fileSystem;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -54,7 +52,7 @@ class ObjectModelCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -70,6 +68,7 @@ class ObjectModelCommand extends Command
                 if (!Validate::isFileName($answer)) {
                     throw new \RuntimeException('The className is not valid');
                 }
+
                 return $answer;
             });
             $objectClass = $helper->ask($input, $output, $objectQuestion);
@@ -109,6 +108,7 @@ class ObjectModelCommand extends Command
                 if ($answer !== null && !in_array($answer, $fieldTypes)) {
                     throw new RuntimeException('The field type must be part of the suggested');
                 }
+
                 return $answer;
             });
             $type = $helper->ask($input, $output, $fieldQuestion);
@@ -124,6 +124,7 @@ class ObjectModelCommand extends Command
                 if ($answer !== null && !in_array($answer, $validationFunctions)) {
                     throw new RuntimeException('The validate function must be part of the suggested');
                 }
+
                 return $answer;
             });
             $validation = $helper->ask($input, $output, $validationQuestion);
@@ -168,7 +169,7 @@ class ObjectModelCommand extends Command
                     '{object}',
                     '{object_properties}',
                     '{object_definition}',
-                    '{object_install}'
+                    '{object_install}',
                 ],
                 [
                     $objectClass,
@@ -190,16 +191,18 @@ class ObjectModelCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to create model file</error>');
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Model file generated</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 
-
     /**
      * Get default Php content
+     *
      * @return string
      */
     protected function _getDefaultContent()
@@ -230,7 +233,9 @@ class {object} extends ObjectModel
 
     /**
      * Create directories
+     *
      * @todo Add index.php files
+     *
      * @return void
      */
     protected function _createDirectories()
@@ -242,8 +247,11 @@ class {object} extends ObjectModel
 
     /**
      * Get Object properties from object fields
+     *
      * @param array $fields
+     *
      * @return string
+     *
      * @todo Comment field types
      */
     protected function _getObjectProperties(array $fields)
@@ -252,12 +260,15 @@ class {object} extends ObjectModel
         foreach ($fields as $field) {
             $fieldStr .= 'public $' . $field['name'] . ';' . "\n";
         }
+
         return $fieldStr;
     }
 
     /**
      * Construct object definition
+     *
      * @param array $params
+     *
      * @return string
      */
     protected function _getObjectDefinition(array $params)
@@ -269,12 +280,12 @@ class {object} extends ObjectModel
         'fields' => [";
         foreach ($params['fields'] as $field) {
             $type = $this->_getObjectModelFieldType($field['type']);
-            $defStr .= "'" . $field['name'] . "' => [ 'type' => self::" . $type . ",";
+            $defStr .= "'" . $field['name'] . "' => [ 'type' => self::" . $type . ',';
             if ($field['validate']) {
                 $defStr .= "'validate' => '" . $field['validate'] . "', ";
             }
             if ($field['length']) {
-                $defStr .= "'length' => " . $field['length'] . ", ";
+                $defStr .= "'length' => " . $field['length'] . ', ';
             }
             if ($field['lang'] == true) {
                 $defStr .= "'lang' => true,";
@@ -284,12 +295,15 @@ class {object} extends ObjectModel
         $defStr = rtrim($defStr, ',');
         $defStr .= ']
         ];';
+
         return $defStr;
     }
 
     /**
      * Construct object sql install
+     *
      * @param array $sqlQueries
+     *
      * @return string
      */
     protected function _getObjectInstall(array $sqlQueries)
@@ -304,24 +318,25 @@ class {object} extends ObjectModel
          * Model Sql installation
          * Add it in your module installation if necessary
          */ 
-        public function installSql(){'."\n";
+        public function installSql(){' . "\n";
 
         foreach ($sqlQueries as $query) {
             if ($query != '') {
-                $installStr .= "\n".' Db::getInstance()->execute("'.$query.'");'."\n";
+                $installStr .= "\n" . ' Db::getInstance()->execute("' . $query . '");' . "\n";
             }
         }
         $installStr .= '}';
 
         return $installStr;
     }
+
     /**
      * @param array $params
+     *
      * @return array
      */
     protected function _generateSql(array $params)
     {
-
         /**
          * $sql[] = ' CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'psgdpr_consent` (
          * `id_gdpr_consent` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -334,7 +349,6 @@ class {object} extends ObjectModel
          * PRIMARY KEY (`id_gdpr_consent`, `id_module`)
          * ) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=UTF8;';
          */
-
         $hasLang = false;
         $sqlQueryString = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . $params['table_name'] . '`(' . "\n";
         $sqlQueryString .= '`' . $params['primary'] . '` int(10) unsigned NOT NULL AUTO_INCREMENT,';
@@ -344,7 +358,6 @@ class {object} extends ObjectModel
         $sqlQueryStringLang .= '`id_lang` int(10) unsigned NOT NULL ,' . "\n";
 
         foreach ($params['fields'] as $field) {
-
             //Required fields must be NOT NULL in database
             ($field['required'] !== false) ? $required = 'NOT NULL' : $required = '';
 
@@ -399,17 +412,21 @@ class {object} extends ObjectModel
 
     /**
      * Get ObjectModelField Type constant Key
+     *
      * @param string $type
+     *
      * @return mixed
      */
     protected function _getObjectModelFieldType($type)
     {
         $key = 'TYPE_' . strtoupper($type);
+
         return $key;
     }
 
     /**
      * Get available fields type for object Model (string)
+     *
      * @return array
      */
     protected function _getFieldTypes()
@@ -419,8 +436,11 @@ class {object} extends ObjectModel
 
     /**
      * Get field validation functions
+     *
      * @param string|null $fieldType
+     *
      * @return array
+     *
      * @todo Manage by field type if possible
      */
     protected function _getValidationFunctions($fieldType = null)
@@ -433,6 +453,7 @@ class {object} extends ObjectModel
             }
         } catch (\ReflectionException $e) {
         }
+
         return $functions;
     }
 }

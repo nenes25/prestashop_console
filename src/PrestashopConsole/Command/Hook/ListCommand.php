@@ -19,14 +19,13 @@
  * http://www.h-hennes.fr/blog/
  */
 
-
 namespace PrestashopConsole\Command\Hook;
 
+use Hook;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Hook;
 
 /**
  * Class Module
@@ -35,7 +34,7 @@ use Hook;
 class ListCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -45,7 +44,7 @@ class ListCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -58,7 +57,7 @@ class ListCommand extends Command
         }, $hooks);
 
         //Sort hooks by name
-        usort($hooks, array($this, "cmp"));
+        usort($hooks, [$this, 'cmp']);
 
         //Init Table
         $table = new Table($output);
@@ -76,8 +75,10 @@ class ListCommand extends Command
 
     /**
      * Function to sort hook by name
+     *
      * @param string $a
      * @param string $b
+     *
      * @return int
      */
     private function cmp($a, $b)

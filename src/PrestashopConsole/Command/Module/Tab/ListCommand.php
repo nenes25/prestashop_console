@@ -20,12 +20,12 @@
 
 namespace PrestashopConsole\Command\Module\Tab;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Module;
 use Tab;
 
 /**
@@ -48,6 +48,7 @@ class ListCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|string|void|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -61,7 +62,7 @@ class ListCommand extends Command
                 $table = new Table($output);
                 $table->setHeaders(['id', 'class', 'label']);
                 foreach ($results as $tab) {
-                    /** @var Tab $tab */
+                    /* @var Tab $tab */
                     $table->addRow([$tab->id, $tab->class_name, $tab->name]);
                 }
                 $table->render();
@@ -70,8 +71,10 @@ class ListCommand extends Command
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

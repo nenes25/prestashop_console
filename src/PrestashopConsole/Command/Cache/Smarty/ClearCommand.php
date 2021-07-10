@@ -17,6 +17,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
+
 namespace PrestashopConsole\Command\Cache\Smarty;
 
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
@@ -28,12 +29,13 @@ use Tools;
  * Commande qui permet de supprimer tout le cache smarty
  * (Fichiers compilés + cache)
  * Pour l'instant nécessite la function exec
+ *
  * @todo Optmimiser pour ne pas supprimer le fichier index.php + gérer le mode SQL
  */
 class ClearCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -43,12 +45,13 @@ class ClearCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         Tools::clearSmartyCache();
         $output->writeln('<info>Smarty Cache and compiled dir cleaned</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 }

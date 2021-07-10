@@ -20,15 +20,14 @@
 
 namespace PrestashopConsole\Command\Module\Hook;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
 
 /**
  * Commande qui permet de supprimer les modules d'un hook
- *
  */
 class RemoveModuleHooksCommand extends Command
 {
@@ -50,7 +49,6 @@ class RemoveModuleHooksCommand extends Command
     }
 
     /**
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      */
@@ -63,20 +61,24 @@ class RemoveModuleHooksCommand extends Command
             if (sizeof($hooks)) {
                 foreach ($hooks as $hook) {
                     if (!$module->unregisterHook($hook)) {
-                        $output->writeln('<error>Error during hook remove from hook '.$hook.'</error>');
+                        $output->writeln('<error>Error during hook remove from hook ' . $hook . '</error>');
+
                         return self::RESPONSE_ERROR;
                     } else {
-                        $output->writeln('<info>Module remove from hook '.$hook.' with success</info>');
+                        $output->writeln('<info>Module remove from hook ' . $hook . ' with success</info>');
                     }
                 }
             } else {
                 $output->writeln('<error>Not hooks given for ' . $moduleName . '</error>');
+
                 return self::RESPONSE_ERROR;
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

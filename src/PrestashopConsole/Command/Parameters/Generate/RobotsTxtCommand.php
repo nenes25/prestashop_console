@@ -17,28 +17,24 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
-
 
 namespace PrestashopConsole\Command\Parameters\Generate;
 
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tools;
 
 /**
  * Class RobotsTxtCommand
  * This command will generate the robots.txt file
- * @package Hhennes\PrestashopConsole\Command\Parameters\Generate
  */
 class RobotsTxtCommand extends Command
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -54,16 +50,17 @@ class RobotsTxtCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $input->getOption('executeHook') ? $executeHook = true : $executeHook = false;
 
         if (true === Tools::generateRobotsFile($executeHook)) {
-            $output->writeln("<info>robots.txt file generated with success</info>");
+            $output->writeln('<info>robots.txt file generated with success</info>');
         } else {
-            $output->writeln("<error>An error occurs while generating robots.txt file</error>");
+            $output->writeln('<error>An error occurs while generating robots.txt file</error>');
+
             return self::RESPONSE_ERROR;
         }
 

@@ -17,6 +17,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * http://www.h-hennes.fr/blog/
  */
+
 namespace PrestashopConsole\Command;
 
 use Symfony\Component\Console\Command\Command;

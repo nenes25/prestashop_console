@@ -20,15 +20,14 @@
 
 namespace PrestashopConsole\Command\Module\Hook;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
 
 /**
  * Commande qui permet de greffer des modules sur un hook
- *
  */
 class AddModuleHooksCommand extends Command
 {
@@ -50,7 +49,6 @@ class AddModuleHooksCommand extends Command
     }
 
     /**
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      */
@@ -60,15 +58,17 @@ class AddModuleHooksCommand extends Command
         $hooks = $input->getArgument('hooks');
 
         if ($module = Module::getInstanceByName($moduleName)) {
-            if (! $module->registerHook($hooks)) {
+            if (!$module->registerHook($hooks)) {
                 $output->writeln('<error>Error during hook assignation</error>');
             } else {
                 $output->writeln('<info>Module hooked with success</info>');
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

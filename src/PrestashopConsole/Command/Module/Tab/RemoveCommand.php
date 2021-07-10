@@ -20,11 +20,11 @@
 
 namespace PrestashopConsole\Command\Module\Tab;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
 use Tab;
 
 class RemoveCommand extends Command
@@ -49,6 +49,7 @@ class RemoveCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|void|null
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -64,11 +65,13 @@ class RemoveCommand extends Command
                         $tabObject->delete();
                     } catch (\Exception $e) {
                         $output->writeln('<error>' . $e->getMessage() . '</error>');
+
                         return self::RESPONSE_ERROR;
                     }
                     $output->writeln('<info>Tab ' . $tab . ' removed with success');
                 } else {
                     $output->writeln('<error>Tab ' . $tab . ' does not exists</error>');
+
                     return self::RESPONSE_ERROR;
                 }
             } else {
@@ -76,8 +79,10 @@ class RemoveCommand extends Command
             }
         } catch (\Exception $e) {
             $output->writeln('<error>Error unable to get information about ' . $moduleName . '</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

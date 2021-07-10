@@ -20,16 +20,15 @@
 
 namespace PrestashopConsole\Command\Module\Hook;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
-use Module;
 
 /**
  * Commande qui permet de lister les hooks d'un module
- *
  */
 class ListModuleHooksCommand extends Command
 {
@@ -46,7 +45,6 @@ class ListModuleHooksCommand extends Command
     }
 
     /**
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      */
@@ -55,17 +53,16 @@ class ListModuleHooksCommand extends Command
         $moduleName = $input->getArgument('name');
 
         if ($module = Module::getInstanceByName($moduleName)) {
-
             //Possible hook list
             $possibleHooksList = $module->getPossibleHooksList();
-            $moduleHooks = array();
+            $moduleHooks = [];
 
             foreach ($possibleHooksList as $hook) {
-                $isHooked = (int)$module->getPosition($hook['id_hook']);
+                $isHooked = (int) $module->getPosition($hook['id_hook']);
                 if ($isHooked != 0) {
                     $moduleHooks[] = [
-                        'name' => $hook['name'] ,
-                        'position' => $isHooked
+                        'name' => $hook['name'],
+                        'position' => $isHooked,
                     ];
                 }
             }
@@ -73,9 +70,9 @@ class ListModuleHooksCommand extends Command
             if (count($moduleHooks)) {
                 $output->writeln('<info>The module ' . $moduleName . ' is linked on the following hooks :</info>');
                 $table = new Table($output);
-                $table->setHeaders(['Hook Name','Position']);
+                $table->setHeaders(['Hook Name', 'Position']);
                 foreach ($moduleHooks as $moduleHook) {
-                    $table->addRow([$moduleHook['name'],$moduleHook['position']]);
+                    $table->addRow([$moduleHook['name'], $moduleHook['position']]);
                 }
                 $table->render();
             } else {
@@ -83,8 +80,10 @@ class ListModuleHooksCommand extends Command
             }
         } else {
             $output->writeln('<error>Error the module ' . $moduleName . ' doesn\'t exists</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

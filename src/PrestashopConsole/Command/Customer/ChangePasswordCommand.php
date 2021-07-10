@@ -20,17 +20,16 @@
 
 namespace PrestashopConsole\Command\Customer;
 
-
+use Customer;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Exception\RuntimeException;
-use PrestaShopException;
-use Customer;
-use Validate;
 use Tools;
+use Validate;
 
 /**
  * Class ChangeCustomerPassword
@@ -39,7 +38,7 @@ use Tools;
 class ChangePasswordCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -51,11 +50,11 @@ class ChangePasswordCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $email =  $input->getOption('email');
+        $email = $input->getOption('email');
         $password = $input->getOption('password');
 
         $questionHelper = $this->getHelper('question');
@@ -68,6 +67,7 @@ class ChangePasswordCommand extends Command
         $customer->getByEmail($email);
         if (!Validate::isLoadedObject($customer)) {
             $output->writeln('<error>There is no account registered for this email.</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -87,16 +87,18 @@ class ChangePasswordCommand extends Command
             $customer->save();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>Unable to update customer password.</error>');
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Customer password updated with success</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 
-
     /**
      * Email Question
+     *
      * @return Question
      */
     protected function _getEmailQuestion()
@@ -104,15 +106,18 @@ class ChangePasswordCommand extends Command
         $question = new Question('<question>customer email :</question>');
         $question->setValidator(function ($answer) {
             if (null !== $answer && !Validate::isEmail($answer)) {
-                throw new RuntimeException("Invalid email");
+                throw new RuntimeException('Invalid email');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
     /**
      * Password Question
+     *
      * @return Question
      */
     protected function _getPasswordQuestion()
@@ -121,10 +126,12 @@ class ChangePasswordCommand extends Command
         $question->setHidden(true);
         $question->setValidator(function ($answer) {
             if (null === $answer) {
-                throw new RuntimeException("Invalid email");
+                throw new RuntimeException('Invalid email');
             }
+
             return $answer;
         });
+
         return $question;
     }
 }

@@ -20,10 +20,10 @@
 
 namespace PrestashopConsole\Command\Cache;
 
+use Cache;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Cache;
 
 /**
  * Flush prestashop cache
@@ -33,7 +33,7 @@ use Cache;
 class FlushCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -43,11 +43,11 @@ class FlushCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $cache =  Cache::getInstance();
+        $cache = Cache::getInstance();
         $cache->flush();
 
         //Specific cacheFS
@@ -57,6 +57,7 @@ class FlushCommand extends Command
         }
 
         $output->writeln('<info>Cache flushed</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 }

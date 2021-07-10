@@ -30,13 +30,11 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Class ControllerCommand
  * This command will create a new module controller
- * @package Hhennes\PrestashopConsole\Command\Module\Generate
  */
 class ControllerCommand extends Command
 {
-
     /** @var array Allowed Controllers Types */
-    protected $_allowedControllerTypes = array('front', 'admin');
+    protected $_allowedControllerTypes = ['front', 'admin'];
 
     /** @var string Module Name */
     protected $_moduleName;
@@ -53,9 +51,8 @@ class ControllerCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -69,7 +66,7 @@ class ControllerCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -81,11 +78,13 @@ class ControllerCommand extends Command
 
         if (!is_dir(_PS_MODULE_DIR_ . $this->_moduleName)) {
             $output->writeln('<error>Module not exists</error>');
+
             return self::RESPONSE_ERROR;
         }
 
         if (!in_array($this->_controllerType, $this->_allowedControllerTypes)) {
             $output->writeln('<error>Unknown controller type</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -94,6 +93,7 @@ class ControllerCommand extends Command
             $this->_createDirectories();
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat controller directories</error>');
+
             return self::RESPONSE_ERROR;
         }
         $controllerClass = ucfirst($this->_moduleName) . ucfirst($this->_controllerName);
@@ -118,18 +118,22 @@ class ControllerCommand extends Command
             );
         } catch (IOException $e) {
             $output->writeln('<error>Unable to creat controller directories</error>');
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Controller ' . $this->_controllerName . ' created with sucess');
+
         return self::RESPONSE_SUCCESS;
     }
 
-
     /**
      * Generate controller directories
+     *
      * @throws \Exception
+     *
      * @todo Add add index.php security files
+     *
      * @return void
      */
     protected function _createDirectories()
@@ -156,6 +160,7 @@ class ControllerCommand extends Command
 
     /**
      * Return default adminControllerContent
+     *
      * @return string
      */
     protected function _getAdminControllerContent()
@@ -171,6 +176,7 @@ class {controllerClass}Controller extends ModuleAdminController {
 
     /**
      * Return default FrontControllerContent
+     *
      * @return string
      */
     protected function _getFrontControllerContent()
@@ -210,6 +216,7 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
 
     /**
      * Generate Template for front Controller
+     *
      * @return void
      */
     protected function _generateTemplate()

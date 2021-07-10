@@ -27,7 +27,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class CleanCommandAbstract extends Command
 {
-
     /** @var string Prestashop clean Module */
     protected $_cleanModuleName = 'pscleaner';
 
@@ -35,14 +34,15 @@ abstract class CleanCommandAbstract extends Command
     protected $_cleanModuleInstance = null;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cleanModuleName)) {
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cleanModuleName . ' is not active or installed</error>');
-                return self::RESPONSE_SUCCESS;;
+
+                return self::RESPONSE_SUCCESS;
             }
             $this->_cleanModuleInstance = $module;
         } else {

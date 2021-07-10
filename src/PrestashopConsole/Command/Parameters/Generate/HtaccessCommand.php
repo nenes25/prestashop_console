@@ -17,9 +17,7 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
-
 
 namespace PrestashopConsole\Command\Parameters\Generate;
 
@@ -31,12 +29,11 @@ use Tools;
 /**
  * Class HtaccessCommand
  * This command will generate the .htaccess file
- * @package Hhennes\PrestashopConsole\Command\Parameters\Generate
  */
 class HtaccessCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -46,14 +43,15 @@ class HtaccessCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (true === Tools::generateHtaccess()) {
-            $output->writeln("<info>.htaccess file generated with success</info>");
+            $output->writeln('<info>.htaccess file generated with success</info>');
         } else {
-            $output->writeln("<error>An error occurs while generating .htaccess file</error>");
+            $output->writeln('<error>An error occurs while generating .htaccess file</error>');
+
             return self::RESPONSE_ERROR;
         }
 

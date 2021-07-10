@@ -20,17 +20,16 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
+use CMS;
+use Context;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Context;
-use Shop;
-use CMS;
 
 /**
  * This commands allow to enable/disable cms pages
- *
  */
 class CmsCommand extends Command
 {
@@ -53,7 +52,7 @@ class CmsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $id_cms = (int)$input->getArgument('id');
+        $id_cms = (int) $input->getArgument('id');
         $action = $input->getArgument('action');
 
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
@@ -62,17 +61,18 @@ class CmsCommand extends Command
 
         if ($cms->id == null) {
             $output->writeln(sprintf("<error>Error Cms page %d doesn't exists</error>", $id_cms));
+
             return self::RESPONSE_ERROR;
         }
 
         switch ($action) {
             case 'enable':
                 $cms->active = true;
-                $output->writeln(sprintf("<info>Enable cms page %d</info>", $id_cms));
+                $output->writeln(sprintf('<info>Enable cms page %d</info>', $id_cms));
                 break;
             case 'disable':
             default:
-                $output->writeln(sprintf("<info>Disable cms page %d</info>", $id_cms));
+                $output->writeln(sprintf('<info>Disable cms page %d</info>', $id_cms));
                 $cms->active = false;
                 break;
         }
@@ -80,9 +80,11 @@ class CmsCommand extends Command
         try {
             $cms->save();
         } catch (\Exception $e) {
-            $output->writeln('<error>'.$e->getMessage().'</error>');
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+
             return self::RESPONSE_ERROR;
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

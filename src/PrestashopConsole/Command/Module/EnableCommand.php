@@ -20,21 +20,20 @@
 
 namespace PrestashopConsole\Command\Module;
 
+use Module;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Module;
-use PrestaShopException;
 
 /**
  * Commande qui permet d'activer un module
- *
  */
 class EnableCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -48,7 +47,7 @@ class EnableCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -58,25 +57,26 @@ class EnableCommand extends Command
             foreach ($name as $moduleName) {
                 if ($module = Module::getInstanceByName($moduleName)) {
                     if (Module::isInstalled($module->name)) {
-
                         // Exécution de l'action du module
                         try {
                             $module->enable();
                         } catch (PrestaShopException $e) {
-                            $outputString = '<error>module ' . $moduleName . ' ' . $e->getMessage() . "</error>";
+                            $outputString = '<error>module ' . $moduleName . ' ' . $e->getMessage() . '</error>';
                             $output->writeln($outputString);
+
                             return self::RESPONSE_ERROR;
                         }
-                        $outputString = '<info>Module ' . $moduleName . ' enable with sucess' . "</info>";
+                        $outputString = '<info>Module ' . $moduleName . ' enable with sucess' . '</info>';
                     } else {
-                        $outputString = '<error>module ' . $moduleName . ' is not installed' . "<error>";
+                        $outputString = '<error>module ' . $moduleName . ' is not installed' . '<error>';
                     }
                 } else {
-                    $outputString = '<error>Unknow module name ' . $moduleName . "<error>";
+                    $outputString = '<error>Unknow module name ' . $moduleName . '<error>';
                 }
                 $output->writeln($outputString);
             }
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

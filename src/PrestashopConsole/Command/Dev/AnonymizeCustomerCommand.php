@@ -16,18 +16,18 @@
 
 namespace PrestashopConsole\Command\Dev;
 
+use Db;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use PrestaShopDatabaseException;
 use RuntimeException;
-use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Db;
 
 class AnonymizeCustomerCommand extends Command
 {
-    protected $_allowedTypes = array('all', 'customers', 'addresses', 'newsletter');
+    protected $_allowedTypes = ['all', 'customers', 'addresses', 'newsletter'];
     protected $_excludedEmail = null;
 
     protected function configure()
@@ -67,19 +67,22 @@ class AnonymizeCustomerCommand extends Command
         $method = '_anonymize' . ucfirst(strtolower($type));
         $message = $this->$method($input);
         $output->writeln($message);
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Anonymize all content
+     *
      * @param InputInterface $input
+     *
      * @return string
      */
     protected function _anonymizeAll(InputInterface $input)
     {
         $message = '';
-        $message .= $this->_anonymizeCustomers($input)."\n";
-        $message .= $this->_anonymizeAddresses($input)."\n";
+        $message .= $this->_anonymizeCustomers($input) . "\n";
+        $message .= $this->_anonymizeAddresses($input) . "\n";
         $message .= $this->_anonymizeNewsletter($input);
 
         return $message;
@@ -87,7 +90,9 @@ class AnonymizeCustomerCommand extends Command
 
     /**
      * Anonymize customer data
+     *
      * @param InputInterface $input
+     *
      * @return string
      */
     protected function _anonymizeCustomers(InputInterface $input)
@@ -112,7 +117,7 @@ class AnonymizeCustomerCommand extends Command
         }
 
         try {
-            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "customer SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlUpd . ' ' . $sqlCond);
+            Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . "customer SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlUpd . ' ' . $sqlCond);
         } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
@@ -122,7 +127,9 @@ class AnonymizeCustomerCommand extends Command
 
     /**
      * Anonymize address data
+     *
      * @param InputInterface $input
+     *
      * @return string
      */
     protected function _anonymizeAddresses(InputInterface $input)
@@ -141,7 +148,7 @@ class AnonymizeCustomerCommand extends Command
         }
 
         try {
-            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
+            Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . "address SET lastname = '" . $this->_randomString() . "', firstname = '" . $this->_randomString() . "' " . $sqlCond);
         } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
@@ -151,7 +158,9 @@ class AnonymizeCustomerCommand extends Command
 
     /**
      * Anonymize newsletter data
+     *
      * @param InputInterface $input
+     *
      * @return string
      */
     protected function _anonymizeNewsletter(InputInterface $input)
@@ -176,7 +185,7 @@ class AnonymizeCustomerCommand extends Command
         }
 
         try {
-            Db::getInstance()->execute("UPDATE " . _DB_PREFIX_ . $table . " SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlCond);
+            Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . $table . " SET email = CONCAT(MD5(email),'@fake-email.com') " . $sqlCond);
         } catch (PrestaShopDatabaseException $e) {
             return '<error>' . strip_tags($e->getMessage()) . '</error>';
         }
@@ -184,9 +193,9 @@ class AnonymizeCustomerCommand extends Command
         return '<info>Newsletter subscriber anonymized with success</info>';
     }
 
-
     /**
      * Get Type Question
+     *
      * @return Question
      */
     protected function _getTypeQuestion()
@@ -198,6 +207,7 @@ class AnonymizeCustomerCommand extends Command
             if ($answer !== null && !in_array($answer, $allowedTypes)) {
                 throw new RuntimeException('The field type must be part of the suggested');
             }
+
             return $answer;
         });
 
@@ -206,6 +216,7 @@ class AnonymizeCustomerCommand extends Command
 
     /**
      * Get email question
+     *
      * @return Question
      */
     protected function getEmailQuestion()
@@ -215,8 +226,9 @@ class AnonymizeCustomerCommand extends Command
             $allAnswers = explode(',', $answer);
             foreach ($allAnswers as $allAnswer) {
                 if (!empty($allAnswer) && !filter_var($allAnswer, FILTER_VALIDATE_EMAIL)) {
-                    throw  new RuntimeException("Invalid email  in exclude email");
+                    throw new RuntimeException('Invalid email  in exclude email');
                 }
+
                 return $answer;
             }
         });
@@ -226,15 +238,17 @@ class AnonymizeCustomerCommand extends Command
 
     /**
      * @param int $length
+     *
      * @return string
      */
     public function _randomString($length = 10)
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $randstring .= $characters[rand(1, strlen($characters))];
         }
+
         return $randstring;
     }
 }

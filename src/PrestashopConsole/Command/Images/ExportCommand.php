@@ -21,15 +21,14 @@
 namespace PrestashopConsole\Command\Images;
 
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use RuntimeException;
 
 class ExportCommand extends Command
 {
-
     /** @var array Images Types */
     protected $_types = [
         'all',
@@ -52,7 +51,7 @@ class ExportCommand extends Command
     protected $_archiveFormat;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -65,15 +64,15 @@ class ExportCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         //Shell_exec function is required
         //@Todo make it optionnal and do it also with php ( symfony finder )
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -92,6 +91,7 @@ class ExportCommand extends Command
                 if ($answer !== null && !in_array($answer, $imagesTypes)) {
                     throw new RuntimeException('The field type must be part of the suggested');
                 }
+
                 return $answer;
             });
 
@@ -99,18 +99,20 @@ class ExportCommand extends Command
         }
 
         $this->_exportImages($output);
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Export images
+     *
      * @param OutputInterface $output
+     *
      * @return void
      */
-    protected function _exportImages(OutputInterface $output) :void
+    protected function _exportImages(OutputInterface $output): void
     {
         switch ($this->_type) {
-
             case 'admin':
             case 'cms':
             case 'tmp':
@@ -126,7 +128,7 @@ class ExportCommand extends Command
                 break;
 
             default:
-                $directory = "";
+                $directory = '';
                 break;
         }
 
@@ -142,7 +144,7 @@ class ExportCommand extends Command
             }
 
             $output->writeln('<info>Images export started</info>');
-            $export = shell_exec("cd " . $exportPath . ' && ' . $command);
+            $export = shell_exec('cd ' . $exportPath . ' && ' . $command);
             $output->writeln($export);
             $output->writeln('<info>Images export ended in path ' . $filePath . '</info>');
         } else {

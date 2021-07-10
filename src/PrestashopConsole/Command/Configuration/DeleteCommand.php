@@ -20,20 +20,19 @@
 
 namespace PrestashopConsole\Command\Configuration;
 
+use Configuration;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Configuration;
 
 /**
  * Commande qui permet de supprimer une valeur de configuration
- *
  */
 class DeleteCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -48,13 +47,14 @@ class DeleteCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
         $value = Configuration::deleteByName($name);
-        $output->writeln('<info>'.$value.'</info>');
+        $output->writeln('<info>' . $value . '</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 }

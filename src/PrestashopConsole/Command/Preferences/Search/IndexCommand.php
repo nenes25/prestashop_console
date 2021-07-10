@@ -17,23 +17,21 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
 
 namespace PrestashopConsole\Command\Preferences\Search;
 
+use Context;
+use Db;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Search;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Context;
-use Shop;
-use Search;
-use Db;
 
 /**
  * Commands: Add missing products to the index or re-build the entire index
- *
  */
 class IndexCommand extends Command
 {
@@ -69,7 +67,8 @@ class IndexCommand extends Command
 
         list($total, $indexed) = Db::getInstance()->getRow('SELECT COUNT(*) as "0", SUM(product_shop.indexed) as "1" FROM ' . _DB_PREFIX_ . 'product p ' . Shop::addSqlAssociation('product', 'p') . ' WHERE product_shop.`visibility` IN ("both", "search") AND product_shop.`active` = 1');
 
-        $output->writeln('<info>Currently indexed products: ' . (int)$indexed . ' / ' . (int)$total . '</info>');
+        $output->writeln('<info>Currently indexed products: ' . (int) $indexed . ' / ' . (int) $total . '</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 }

@@ -20,13 +20,13 @@
 
 namespace PrestashopConsole\Command\Console;
 
-use RuntimeException;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class CreateCommand
@@ -35,7 +35,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 class CreateCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -45,13 +45,14 @@ class CreateCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         //This command can only be launched in php mode
         if ($this->getApplication()->getRunAs() == 'phar') {
             $output->writeln('<error>This command can only be run in php mode</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -71,21 +72,25 @@ class CreateCommand extends Command
             );
         } catch (RuntimeException $e) {
             $output->writeln('<error>Unable to generate the command :' . $e->getMessage() . '</error>');
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Command Created with success</info>');
 
-        return self::RESPONSE_SUCCESS;;
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Create the command file ( and directory if necessary )
+     *
      * @param string $commandName
      * @param string $commandDescription
      * @param string $commandDomain
      * @param string $commandClass
+     *
      * @throws RuntimeException
+     *
      * @return void
      */
     protected function _createCommand($commandName, $commandDescription, $commandDomain, $commandClass)
@@ -100,7 +105,7 @@ class CreateCommand extends Command
             try {
                 $fileSystem->mkdir($path, 0755);
             } catch (IOException $e) {
-                throw new RuntimeException("Unable to create command directory");
+                throw new RuntimeException('Unable to create command directory');
             }
         }
 
@@ -119,7 +124,7 @@ class CreateCommand extends Command
                 $commandClass,
                 $commandName,
                 $commandDescription,
-                $commandDomain
+                $commandDomain,
             ],
             $fileContent
         );
@@ -129,13 +134,13 @@ class CreateCommand extends Command
         try {
             $fileSystem->appendToFile($fileName, $fileContent);
         } catch (IOException $e) {
-            throw new RuntimeException("Unable to create command class file");
+            throw new RuntimeException('Unable to create command class file');
         }
     }
 
-
     /**
      * Get command name question
+     *
      * @return Question
      */
     protected function _getCommandNameQuestion()
@@ -148,6 +153,7 @@ class CreateCommand extends Command
             if ($answer === null || !preg_match('#^[a-z-]+:[a-z-]+(?::[a-z-]+)?$#', $answer)) {
                 throw new RuntimeException('The command name is not valid, it must use a format like domain:action or domain:subdomain:action');
             }
+
             return $answer;
         });
 
@@ -156,6 +162,7 @@ class CreateCommand extends Command
 
     /**
      * Get command description question
+     *
      * @return Question
      */
     protected function _getCommandDescriptionQuestion()
@@ -165,6 +172,7 @@ class CreateCommand extends Command
             if ($answer === null) {
                 throw new RuntimeException('Please give a command description');
             }
+
             return $answer;
         });
 
@@ -173,6 +181,7 @@ class CreateCommand extends Command
 
     /**
      * Get command domain question
+     *
      * @return Question
      */
     protected function _getCommandDomainQuestion()
@@ -185,6 +194,7 @@ class CreateCommand extends Command
             if ($answer === null) {
                 throw new RuntimeException('Please give a command domain');
             }
+
             return $answer;
         });
 
@@ -193,6 +203,7 @@ class CreateCommand extends Command
 
     /**
      * Get Command Class Name
+     *
      * @return Question
      */
     protected function _getCommandClassQuestion()
@@ -207,12 +218,14 @@ class CreateCommand extends Command
             if (preg_match('#Command$#', $cleanAnswer)) {
                 $cleanAnswer = str_ireplace('Command', '', $cleanAnswer);
             }
+
             return $cleanAnswer;
         });
         $question->setValidator(function ($answer) {
             if ($answer === null) {
                 throw new RuntimeException('Please give a command class name');
             }
+
             return $answer;
         });
 
@@ -221,6 +234,7 @@ class CreateCommand extends Command
 
     /**
      * Get base command content
+     *
      * @return string
      */
     protected function _getBaseCommandContent()
@@ -265,11 +279,12 @@ class CreateCommand extends Command
 
     /**
      * Get Command Header
+     *
      * @return string
      */
     protected function _getHeader()
     {
-        return "
+        return '
         /**
          * 2007-2020 Hennes Hervé
          *
@@ -284,10 +299,10 @@ class CreateCommand extends Command
          * to contact@h-hennes.fr so we can send you a copy immediately.
          *
          * @author    Hennes Hervé <contact@h-hennes.fr>
-         * @copyright 2007-" . date('Y') . " Hennes Hervé
+         * @copyright 2007-' . date('Y') . ' Hennes Hervé
          * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
          * http://www.h-hennes.fr/blog/
          */
-         ";
+         ';
     }
 }

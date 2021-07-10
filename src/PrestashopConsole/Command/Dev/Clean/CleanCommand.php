@@ -20,29 +20,29 @@
 
 namespace PrestashopConsole\Command\Dev\Clean;
 
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Store\SemaphoreStore;
 
 class CleanCommand extends CleanCommandAbstract
 {
-    protected $_allowedCleanType = ['all','catalog','sales'];
+    protected $_allowedCleanType = ['all', 'catalog', 'sales'];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
         $this
                 ->setName('dev:clean')
                 ->setDescription('Clean existing datas with module PsCleaner')
-                ->addArgument('type', InputArgument::REQUIRED, 'data types. Possibles values '. implode(', ', $this->_allowedCleanType));
+                ->addArgument('type', InputArgument::REQUIRED, 'data types. Possibles values ' . implode(', ', $this->_allowedCleanType));
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -55,11 +55,11 @@ class CleanCommand extends CleanCommandAbstract
             $lock = $factory->createLock($this->getName());
             if (!$lock->acquire()) {
                 $output->writeln('<error>The command is already running in another process.</error>');
+
                 return self::RESPONSE_ERROR;
             }
 
             switch ($type) {
-
                 case 'all':
                     $this->_cleanModuleInstance->truncate('catalog');
                     $this->_cleanModuleInstance->truncate('sales');
@@ -75,6 +75,7 @@ class CleanCommand extends CleanCommandAbstract
                     break;
                 default:
                     $output->writeln('<error>Unknow clean type</error>');
+
                     return self::RESPONSE_ERROR;
                     break;
             }

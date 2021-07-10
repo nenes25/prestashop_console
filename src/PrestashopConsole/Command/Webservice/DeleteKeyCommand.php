@@ -19,16 +19,15 @@
  * http://www.h-hennes.fr/blog/
  */
 
-
 namespace PrestashopConsole\Command\Webservice;
 
-use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
-use PrestaShopException;
-use WebserviceKey;
 use Db;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use PrestaShopException;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use WebserviceKey;
 
 /**
  * Class DeleteKey
@@ -36,12 +35,11 @@ use Db;
  */
 class DeleteKeyCommand extends Command
 {
-
     /** @var string Argument Key */
     const ARGUMENT_KEY = 'key';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -56,7 +54,7 @@ class DeleteKeyCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -64,16 +62,18 @@ class DeleteKeyCommand extends Command
 
         if ((empty($apiKey) || !$this->_validateWebserviceKey($apiKey))) {
             $output->writeln('<error>The api key is invalid ( 32 characters required)</error>');
+
             return self::RESPONSE_ERROR;
         }
         if (!WebserviceKey::keyExists(pSQL($apiKey))) {
             $output->writeln('<error>The api key does not exists</error>');
+
             return self::RESPONSE_ERROR;
         }
 
-        $idKey = Db::getInstance()->getValue("
+        $idKey = Db::getInstance()->getValue('
                 SELECT id_webservice_account 
-                FROM " . _DB_PREFIX_ . "webservice_account
+                FROM ' . _DB_PREFIX_ . "webservice_account
                 WHERE `key`= '" . pSQL($apiKey) . "' 
         ");
 
@@ -82,20 +82,23 @@ class DeleteKeyCommand extends Command
             $webserviceKey->delete();
         } catch (PrestaShopException $e) {
             $output->writeln('<error>An error occurs while saving webservice key</error>');
+
             return self::RESPONSE_ERROR;
         }
-        $output->writeln("<info>Webservice key deleted with success</info>");
+        $output->writeln('<info>Webservice key deleted with success</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 
     /**
      * Validate that provided key is valid
+     *
      * @param string $key
+     *
      * @return bool
      */
     protected function _validateWebserviceKey($key)
     {
-        return (bool)preg_match('/^[A-Z_0-9-]{32}$/', $key);
+        return (bool) preg_match('/^[A-Z_0-9-]{32}$/', $key);
     }
-
 }

@@ -20,17 +20,16 @@
 
 namespace PrestashopConsole\Command\Preferences;
 
+use Configuration;
+use Context;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Shop;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Context;
-use Shop;
-use Configuration;
 
 /**
  * Commande qui permet d'activer / desactiver la réécriture d'url
- *
  */
 class UrlRewriteCommand extends Command
 {
@@ -54,12 +53,12 @@ class UrlRewriteCommand extends Command
 
         switch ($type) {
             case 'enable':
-                $output->writeln("<info>Url rewrite is enabled</info>");
+                $output->writeln('<info>Url rewrite is enabled</info>');
                 Configuration::updateValue('PS_REWRITING_SETTINGS', 1);
                 break;
             case 'disable':
             default:
-                $output->writeln("<info>Url rewrite is disabled</info>");
+                $output->writeln('<info>Url rewrite is disabled</info>');
                 Configuration::updateValue('PS_REWRITING_SETTINGS', 0);
                 break;
         }

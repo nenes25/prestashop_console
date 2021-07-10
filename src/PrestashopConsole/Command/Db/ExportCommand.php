@@ -27,7 +27,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportCommand extends Command
 {
-
     /** @var string[] */
     protected $_allowedTypes = [
         'all',
@@ -37,7 +36,7 @@ class ExportCommand extends Command
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -51,13 +50,14 @@ class ExportCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -67,11 +67,12 @@ class ExportCommand extends Command
 
         if (!in_array($type, $this->_allowedTypes)) {
             $output->writeln('<error>Unknow type option for export</error>');
+
             return self::RESPONSE_ERROR;
         }
 
         $output->writeln('<info>Export started</info>');
-        $command = "mysqldump -h " . _DB_SERVER_ . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' ';
+        $command = 'mysqldump -h ' . _DB_SERVER_ . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' ';
 
         //Export type management
         if ($type !== 'all') {
@@ -81,7 +82,7 @@ class ExportCommand extends Command
             $tables = array_map(function ($item) {
                 return _DB_PREFIX_ . $item;
             }, $tables);
-            $command .= implode(" ", $tables);
+            $command .= implode(' ', $tables);
         }
 
         //Get export fileName
@@ -89,6 +90,7 @@ class ExportCommand extends Command
             $fileName = $this->_cleanFileName($fileName);
             if (false === $fileName) {
                 $output->writeln('<error>Incorrect export filename</error>');
+
                 return self::RESPONSE_ERROR;
             }
         }
@@ -107,9 +109,9 @@ class ExportCommand extends Command
         return self::RESPONSE_SUCCESS;
     }
 
-
     /**
      * Récupération des tables du catalogue
+     *
      * @return array
      */
     protected function _getCustomersTables()
@@ -126,6 +128,7 @@ class ExportCommand extends Command
 
     /**
      * Récupération des tables du catalogue
+     *
      * @return array
      */
     protected function _getOrdersTables()
@@ -165,6 +168,7 @@ class ExportCommand extends Command
 
     /**
      * Récupération des tables du catalogue
+     *
      * @return array
      */
     protected function _getCatalogTables()
@@ -232,16 +236,19 @@ class ExportCommand extends Command
 
     /**
      * Clean fileName to avoid error and Xss injection
+     *
      * @param string $fileName
+     *
      * @return string|bool
      */
     protected function _cleanFileName($fileName)
     {
         $fileName = trim($fileName);
-        $fileName = str_replace(['.sql','.gz'], '', $fileName);
+        $fileName = str_replace(['.sql', '.gz'], '', $fileName);
         if (preg_match('/[^a-z_\-0-9]/i', $fileName)) {
             return false;
         }
+
         return $fileName;
     }
 }

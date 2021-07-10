@@ -20,29 +20,28 @@
 
 namespace PrestashopConsole\Command\Cache\Smarty;
 
+use Configuration;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Configuration;
 
 /**
  * Commande qui permet de configurer le cache Smarty
- *
  */
 class ConfigureCommand extends Command
 {
-
     /**
      * Limitation des donnés à saisir
-     * @var array $_allowedNames
+     *
+     * @var array
      */
-    protected $_allowedNames = array(
-        'compile' => array('config_value' => 'PS_SMARTY_FORCE_COMPILE', 'allowed_values' => array('0', '1', '2')),
-        'cache' => array('config_value' => 'PS_SMARTY_CACHE', 'allowed_values' => array('0', '1')),
-        'cacheType' => array('config_value' => 'PS_SMARTY_CACHING_TYPE', 'allowed_values' => array('filesystem', 'mysql')),
-        'clearCache' => array('config_value' => 'PS_SMARTY_CLEAR_CACHE', 'allowed_values' => array('never', 'everytime'))
-    );
+    protected $_allowedNames = [
+        'compile' => ['config_value' => 'PS_SMARTY_FORCE_COMPILE', 'allowed_values' => ['0', '1', '2']],
+        'cache' => ['config_value' => 'PS_SMARTY_CACHE', 'allowed_values' => ['0', '1']],
+        'cacheType' => ['config_value' => 'PS_SMARTY_CACHING_TYPE', 'allowed_values' => ['filesystem', 'mysql']],
+        'clearCache' => ['config_value' => 'PS_SMARTY_CLEAR_CACHE', 'allowed_values' => ['never', 'everytime']],
+    ];
 
     protected function configure()
     {
@@ -59,18 +58,21 @@ class ConfigureCommand extends Command
         $value = $input->getArgument('value');
 
         if (!array_key_exists($name, $this->_allowedNames)) {
-            $output->writeln("<error>Name not allowed</error>");
+            $output->writeln('<error>Name not allowed</error>');
+
             return self::RESPONSE_ERROR;
         } else {
             //Vérification de la valeur
             if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
-                $output->writeln("<error>Value not allowed for configuration " . $name."</error>");
+                $output->writeln('<error>Value not allowed for configuration ' . $name . '</error>');
+
                 return self::RESPONSE_ERROR;
             } else {
                 Configuration::updateValue($this->_allowedNames[$name]['config_value'], $value);
-                $output->writeln("<info>Update configuration " . $name . " with " . $value."</info>");
+                $output->writeln('<info>Update configuration ' . $name . ' with ' . $value . '</info>');
             }
         }
+
         return self::RESPONSE_SUCCESS;
     }
 }

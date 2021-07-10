@@ -27,12 +27,11 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Commande qui permet de lister les overrides en place sur le site
- *
  */
 class ListOverridesCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -42,7 +41,7 @@ class ListOverridesCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -52,16 +51,18 @@ class ListOverridesCommand extends Command
             $finder->files()->in(_PS_OVERRIDE_DIR_)->name('*.php')->notName('index.php');
 
             foreach ($finder as $file) {
-                $outputString.= $file->getRelativePathname()."\n";
+                $outputString .= $file->getRelativePathname() . "\n";
             }
         } catch (\Exception $e) {
-            $output->writeln("<info>ERROR:" . $e->getMessage() . "</info>");
+            $output->writeln('<info>ERROR:' . $e->getMessage() . '</info>');
+
             return self::RESPONSE_ERROR;
         }
         if ($outputString == '') {
             $outputString = 'No class or controllers overrides on this project';
         }
-        $output->writeln("<info>".$outputString."</info>");
+        $output->writeln('<info>' . $outputString . '</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 }

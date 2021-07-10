@@ -18,15 +18,14 @@
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * https://github.com/nenes25/prestashop_console*
  * https://www.h-hennes.fr/blog/
- *
  */
 
 namespace PrestashopConsole\Command\Cache;
 
+use PrestaShop\PrestaShop\Adapter\Cache\CacheClearer;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use PrestaShop\PrestaShop\Adapter\Cache\CacheClearer;
 
 /**
  * Clear all caches commands
@@ -34,7 +33,7 @@ use PrestaShop\PrestaShop\Adapter\Cache\CacheClearer;
 class ClearAllCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -44,13 +43,14 @@ class ClearAllCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $cacheClearer = new CacheClearer();
         $cacheClearer->clearAllCaches();
-        $output->writeln("<info>All cache cleared with success</info>");
+        $output->writeln('<info>All cache cleared with success</info>');
+
         return self::RESPONSE_SUCCESS;
     }
 }

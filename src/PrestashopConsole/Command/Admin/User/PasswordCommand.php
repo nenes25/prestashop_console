@@ -20,11 +20,11 @@
 
 namespace PrestashopConsole\Command\Admin\User;
 
+use Employee;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Employee;
 
 /**
  * Change admin password
@@ -32,7 +32,7 @@ use Employee;
 class PasswordCommand extends Command
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function configure()
     {
@@ -42,7 +42,7 @@ class PasswordCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -52,8 +52,9 @@ class PasswordCommand extends Command
         $email = $helper->ask($input, $output, $userQuestion);
 
         //Error if no employee exists with email
-        if (! Employee::employeeExists($email)) {
-            $output->writeln("<error>Employee with this email not exists");
+        if (!Employee::employeeExists($email)) {
+            $output->writeln('<error>Employee with this email not exists');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -66,7 +67,8 @@ class PasswordCommand extends Command
         $passwordConfirm = $helper->ask($input, $output, $passwordConfirmQuestion);
 
         if ($password !== $passwordConfirm) {
-            $output->writeln("<error>Password and password confirmation do not match");
+            $output->writeln('<error>Password and password confirmation do not match');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -77,10 +79,11 @@ class PasswordCommand extends Command
         try {
             $employee->save();
         } catch (\Exception $e) {
-            $output->writeln("<error>".$e->getMessage()."</error>");
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+
             return self::RESPONSE_ERROR;
         }
-        $output->writeln("<info>Password changed with success for user ".$email."</info>");
+        $output->writeln('<info>Password changed with success for user ' . $email . '</info>');
 
         return self::RESPONSE_SUCCESS;
     }

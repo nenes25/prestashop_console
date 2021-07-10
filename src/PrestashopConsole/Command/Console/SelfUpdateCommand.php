@@ -20,15 +20,14 @@
 
 namespace PrestashopConsole\Command\Console;
 
+use Exception;
+use Humbug\SelfUpdate\Updater;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Humbug\SelfUpdate\Updater;
-use Exception;
 
 /**
  * Commande qui permet de mettre à jour la console
- *
  */
 class SelfUpdateCommand extends Command
 {
@@ -43,7 +42,6 @@ class SelfUpdateCommand extends Command
     }
 
     /**
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      */
@@ -51,6 +49,7 @@ class SelfUpdateCommand extends Command
     {
         if ($this->getApplication()->getRunAs() == 'php') {
             $output->writeln('<error>This commande can only be run in phar mode</error>');
+
             return self::RESPONSE_ERROR;
         }
 
@@ -67,7 +66,8 @@ class SelfUpdateCommand extends Command
             }
         } catch (Exception $e) {
             $output->writeln('<error>Unable to update console</error>');
-            $output->writeln('<error>'.$e->getMessage().'</error>');
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
+
             return self::RESPONSE_ERROR;
         }
 

@@ -20,13 +20,12 @@
 
 namespace PrestashopConsole\Command\Install;
 
+use Symfony\Component\Console\Command\ListCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\ListCommand;
 
 /**
  * This commands display information on ps install
- *
  */
 class InfoCommand extends ListCommand
 {
@@ -41,9 +40,10 @@ class InfoCommand extends ListCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         parent::execute($input, $output);
-        $output->writeln("<error>No prestashop installation detected, please install it or place the console in the right place.</error>");
-        $output->writeln("<error>Or run install:install to install a new prestashop website.</error>");
-        $output->writeln("<error>All console commands will be available once a prestashop installation will be detected</error>");
+        $output->writeln('<error>No prestashop installation detected, please install it or place the console in the right place.</error>');
+        $output->writeln('<error>Or run install:install to install a new prestashop website.</error>');
+        $output->writeln('<error>All console commands will be available once a prestashop installation will be detected</error>');
+
         return 1;
     }
 }
