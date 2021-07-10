@@ -4,6 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/nenes25/prestashop_console)](https://github.com/nenes25/eicaptcha/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/nenes25/prestashop_console)](https://github.com/nenes25/eicaptcha/network) 
 [![Github All Releases](https://img.shields.io/github/downloads/nenes25/prestashop_console/total.svg)]()
+[![PHP tests](https://github.com/nenes25/prestashop_console/actions/workflows/php.yml/badge.svg)](https://github.com/nenes25/prestashop_console/actions/workflows/php.yml)
 
 Prestashop cli tools based on Symfony Console component   
 You can read more about it : http://www.h-hennes.fr/blog/2016/05/19/console-prestashop/ (FR)
@@ -31,12 +32,12 @@ You can download all the versions of the console (since 1.5 ) from the release p
 
 | Php Version | Compatible |
 | ------ | -----------|
-| 5.6 | :heavy_check_mark:|
-| 7.0 | :heavy_check_mark: |
-| 7.1 | :heavy_check_mark: |
+| 5.6 | :x: No more compatible see v 1.x|
+| 7.0 | :x: No more compatible see v 1.x |
+| 7.1 | :x: No more compatible see v 1.x |
 | 7.2 | :heavy_check_mark: |
-| 7.3| :heavy_check_mark: |
-| 7.4 | :interrobang: Not yet tested |
+| 7.3 | :heavy_check_mark: |
+| 7.4 | :heavy_check_mark: |
 | 8.0 | :interrobang: Not yet tested |
 
 # How to use it
