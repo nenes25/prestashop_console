@@ -34,8 +34,11 @@
     "phpunit/phpunit": "^8.5"
   },
   "scripts": {
+    "header-stamp": [
+      "@php ./src/vendor/bin/header-stamp --exclude=src/vendor --extensions=php --license='./.devtools/licence.txt'"
+    ],
     "test": [
-      "@php -d date.timezone=UTC ./src/vendor/bin/phpunit -c tests/phpunit.xml"
+      "@php -d date.timezone=UTC ./src/vendor/bin/phpunit -c tests/phpunit.xml tests/PrestashopConsole/"
     ]
   }
 }

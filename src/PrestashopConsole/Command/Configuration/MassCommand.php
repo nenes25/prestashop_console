@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 PrestaShop
+ * 2007-2021 Hennes Hervé
  *
  * NOTICE OF LICENSE
  *
@@ -12,16 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
- * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
- *
- * @author    Mariusz Mielnik <mariusz@ecbox.pl>
- * @copyright 2013-2019 Mariusz Mielnik
+ * @author    Hennes Hervé <contact@h-hennes.fr>
+ * @copyright 2007-2021 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- *  http://www.ecbox.pl
+ * https://github.com/nenes25/prestashop_console*
+ * https://www.h-hennes.fr/blog/
+ *
  */
 
 namespace PrestashopConsole\Command\Configuration;
