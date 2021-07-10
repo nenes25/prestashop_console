@@ -23,6 +23,8 @@
 
 use PrestashopConsole\Command\Customer\CreateCommand;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use PHPUnit\Framework\TestCase;
 
 class CreateCommandTest extends TestCase
@@ -32,19 +34,51 @@ class CreateCommandTest extends TestCase
 
     protected function setUp(): void
     {
+        $command = new CreateCommand();
+        $command->setHelperSet(new HelperSet([new QuestionHelper()]));
         $this->commandTester = new CommandTester(
-            new CreateCommand()
+            $command
         );
         parent::setUp();
     }
 
-    public function testExecute($datas):void
+    /**
+     * @param array $datas
+     * @dataProvider getCases
+     */
+    public function testExecute($datas): void
     {
 
+        //Check command status code
+        $this->assertEquals(
+            $datas['response_code'],
+            $this->commandTester->execute(
+                $datas['params']
+            )
+        );
+
+        //Check command message
+        $this->assertEquals(
+            $datas['response_message'],
+            trim($this->commandTester->getDisplay())
+        );
     }
 
-    public function getCases():Generator
-    {
 
+    public function getCases(): Generator
+    {
+        $emailOkRandomString = sprintf('unittestuser-frontend-%s@yopmail.com', time() * mt_rand(1, 1000));
+        yield 'Case ok' => [
+            [
+                'params' => [
+                    "--email" => $emailOkRandomString,
+                    "--password" => 'prestashop123',
+                    "--firstname" => 'frontend',
+                    "--lastname" => 'user',
+                ],
+                'response_message' => sprintf('new customer %s created with success', $emailOkRandomString),
+                'response_code' => 0,
+            ]
+        ];
     }
 }
