@@ -23,8 +23,8 @@ namespace PrestashopConsole\Command\Admin;
 
 use Context;
 use Exception;
-use Profile;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Profile;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -63,6 +63,7 @@ class ProfilesListCommand extends Command
                 }
                 $table->render();
             }
+
             return self::RESPONSE_SUCCESS;
         } catch (Exception $e) {
             return self::RESPONSE_ERROR;
