@@ -19,7 +19,7 @@ You can download all the versions of the console (since 1.5 ) from the release p
 | ------------------ | -----------|
 | 1.5.x | :x: |
 | 1.6.x | :x: |
-| 1.6.1.x | :heavy_check_mark: (somme commands are not available)|
+| 1.6.1.x | :x: |
 | 1.7.0.x | :heavy_check_mark: |
 | 1.7.1.x | :heavy_check_mark: |
 | 1.7.2.x | :heavy_check_mark: |
