@@ -30,7 +30,8 @@ Compatibility
 | 1.7.4.x | :heavy_check_mark: |
 | 1.7.5.x | :heavy_check_mark: |
 | 1.7.6.x | :heavy_check_mark: |
-| 1.7.7.x | :interrobang: Not yet tested |
+| 1.7.7.x | :heavy_check_mark: |
+| 1.7.8.x | :interrobang: Not yet tested |
 
 | Php Version | Compatible |
 | ------ | -----------|
