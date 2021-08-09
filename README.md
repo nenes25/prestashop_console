@@ -1,6 +1,5 @@
 # PrestaShop Console
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f72aeabcce684a8ca888cd53a954212e)](https://app.codacy.com/app/nenes25/prestashop_console?utm_source=github.com&utm_medium=referral&utm_content=nenes25/prestashop_console&utm_campaign=Badge_Grade_Dashboard)
 [![GitHub stars](https://img.shields.io/github/stars/nenes25/prestashop_console)](https://github.com/nenes25/eicaptcha/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/nenes25/prestashop_console)](https://github.com/nenes25/eicaptcha/network)
 [![Github All Releases](https://img.shields.io/github/downloads/nenes25/prestashop_console/total.svg)]()
