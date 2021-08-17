@@ -30,7 +30,7 @@ abstract class CleanCommandAbstract extends Command
     /** @var string Prestashop clean Module */
     protected $_cleanModuleName = 'pscleaner';
 
-    /** @var PSCleaner | null */
+    /** @var PSCleaner|null */
     protected $_cleanModuleInstance = null;
 
     /**
