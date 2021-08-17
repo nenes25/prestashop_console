@@ -23,6 +23,7 @@ namespace PrestashopConsole\Command\Admin\User;
 use Configuration;
 use Employee;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -69,11 +70,11 @@ class CreateCommand extends Command
             $password = $helper->ask($input, $output, $this->getPasswordQuestion());
         }
 
-        if (!Validate::isCustomerName($firstname)) {
+        if (!Validate::isName($firstname)) {
             $firstname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
         }
 
-        if (!Validate::isCustomerName($lastname)) {
+        if (!Validate::isName($lastname)) {
             $lastname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
         }
 
@@ -109,23 +110,26 @@ class CreateCommand extends Command
 
     /**
      * Get employee email question
-     * @return Question
      *
+     * @return Question
      */
     protected function getEmailQuestion(): Question
     {
         $question = new Question('admin email :', false);
         $question->setValidator(function ($answer) {
             if (!Validate::isEmail($answer)) {
-                throw new \RuntimeException('The email is empty or not valid');
+                throw new RuntimeException('The email is empty or not valid');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
     /**
      * Get employee password question
+     *
      * @return Question
      */
     protected function getPasswordQuestion(): Question
@@ -134,27 +138,33 @@ class CreateCommand extends Command
         $question->setHidden(true);
         $question->setValidator(function ($answer) {
             if (!Validate::isPasswdAdmin($answer)) {
-                throw new \RuntimeException('Your password is not valid');
+                throw new RuntimeException('Your password is not valid');
             }
+
             return $answer;
         });
+
         return $question;
     }
 
     /**
      * Get Customer Firstname or lastname question
+     *
      * @param string $field firstname|lastname
+     *
      * @return Question
      */
     protected function getCustomerQuestion(string $field): Question
     {
         $question = new Question($field . ' :', 'admin');
         $question->setValidator(function ($answer) use ($field) {
-            if (!Validate::isCustomerName($answer)) {
-                throw new \RuntimeException($field . ' is not valid');
+            if (!Validate::isName($answer)) {
+                throw new RuntimeException($field . ' is not valid');
             }
+
             return $answer;
         });
+
         return $question;
     }
 }
