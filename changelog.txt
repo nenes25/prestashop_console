@@ -24,6 +24,8 @@
 */
 2021-    - V 2.0.0 : #117 Change commands domain
                         #203 Remove Install commands
+                        #217 admin:user:create validate customer data
+                        #218 New Command admin:profiles:list
                         Update min php version to php7.2 +
                         Update compatibility only for ps 1.7 +
                         Remove commands:
