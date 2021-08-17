@@ -21,7 +21,6 @@
  */
 
 
-
 use PrestashopConsole\Command\Admin\User\CreateCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use PHPUnit\Framework\TestCase;
@@ -48,20 +47,34 @@ class CreateAdminCommandTest extends TestCase
      */
     public function testExecute($datas): void
     {
-        //Check command status code
-        $this->assertEquals(
-            $datas['response_code'],
-            $this->commandTester->execute(
-                $datas['params']
-            )
-        );
+        //Gestion des messages d'exception
+        if ($datas['expect_exception'] == 1) {
+            $this->expectException(
+                \RuntimeException::class
+            );
+            //Check command status code
+            $this->assertEquals(
+                $datas['response_code'],
+                $this->commandTester->execute(
+                    $datas['params']
+                )
+            );
+        } else {
 
-        //Check command message
-        $this->assertEquals(
-            $datas['response_message'],
-            trim($this->commandTester->getDisplay())
-        );
+            //Check command status code
+            $this->assertEquals(
+                $datas['response_code'],
+                $this->commandTester->execute(
+                    $datas['params']
+                )
+            );
 
+            //Check command message
+            $this->assertEquals(
+                $datas['response_message'],
+                trim($this->commandTester->getDisplay())
+            );
+        }
     }
 
 
@@ -76,6 +89,7 @@ class CreateAdminCommandTest extends TestCase
                     "--firstname" => 'admin',
                     "--lastname" => 'user',
                 ],
+                'expect_exception' => 0,
                 'response_message' => sprintf('New user %s created', $emailOkRandomString),
                 'response_code' => 0,
             ]
@@ -89,6 +103,7 @@ class CreateAdminCommandTest extends TestCase
                     "--firstname" => 'admin',
                     "--lastname" => 'user',
                 ],
+                'expect_exception' => 0,
                 'response_message' => 'Employee with this email already exists',
                 'response_code' => 1,
             ]
@@ -108,6 +123,7 @@ class CreateAdminCommandTest extends TestCase
                     "--firstname" => 'admin',
                     "--lastname" => 'user',
                 ],
+                'expect_exception' => 1,
                 'response_message' => 'PrestaShopException: Erreur fatale',
                 'response_code' => 1,
             ]
@@ -135,6 +151,7 @@ class CreateAdminCommandTest extends TestCase
                     "--firstname" => '1234',
                     "--lastname" => 'user',
                 ],
+                'expect_exception' => 1,
                 'response_message' => 'La propriété Employee->firstname n\'est pas valide.',
                 'response_code' => 1,
             ]
@@ -148,10 +165,10 @@ class CreateAdminCommandTest extends TestCase
                     "--firstname" => 'admin',
                     "--lastname" => '1234',
                 ],
+                'expect_exception' => 1,
                 'response_message' => 'La propriété Employee->lastname n\'est pas valide.',
                 'response_code' => 1,
             ]
         ];
-
     }
 }

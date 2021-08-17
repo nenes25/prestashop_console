@@ -28,6 +28,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Tools;
+use Validate;
 
 /**
  * Create New Admin User
@@ -38,7 +39,7 @@ class CreateCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('admin:user:create')
@@ -52,29 +53,28 @@ class CreateCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
+        $email = $input->getOption('email');
+        $password = $input->getOption('password');
+        $firstname = $input->getOption('firstname');
+        $lastname = $input->getOption('lastname');
 
-        if (!$email = $input->getOption('email')) {
-            $userQuestion = new Question('admin email :', false);
-            $email = $helper->ask($input, $output, $userQuestion);
+        if (!Validate::isEmail($email)) {
+            $email = $helper->ask($input, $output, $this->getEmailQuestion());
         }
 
-        if (!$password = $input->getOption('password')) {
-            $passwordQuestion = new Question('admin password :', 'admin123456');
-            $passwordQuestion->setHidden(true);
-            $password = $helper->ask($input, $output, $passwordQuestion);
+        if (!Validate::isPasswdAdmin($password)) {
+            $password = $helper->ask($input, $output, $this->getPasswordQuestion());
         }
 
-        if (!$firstname = $input->getOption('firstname')) {
-            $firstnameQuestion = new Question('firstname :', 'admin');
-            $firstname = $helper->ask($input, $output, $firstnameQuestion);
+        if (!Validate::isCustomerName($firstname)) {
+            $firstname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
         }
 
-        if (!$lastname = $input->getOption('lastname')) {
-            $lastnameQuestion = new Question('lastname :', 'admin');
-            $lastname = $helper->ask($input, $output, $lastnameQuestion);
+        if (!Validate::isCustomerName($lastname)) {
+            $lastname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
         }
 
         //Error if employee with same email already exists
@@ -84,18 +84,17 @@ class CreateCommand extends Command
             return self::RESPONSE_ERROR;
         }
 
-        $employee = new Employee();
-        $employee->active = 1;
-        $employee->email = $email;
-        $employee->passwd = Tools::encrypt($password);
-        $employee->firstname = $firstname;
-        $employee->lastname = $lastname;
-        $employee->id_lang = Configuration::get('PS_LANG_DEFAULT');
-        $employee->id_profile = _PS_ADMIN_PROFILE_;
-        $employee->default_tab = 1;
-        $employee->bo_theme = 'default';
-
         try {
+            $employee = new Employee();
+            $employee->active = 1;
+            $employee->email = $email;
+            $employee->passwd = Tools::encrypt($password);
+            $employee->firstname = $firstname;
+            $employee->lastname = $lastname;
+            $employee->id_lang = Configuration::get('PS_LANG_DEFAULT');
+            $employee->id_profile = _PS_ADMIN_PROFILE_;
+            $employee->default_tab = 1;
+            $employee->bo_theme = 'default';
             $employee->save();
         } catch (\Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
@@ -106,5 +105,56 @@ class CreateCommand extends Command
         $output->writeln('<info>New user ' . $email . ' created</info>');
 
         return self::RESPONSE_SUCCESS;
+    }
+
+    /**
+     * Get employee email question
+     * @return Question
+     *
+     */
+    protected function getEmailQuestion(): Question
+    {
+        $question = new Question('admin email :', false);
+        $question->setValidator(function ($answer) {
+            if (!Validate::isEmail($answer)) {
+                throw new \RuntimeException('The email is empty or not valid');
+            }
+            return $answer;
+        });
+        return $question;
+    }
+
+    /**
+     * Get employee password question
+     * @return Question
+     */
+    protected function getPasswordQuestion(): Question
+    {
+        $question = new Question('admin password :', 'admin123456');
+        $question->setHidden(true);
+        $question->setValidator(function ($answer) {
+            if (!Validate::isPasswdAdmin($answer)) {
+                throw new \RuntimeException('Your password is not valid');
+            }
+            return $answer;
+        });
+        return $question;
+    }
+
+    /**
+     * Get Customer Firstname or lastname question
+     * @param string $field firstname|lastname
+     * @return Question
+     */
+    protected function getCustomerQuestion(string $field): Question
+    {
+        $question = new Question($field . ' :', 'admin');
+        $question->setValidator(function ($answer) use ($field) {
+            if (!Validate::isCustomerName($answer)) {
+                throw new \RuntimeException($field . ' is not valid');
+            }
+            return $answer;
+        });
+        return $question;
     }
 }
