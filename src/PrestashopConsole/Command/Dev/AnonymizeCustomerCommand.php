@@ -27,7 +27,13 @@ use Symfony\Component\Console\Question\Question;
 
 class AnonymizeCustomerCommand extends Command
 {
+    /**
+     * @var string[]
+     */
     protected $_allowedTypes = ['all', 'customers', 'addresses', 'newsletter'];
+    /**
+     * @var ?string
+     */
     protected $_excludedEmail = null;
 
     protected function configure()

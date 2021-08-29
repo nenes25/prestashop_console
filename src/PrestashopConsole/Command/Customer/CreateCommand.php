@@ -51,13 +51,13 @@ class CreateCommand extends Command
             ->addOption('password', '', InputOption::VALUE_OPTIONAL, 'customer password')
             ->addOption('firstname', '', InputOption::VALUE_OPTIONAL, 'customer firstname')
             ->addOption('lastname', '', InputOption::VALUE_OPTIONAL, 'customer lastname')
-            ->addOption('id_shop', '', InputOption::VALUE_OPTIONAL, 'customer shop id', 1);
+            ->addOption('id_shop', '', InputOption::VALUE_OPTIONAL, 'customer shop id', '1');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getOption('email');
         $password = $input->getOption('password');
@@ -114,7 +114,7 @@ class CreateCommand extends Command
      *
      * @return Question
      */
-    protected function _getEmailQuestion()
+    protected function _getEmailQuestion(): Question
     {
         $question = new Question('<question>customer email :</question>');
         $question->setValidator(function ($answer) {
@@ -133,7 +133,7 @@ class CreateCommand extends Command
      *
      * @return Question
      */
-    protected function _getPasswordQuestion()
+    protected function _getPasswordQuestion(): Question
     {
         $question = new Question('<question>customer password :</question>');
         $question->setHidden(true);
@@ -153,7 +153,7 @@ class CreateCommand extends Command
      *
      * @return Question
      */
-    protected function _getFirstnameQuestion()
+    protected function _getFirstnameQuestion(): Question
     {
         $question = new Question('<question>customer firstname :</question>');
         $question->setValidator(function ($answer) {
@@ -172,7 +172,7 @@ class CreateCommand extends Command
      *
      * @return Question
      */
-    protected function _getLastNameQuestion()
+    protected function _getLastNameQuestion(): Question
     {
         $question = new Question('<question>customer lastname :</question>');
         $question->setValidator(function ($answer) {
@@ -194,9 +194,9 @@ class CreateCommand extends Command
      *
      * @return bool
      */
-    protected function validateCustomerName($name)
+    protected function validateCustomerName($name): bool
     {
         return method_exists('Validate', 'isCustomerName') ?
-            Validate::isCustomerName($name) : Validate::isName($name);
+            (bool)Validate::isCustomerName($name) : (bool)Validate::isName($name);
     }
 }

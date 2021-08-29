@@ -33,6 +33,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsCategoryCommand extends Command
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function configure()
     {
         $this
@@ -50,9 +53,12 @@ class CmsCategoryCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * {@inheritDoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output):int
     {
-        $id_cms = $input->getArgument('id');
+        $id_cms = (int)$input->getArgument('id');
         $action = $input->getArgument('action');
 
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);
@@ -67,13 +73,13 @@ class CmsCategoryCommand extends Command
 
         switch ($action) {
             case 'enable':
-                $cmsCategory->active = 1;
+                $cmsCategory->active = true;
                 $output->writeln(sprintf('<info>Enable cms category %d</info>', $id_cms));
                 break;
             case 'disable':
             default:
                 $output->writeln(sprintf('<info>Disable cms category %d</info>', $id_cms));
-                $cmsCategory->active = 0;
+                $cmsCategory->active = false;
                 break;
         }
 

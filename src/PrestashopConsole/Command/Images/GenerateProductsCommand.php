@@ -22,6 +22,8 @@ namespace PrestashopConsole\Command\Images;
 
 class GenerateProductsCommand extends GenerateAbstract
 {
-    /** @var type string */
+    /**
+     * @var string
+     */
     const IMAGE_TYPE = 'products';
 }

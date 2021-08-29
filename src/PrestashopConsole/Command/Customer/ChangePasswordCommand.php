@@ -75,12 +75,8 @@ class ChangePasswordCommand extends Command
             $password = $questionHelper->ask($input, $output, $this->_getPasswordQuestion());
         }
 
-        if (version_compare(_PS_VERSION_, '1.7', '<')) {
-            $password = Tools::encrypt($password);
-        } else {
-            $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
-            $password = $hashing->hash($password);
-        }
+        $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
+        $password = $hashing->hash($password);
 
         try {
             $customer->passwd = $password;

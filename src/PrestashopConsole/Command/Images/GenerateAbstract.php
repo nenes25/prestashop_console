@@ -37,13 +37,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class GenerateAbstract extends Command
 {
-    /** @var type string Override by subclasses */
+    /**
+     * @var string
+     * Override by subclasses
+     */
     const IMAGE_TYPE = '';
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $errors = [];
 
-    /** @var OutputInterface */
+    /**
+     * @var OutputInterface
+     */
     protected $output;
 
     /**
@@ -103,6 +110,8 @@ abstract class GenerateAbstract extends Command
         }
 
         $output->writeln('<info>Thumbnails generated with success for ' . static::IMAGE_TYPE . '</info>');
+
+        return self::RESPONSE_SUCCESS;
     }
 
     /**
@@ -194,7 +203,7 @@ abstract class GenerateAbstract extends Command
      * @param array $type
      * @param bool $product
      *
-     * @return bool
+     * @return void
      */
     protected function deleteOldImages($dir, $type, $product = false)
     {
@@ -375,6 +384,7 @@ abstract class GenerateAbstract extends Command
      * @param string|null $type
      *
      * @throws \PrestaShopDatabaseException
+     * @return void
      */
     protected function regenerateWatermark($dir, $type = null)
     {

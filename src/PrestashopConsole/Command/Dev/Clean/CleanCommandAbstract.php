@@ -30,11 +30,13 @@ abstract class CleanCommandAbstract extends Command
     /** @var string Prestashop clean Module */
     protected $_cleanModuleName = 'pscleaner';
 
-    /** @var PSCleaner|null */
+    /** @var \Module|\PSCleaner|null */
     protected $_cleanModuleInstance = null;
 
     /**
-     * {@inheritDoc}
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|void
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
@@ -42,7 +44,7 @@ abstract class CleanCommandAbstract extends Command
             if (!Module::isInstalled($module->name) || !$module->active) {
                 $output->writeln('<error>' . $this->_cleanModuleName . ' is not active or installed</error>');
 
-                return self::RESPONSE_SUCCESS;
+                return self::RESPONSE_ERROR;
             }
             $this->_cleanModuleInstance = $module;
         } else {

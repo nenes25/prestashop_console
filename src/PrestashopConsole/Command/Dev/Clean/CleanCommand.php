@@ -28,6 +28,9 @@ use Symfony\Component\Lock\Store\SemaphoreStore;
 
 class CleanCommand extends CleanCommandAbstract
 {
+    /**
+     * @var string[]
+     */
     protected $_allowedCleanType = ['all', 'catalog', 'sales'];
 
     /**

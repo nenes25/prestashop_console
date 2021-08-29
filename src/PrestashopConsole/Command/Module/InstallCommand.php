@@ -55,7 +55,7 @@ class InstallCommand extends Command
                                 return self::RESPONSE_ERROR;
                             }
                         } catch (PrestaShopException $e) {
-                            $output->writeln("<error>Module: '$moduleName' $e->displayMessage()</error>");
+                            $output->writeln("<error>Module: '$moduleName' $e->getMessage()</error>");
 
                             return self::RESPONSE_ERROR;
                         }
