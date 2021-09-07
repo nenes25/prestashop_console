@@ -31,6 +31,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MaintenanceCommand extends Command
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function configure()
     {
         $this
@@ -43,6 +46,9 @@ class MaintenanceCommand extends Command
             );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $type = $input->getArgument('type');

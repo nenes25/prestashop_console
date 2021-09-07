@@ -33,6 +33,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UrlRewriteCommand extends Command
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function configure()
     {
         $this
@@ -45,6 +48,9 @@ class UrlRewriteCommand extends Command
             );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $type = $input->getArgument('type');

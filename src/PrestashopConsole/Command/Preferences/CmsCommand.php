@@ -33,6 +33,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsCommand extends Command
 {
+    /**
+     * {@inheritDoc}
+     */
     protected function configure()
     {
         $this
@@ -46,10 +49,13 @@ class CmsCommand extends Command
             ->addArgument(
                 'action',
                 InputArgument::OPTIONAL,
-                'enable|disable(default'
+                'enable|disable(default)'
             );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $id_cms = (int) $input->getArgument('id');
