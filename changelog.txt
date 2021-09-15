@@ -23,6 +23,7 @@
 *  http://www.h-hennes.fr/blog/
 */
 2021-xx-xx  - V 1.6.3 : #194 Check compatibility from php5.6 to php7.2
+                        #227 New Command analyze:carriers
 2021-03-11  - V 1.6.2 : #142 Error when try to start by prestashopConsole command
                         #170 Create Webservice key command
                         #173 Change link in readme
