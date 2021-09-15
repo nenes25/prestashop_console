@@ -79,9 +79,10 @@ class DeleteKeyCommand extends Command
 
         if (false === $idKey) {
             $output->writeln('<error>The webservice key does not exists</error>');
+
             return self::RESPONSE_ERROR;
         }
-        $webserviceKey = new WebserviceKey((int)$idKey);
+        $webserviceKey = new WebserviceKey((int) $idKey);
         try {
             $webserviceKey->delete();
         } catch (PrestaShopException $e) {

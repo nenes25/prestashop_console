@@ -52,7 +52,7 @@ class ListCarriersCommand extends Command
         //$format = $input->getOption('format');
 
         $carriers = Carrier::getCarriers(
-            (int)Configuration::get('PS_DEFAULT_LANG'),
+            (int) Configuration::get('PS_DEFAULT_LANG'),
             $active
         );
         if (count($carriers)) {

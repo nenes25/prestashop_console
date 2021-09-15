@@ -197,6 +197,6 @@ class CreateCommand extends Command
     protected function validateCustomerName($name): bool
     {
         return method_exists('Validate', 'isCustomerName') ?
-            (bool)Validate::isCustomerName($name) : (bool)Validate::isName($name);
+            (bool) Validate::isCustomerName($name) : (bool) Validate::isName($name);
     }
 }

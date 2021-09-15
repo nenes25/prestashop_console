@@ -39,7 +39,7 @@ abstract class GenerateAbstract extends Command
 {
     /**
      * @var string
-     * Override by subclasses
+     *             Override by subclasses
      */
     const IMAGE_TYPE = '';
 
@@ -384,6 +384,7 @@ abstract class GenerateAbstract extends Command
      * @param string|null $type
      *
      * @throws \PrestaShopDatabaseException
+     *
      * @return void
      */
     protected function regenerateWatermark($dir, $type = null)

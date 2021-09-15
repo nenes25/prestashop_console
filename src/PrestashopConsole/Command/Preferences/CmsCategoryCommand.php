@@ -56,9 +56,9 @@ class CmsCategoryCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output):int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $id_cms = (int)$input->getArgument('id');
+        $id_cms = (int) $input->getArgument('id');
         $action = $input->getArgument('action');
 
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);

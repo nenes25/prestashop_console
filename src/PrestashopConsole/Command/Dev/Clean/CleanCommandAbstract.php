@@ -36,6 +36,7 @@ abstract class CleanCommandAbstract extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|void
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
