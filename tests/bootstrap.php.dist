@@ -1,0 +1,6 @@
+<?php
+//Path to prestashop
+include('/home/herve/www/prestashop/versions/175/config/config.inc.php'); //Absolute path to prestashop config file
+
+// Load the modules dependencies
+require __DIR__ . '/../src/vendor/autoload.php';
