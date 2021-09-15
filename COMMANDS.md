@@ -630,42 +630,15 @@ Do not ask any interactive question
 `analyze:payments`
 ------------------
 
-List all payments module on the website
+List all payments modules on the website
 
 ### Usage
 
-* `analyze:payments [--installed] [--active] [--format [FORMAT]]`
+* `analyze:payments`
 
-List all payments module on the website
+List all payments modules on the website
 
 ### Options
-
-#### `--installed`
-
-List only installed module
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--active`
-
-List only installed module
-
-* Accept value: no
-* Is value required: no
-* Is multiple: no
-* Default: `false`
-
-#### `--format`
-
-outputFormat
-
-* Accept value: yes
-* Is value required: no
-* Is multiple: no
-* Default: `NULL`
 
 #### `--help|-h`
 
