@@ -22,12 +22,15 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  http://www.h-hennes.fr/blog/
 */
-2021-    - V 2.0.0 : #117 Change commands domain
+2021-xx-xx  - V 2.0.0 : #117 Change commands domain
                         #203 Remove Install commands
                         #217 admin:user:create validate customer data
                         #218 New Command admin:profiles:list
+                        #227 New Command analyze:carriers
+                        #228 New Command analyze:payments
                         Update min php version to php7.2 +
                         Update compatibility only for ps 1.7 +
+                        Add tests for commands
                         Remove commands:
                          - IdeClassNamesCommand
                          - InfoCommand
