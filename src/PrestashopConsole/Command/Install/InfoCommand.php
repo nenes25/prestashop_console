@@ -29,7 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InfoCommand extends ListCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('install:info')
@@ -37,7 +37,7 @@ class InfoCommand extends ListCommand
             ->setDefinition($this->getNativeDefinition());
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $output->writeln('<error>No prestashop installation detected, please install it or place the console in the right place.</error>');

@@ -29,7 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InstallCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('module:install')
                 ->setDescription('Install module')
@@ -40,7 +40,7 @@ class InstallCommand extends Command
                 );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
 

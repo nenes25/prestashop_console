@@ -30,24 +30,18 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Class CreateCommand
- * Command sample description
+ * Create a new command ( Php version only )
  */
 class CreateCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('console:create:command')
             ->setDescription('Create a new command skeleton');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         //This command can only be launched in php mode
         if ($this->getApplication()->getRunAs() == 'phar') {

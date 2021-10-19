@@ -39,10 +39,7 @@ use Validate;
  */
 class SendCustomerForgotPasswordCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('customer:send-forgot-password')
@@ -50,10 +47,7 @@ class SendCustomerForgotPasswordCommand extends Command
             ->addOption('email', '', InputOption::VALUE_OPTIONAL, 'customer email');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getOption('email');
         $questionHelper = $this->getHelper('question');
@@ -95,7 +89,7 @@ class SendCustomerForgotPasswordCommand extends Command
      *
      * @return Question
      */
-    protected function _getEmailQuestion()
+    protected function _getEmailQuestion(): Question
     {
         $question = new Question('<question>customer email :</question>');
         $question->setValidator(function ($answer) {
@@ -116,7 +110,7 @@ class SendCustomerForgotPasswordCommand extends Command
      *
      * @return bool
      */
-    protected function _sendForgotEmail(Customer $customer)
+    protected function _sendForgotEmail(Customer $customer): bool
     {
         $context = Context::getContext();
 
@@ -130,7 +124,7 @@ class SendCustomerForgotPasswordCommand extends Command
         return Mail::Send(
             $customer->id_lang,
             'password_query',
-            'Password query confirmation', //@ToDo manage translation for 1.6 and 1.7
+            'Password query confirmation',
             $mailParams,
             $customer->email,
             $customer->firstname . ' ' . $customer->lastname

@@ -34,18 +34,14 @@ class SelfUpdateCommand extends Command
     const PHAR_URL = 'https://github.com/nenes25/prestashop_console/raw/master/bin/prestashopConsole.phar';
     const VERSION_URL = 'https://github.com/nenes25/prestashop_console/raw/master/bin/phar/current.version';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('console:self-upgrade')
                 ->setDescription('Upgrade console to last version (phar only)');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->getApplication()->getRunAs() == 'php') {
             $output->writeln('<error>This commande can only be run in phar mode</error>');

@@ -33,20 +33,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('hook:list')
             ->setDescription('List all hooks registered in database');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         //Get Hooks list
         $hooks = Hook::getHooks();
@@ -81,7 +75,7 @@ class ListCommand extends Command
      *
      * @return int
      */
-    private function cmp($a, $b)
+    private function cmp($a, $b): int
     {
         return strcmp($a, $b);
     }

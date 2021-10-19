@@ -34,20 +34,14 @@ use Tools;
  */
 class ClearCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('cache:smarty:clear')
                 ->setDescription('Clear smarty cache');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         Tools::clearSmartyCache();
         $output->writeln('<info>Smarty Cache and compiled dir cleaned</info>');

@@ -34,10 +34,7 @@ use Tab;
  */
 class AddCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:tab:add')
@@ -56,10 +53,7 @@ class AddCommand extends Command
             ->setHelp('Allow to add a new admin tab (controller )');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('name');
         $tabClass = $input->getArgument('tab');

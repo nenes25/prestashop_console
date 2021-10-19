@@ -53,9 +53,6 @@ abstract class GenerateAbstract extends Command
      */
     protected $output;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->output = $output;
@@ -63,9 +60,6 @@ abstract class GenerateAbstract extends Command
         return parent::initialize($input, $output);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -85,9 +79,6 @@ abstract class GenerateAbstract extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $formats = $input->getArgument('format');

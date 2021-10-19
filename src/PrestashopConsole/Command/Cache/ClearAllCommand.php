@@ -32,20 +32,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearAllCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('cache:clearAll')
                 ->setDescription('Clear all cache');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $cacheClearer = new CacheClearer();
         $cacheClearer->clearAllCaches();

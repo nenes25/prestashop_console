@@ -41,10 +41,7 @@ class MassCommand extends Command
             'set',
         ], ];
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('configuration:mass')
@@ -52,10 +49,7 @@ class MassCommand extends Command
             ->addOption('config', null, InputOption::VALUE_REQUIRED, 'Yaml definition file');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $yamlFile = $input->getOption('config');
 

@@ -37,9 +37,6 @@ use Validate;
  */
 class CreateCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
     protected function configure(): void
     {
         $this
@@ -51,9 +48,6 @@ class CreateCommand extends Command
             ->addOption('lastname', null, InputOption::VALUE_OPTIONAL, 'lastname');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');

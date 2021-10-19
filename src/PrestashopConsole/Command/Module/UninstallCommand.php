@@ -30,7 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UninstallCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('module:uninstall')
                 ->setDescription('Uninstall module')
@@ -41,7 +41,7 @@ class UninstallCommand extends Command
                 );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
 

@@ -30,20 +30,14 @@ use Symfony\Component\Finder\Finder;
  */
 class ListOverridesCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('dev:list-overrides')
             ->setDescription('List overrides of classes and controllers in the project');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $outputString = '';
         try {

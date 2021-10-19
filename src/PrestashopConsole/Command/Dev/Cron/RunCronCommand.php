@@ -34,9 +34,6 @@ class RunCronCommand extends Command
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         $this
@@ -49,9 +46,6 @@ class RunCronCommand extends Command
                 );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {

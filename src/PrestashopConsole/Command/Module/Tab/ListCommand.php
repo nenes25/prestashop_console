@@ -33,7 +33,7 @@ use Tab;
  */
 class ListCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:tab:list')
@@ -45,13 +45,7 @@ class ListCommand extends Command
             );
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int|string|void|null
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('name');
         if ($module = Module::getInstanceByName($moduleName)) {

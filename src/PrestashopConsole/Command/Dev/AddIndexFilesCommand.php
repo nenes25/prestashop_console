@@ -31,7 +31,7 @@ use Symfony\Component\Finder\Finder;
  */
 class AddIndexFilesCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('dev:add-index-files')
@@ -49,7 +49,7 @@ class AddIndexFilesCommand extends Command
      *
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dir = $input->getArgument('dir');
         try {

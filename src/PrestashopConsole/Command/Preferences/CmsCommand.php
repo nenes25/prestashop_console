@@ -33,10 +33,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('preferences:cmspage')
@@ -53,10 +50,7 @@ class CmsCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $id_cms = (int) $input->getArgument('id');
         $action = $input->getArgument('action');

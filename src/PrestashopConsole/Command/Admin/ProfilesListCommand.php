@@ -31,10 +31,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProfilesListCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('admin:profiles:list')
@@ -42,9 +39,6 @@ class ProfilesListCommand extends Command
             ->setHelp('List all admin user profiles');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         try {

@@ -35,20 +35,14 @@ class GetAllCommand extends Command
     /** @var int */
     const MAX_LENGTH_CONFIGURATION_VALUE = 130;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('configuration:getAll')
                 ->setDescription('get all configuration values');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //Load All Configurations
         Configuration::loadConfiguration();

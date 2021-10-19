@@ -35,10 +35,7 @@ class UpgradeCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:generate:upgrade')
@@ -47,10 +44,7 @@ class UpgradeCommand extends Command
             ->addArgument('moduleVersion', InputArgument::REQUIRED, 'module version');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('moduleName');
         $moduleVersion = $input->getArgument('moduleVersion');
@@ -112,7 +106,7 @@ class UpgradeCommand extends Command
     /**
      * @return string
      */
-    protected function _getDefaultContent()
+    protected function _getDefaultContent(): string
     {
         return
             '<?php
@@ -140,7 +134,7 @@ function upgrade_module_{version}($module)
      *
      * @return void
      */
-    protected function _createDirectories()
+    protected function _createDirectories(): void
     {
         if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade')) {
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade', 0775);

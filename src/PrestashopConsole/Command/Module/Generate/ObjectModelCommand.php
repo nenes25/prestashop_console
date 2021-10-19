@@ -39,10 +39,7 @@ class ObjectModelCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:generate:model')
@@ -51,10 +48,7 @@ class ObjectModelCommand extends Command
             ->addArgument('objectClass', InputArgument::OPTIONAL, 'object class');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('moduleName');
         $helper = $this->getHelper('question');
@@ -205,7 +199,7 @@ class ObjectModelCommand extends Command
      *
      * @return string
      */
-    protected function _getDefaultContent()
+    protected function _getDefaultContent(): string
     {
         return
             '<?php
@@ -238,7 +232,7 @@ class {object} extends ObjectModel
      *
      * @return void
      */
-    protected function _createDirectories()
+    protected function _createDirectories(): void
     {
         if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/classes')) {
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/classes', 0775);
@@ -254,7 +248,7 @@ class {object} extends ObjectModel
      *
      * @todo Comment field types
      */
-    protected function _getObjectProperties(array $fields)
+    protected function _getObjectProperties(array $fields): string
     {
         $fieldStr = '';
         foreach ($fields as $field) {
@@ -271,7 +265,7 @@ class {object} extends ObjectModel
      *
      * @return string
      */
-    protected function _getObjectDefinition(array $params)
+    protected function _getObjectDefinition(array $params): string
     {
         $defStr = 'public static $definition = [';
         $defStr .= "
@@ -306,7 +300,7 @@ class {object} extends ObjectModel
      *
      * @return string
      */
-    protected function _getObjectInstall(array $sqlQueries)
+    protected function _getObjectInstall(array $sqlQueries): string
     {
         $installStr = '';
         if (!count($sqlQueries)) {
@@ -335,7 +329,7 @@ class {object} extends ObjectModel
      *
      * @return array
      */
-    protected function _generateSql(array $params)
+    protected function _generateSql(array $params): array
     {
         /**
          * $sql[] = ' CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'psgdpr_consent` (
@@ -415,9 +409,9 @@ class {object} extends ObjectModel
      *
      * @param string $type
      *
-     * @return mixed
+     * @return string
      */
-    protected function _getObjectModelFieldType($type)
+    protected function _getObjectModelFieldType($type): string
     {
         $key = 'TYPE_' . strtoupper($type);
 
@@ -429,7 +423,7 @@ class {object} extends ObjectModel
      *
      * @return array
      */
-    protected function _getFieldTypes()
+    protected function _getFieldTypes(): array
     {
         return ['int', 'bool', 'string', 'float', 'date', 'html', 'nothing', 'sql'];
     }
@@ -443,7 +437,7 @@ class {object} extends ObjectModel
      *
      * @todo Manage by field type if possible
      */
-    protected function _getValidationFunctions($fieldType = null)
+    protected function _getValidationFunctions($fieldType = null): array
     {
         $functions = [];
         try {

@@ -28,10 +28,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListPaymentsCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('analyze:payments')
@@ -39,10 +36,7 @@ class ListPaymentsCommand extends Command
         //->addOption('format', null, InputOption::VALUE_OPTIONAL, 'outputFormat', null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $modules = PaymentModule::getInstalledPaymentModules();
         if ($modules && count($modules)) {

@@ -32,7 +32,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListModuleHooksCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('module:hook:list')
@@ -44,11 +44,7 @@ class ListModuleHooksCommand extends Command
                 );
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('name');
 

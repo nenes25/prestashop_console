@@ -31,10 +31,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MaintenanceCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('preferences:maintenance')
@@ -46,10 +43,7 @@ class MaintenanceCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $type = $input->getArgument('type');
         Context::getContext()->shop->setContext(Shop::CONTEXT_ALL);

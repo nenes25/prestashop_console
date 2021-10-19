@@ -38,10 +38,7 @@ use Validate;
  */
 class CreateCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('customer:create')
@@ -54,9 +51,6 @@ class CreateCommand extends Command
             ->addOption('id_shop', '', InputOption::VALUE_OPTIONAL, 'customer shop id', '1');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getOption('email');

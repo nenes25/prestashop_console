@@ -32,10 +32,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DisableCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('module:disable')
@@ -47,10 +44,7 @@ class DisableCommand extends Command
                 );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
 

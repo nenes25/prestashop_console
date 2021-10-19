@@ -30,10 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class QueryCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('db:query')
@@ -42,10 +39,7 @@ class QueryCommand extends Command
             ->setHelp('This command will exec db query using the prestashop Db class, its only allow SELECT queries');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $query = $input->getOption('query');
         if (null === $query) {

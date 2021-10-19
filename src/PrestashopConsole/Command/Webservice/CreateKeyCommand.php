@@ -42,10 +42,7 @@ class CreateKeyCommand extends Command
     /** @var string Option description */
     const OPTION_DESCRIPTION = 'description';
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('webservice:key:create')
@@ -65,10 +62,7 @@ class CreateKeyCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $apiKey = $input->getOption(self::OPTION_KEY);
         $apiDescription = $input->getOption(self::OPTION_DESCRIPTION);
@@ -111,7 +105,7 @@ class CreateKeyCommand extends Command
      *
      * @return array
      */
-    protected function _getPermissions()
+    protected function _getPermissions(): array
     {
         $resources = WebserviceRequest::getResources();
         $methods = ['GET', 'PUT', 'POST', 'DELETE', 'HEAD'];
@@ -133,7 +127,7 @@ class CreateKeyCommand extends Command
      *
      * @return string
      */
-    protected function _generateWebserviceKey()
+    protected function _generateWebserviceKey(): string
     {
         return Tools::passwdGen(32, 'NO_NUMERIC');
     }
@@ -145,7 +139,7 @@ class CreateKeyCommand extends Command
      *
      * @return bool
      */
-    protected function _validateWebserviceKey($key)
+    protected function _validateWebserviceKey($key): bool
     {
         return (bool) preg_match('/^[A-Z_0-9-]{32}$/', $key);
     }

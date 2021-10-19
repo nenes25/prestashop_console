@@ -31,9 +31,6 @@ class ListCronCommand extends Command
     /** @var string cron Module Name */
     protected $_cronModuleName = 'cronjobs';
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure()
     {
         $this
@@ -41,9 +38,6 @@ class ListCronCommand extends Command
                 ->setDescription('List cron tasks configured with the module cronjobs');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($module = Module::getInstanceByName($this->_cronModuleName)) {

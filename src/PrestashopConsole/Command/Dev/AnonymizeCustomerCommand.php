@@ -36,7 +36,7 @@ class AnonymizeCustomerCommand extends Command
      */
     protected $_excludedEmail = null;
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('dev:anonymize:customer')
@@ -47,11 +47,7 @@ class AnonymizeCustomerCommand extends Command
             ->setHelp('This command will anonymize customer related data (lastname,firstname,email ) without erasing them');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $type = $input->getOption('type');
         $excludes = $input->getOption('exclude-emails');
@@ -84,7 +80,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return string
      */
-    protected function _anonymizeAll(InputInterface $input)
+    protected function _anonymizeAll(InputInterface $input): string
     {
         $message = '';
         $message .= $this->_anonymizeCustomers($input) . "\n";
@@ -101,7 +97,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return string
      */
-    protected function _anonymizeCustomers(InputInterface $input)
+    protected function _anonymizeCustomers(InputInterface $input): string
     {
         $anonymiseName = $input->getOption('names');
         $sqlCond = $sqlUpd = '';
@@ -138,7 +134,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return string
      */
-    protected function _anonymizeAddresses(InputInterface $input)
+    protected function _anonymizeAddresses(InputInterface $input): string
     {
         $sqlCond = '';
         if ($this->_excludedEmail) {
@@ -169,7 +165,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return string
      */
-    protected function _anonymizeNewsletter(InputInterface $input)
+    protected function _anonymizeNewsletter(InputInterface $input): string
     {
         if (version_compare('1.7', _PS_VERSION_) == 1) {
             $table = 'newsletter';
@@ -204,7 +200,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return Question
      */
-    protected function _getTypeQuestion()
+    protected function _getTypeQuestion(): Question
     {
         $cleanTypeQuestion = new Question('<question>Clean Type :</question>');
         $allowedTypes = $this->_allowedTypes;
@@ -225,7 +221,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return Question
      */
-    protected function getEmailQuestion()
+    protected function getEmailQuestion(): Question
     {
         $emailQuestion = new Question('<question>Exclude emails from anonymization ? (separated by commas)</question>');
         $emailQuestion->setValidator(function ($answer) {
@@ -247,7 +243,7 @@ class AnonymizeCustomerCommand extends Command
      *
      * @return string
      */
-    public function _randomString($length = 10)
+    public function _randomString($length = 10): string
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';

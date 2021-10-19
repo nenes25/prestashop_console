@@ -33,10 +33,7 @@ class CleanCommand extends CleanCommandAbstract
      */
     protected $_allowedCleanType = ['all', 'catalog', 'sales'];
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('dev:clean')
@@ -44,10 +41,7 @@ class CleanCommand extends CleanCommandAbstract
                 ->addArgument('type', InputArgument::REQUIRED, 'data types. Possibles values ' . implode(', ', $this->_allowedCleanType));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->_cleanModuleInstance) {
             $type = $input->getArgument('type');

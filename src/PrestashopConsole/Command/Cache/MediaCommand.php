@@ -30,20 +30,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MediaCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('cache:media')
                 ->setDescription('Clean media cache directory');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         Media::clearCache();
         $output->writeln('<info>Media cache cleared</info>');

@@ -27,10 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('db:import')
@@ -40,10 +37,7 @@ class ImportCommand extends Command
             ->setHelp('This command will import dumb (gziped or not ) in current prestashop database using mysql shell command');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {

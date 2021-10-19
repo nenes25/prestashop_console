@@ -35,10 +35,7 @@ class ExportCommand extends Command
         'catalog',
     ];
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('db:export')
@@ -49,10 +46,7 @@ class ExportCommand extends Command
             ->setHelp('This command will export current prestashop database using mysqldump shell command');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //Shell_exec function is required
         if (!function_exists('shell_exec')) {
@@ -114,7 +108,7 @@ class ExportCommand extends Command
      *
      * @return array
      */
-    protected function _getCustomersTables()
+    protected function _getCustomersTables(): array
     {
         return [
             'customer',
@@ -131,7 +125,7 @@ class ExportCommand extends Command
      *
      * @return array
      */
-    protected function _getOrdersTables()
+    protected function _getOrdersTables(): array
     {
         return [
             'cart',
@@ -171,7 +165,7 @@ class ExportCommand extends Command
      *
      * @return array
      */
-    protected function _getCatalogTables()
+    protected function _getCatalogTables(): array
     {
         return [
             'product',

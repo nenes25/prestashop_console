@@ -30,10 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListCarriersCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('analyze:carriers')
@@ -42,10 +39,7 @@ class ListCarriersCommand extends Command
         //->addOption('format', null, InputOption::VALUE_OPTIONAL, 'outputFormat', null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $active = (bool) $input->getOption('active');
         //@todo Manage format when refacto with meta command

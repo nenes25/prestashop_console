@@ -31,10 +31,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GetCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('configuration:get')
@@ -46,10 +43,7 @@ class GetCommand extends Command
                 );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
         $value = Configuration::get($name);

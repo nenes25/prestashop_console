@@ -38,10 +38,7 @@ class DeleteKeyCommand extends Command
     /** @var string Argument Key */
     const ARGUMENT_KEY = 'key';
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('webservice:key:delete')
@@ -53,10 +50,7 @@ class DeleteKeyCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $apiKey = $input->getArgument(self::ARGUMENT_KEY);
 
@@ -102,7 +96,7 @@ class DeleteKeyCommand extends Command
      *
      * @return bool
      */
-    protected function _validateWebserviceKey($key)
+    protected function _validateWebserviceKey($key): bool
     {
         return (bool) preg_match('/^[A-Z_0-9-]{32}$/', $key);
     }

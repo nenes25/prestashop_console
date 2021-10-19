@@ -33,20 +33,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ModuleCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('hook:modules')
             ->setDescription('List all hooks with hooked modules');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         //Get Hooks list
         $hooks = Hook::getHooks();
@@ -91,7 +85,7 @@ class ModuleCommand extends Command
      *
      * @return int
      */
-    private function cmp($a, $b)
+    private function cmp($a, $b): int
     {
         return strcmp($a, $b);
     }

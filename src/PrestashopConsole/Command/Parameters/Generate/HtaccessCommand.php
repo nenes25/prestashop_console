@@ -32,20 +32,14 @@ use Tools;
  */
 class HtaccessCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('parameters:generate:htaccess')
             ->setDescription('Generate the .htaccess file');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (true === Tools::generateHtaccess()) {
             $output->writeln('<info>.htaccess file generated with success</info>');

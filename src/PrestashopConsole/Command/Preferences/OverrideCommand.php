@@ -33,10 +33,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class OverrideCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('preferences:override')
@@ -48,10 +45,7 @@ class OverrideCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $type = $input->getArgument('type');
 

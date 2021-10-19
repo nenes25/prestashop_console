@@ -41,7 +41,7 @@ class ListCommand extends Command
         'trusted',
     ];
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:list')
@@ -65,7 +65,7 @@ class ListCommand extends Command
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $modules = Module::getModulesOnDisk();
         //module stdClass definition

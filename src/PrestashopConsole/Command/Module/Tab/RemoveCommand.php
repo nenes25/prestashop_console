@@ -29,7 +29,7 @@ use Tab;
 
 class RemoveCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:tab:remove')
@@ -46,13 +46,7 @@ class RemoveCommand extends Command
             );
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int|void|null
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('name');
         $tab = $input->getArgument('tab');

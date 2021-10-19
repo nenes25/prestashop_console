@@ -30,7 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ResetCommand extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('module:reset')
                 ->setDescription('Reset module: hard = remove data and reinstall, soft(default) = keep data and reinstall')
@@ -42,7 +42,7 @@ class ResetCommand extends Command
                 ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'hard|soft(default)');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
         $type = $input->getOption('type');

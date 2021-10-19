@@ -50,10 +50,7 @@ class ExportCommand extends Command
     /** @var string */
     protected $_archiveFormat;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('images:export')
@@ -63,10 +60,7 @@ class ExportCommand extends Command
             ->addOption('archive', 'a', InputOption::VALUE_OPTIONAL, 'Archive format', 'tar.gz');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //Shell_exec function is required
         //@Todo make it optionnal and do it also with php ( symfony finder )

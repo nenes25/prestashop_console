@@ -36,10 +36,7 @@ use Validate;
  */
 class ChangePasswordCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('customer:change-password')
@@ -48,10 +45,7 @@ class ChangePasswordCommand extends Command
             ->addOption('password', '', InputOption::VALUE_OPTIONAL, 'customer password');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getOption('email');
         $password = $input->getOption('password');
@@ -96,7 +90,7 @@ class ChangePasswordCommand extends Command
      *
      * @return Question
      */
-    protected function _getEmailQuestion()
+    protected function _getEmailQuestion(): Question
     {
         $question = new Question('<question>customer email :</question>');
         $question->setValidator(function ($answer) {

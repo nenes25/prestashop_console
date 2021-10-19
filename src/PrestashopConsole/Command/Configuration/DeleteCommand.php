@@ -31,10 +31,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('configuration:delete')
@@ -46,9 +43,6 @@ class DeleteCommand extends Command
                 );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');

@@ -33,10 +33,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsCategoryCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('preferences:cmscategory')
@@ -53,9 +50,6 @@ class CmsCategoryCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $id_cms = (int) $input->getArgument('id');

@@ -43,7 +43,7 @@ class ConfigureCommand extends Command
         'clearCache' => ['config_value' => 'PS_SMARTY_CLEAR_CACHE', 'allowed_values' => ['never', 'everytime']],
     ];
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('cache:smarty:configure')
@@ -52,7 +52,7 @@ class ConfigureCommand extends Command
                 ->addArgument('value', InputArgument::REQUIRED, 'configuration value');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
         $value = $input->getArgument('value');

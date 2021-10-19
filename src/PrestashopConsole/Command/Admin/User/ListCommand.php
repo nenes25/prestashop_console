@@ -29,10 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('admin:user:list')
@@ -40,10 +37,7 @@ class ListCommand extends Command
             ->setHelp('List admin users registered in employee table');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //Function Employee::getEmployees() has not enough information , use db query instead
         $employeesQuery = 'SELECT e.email,e.firstname,e.lastname,e.active,e.last_connection_date,p.name

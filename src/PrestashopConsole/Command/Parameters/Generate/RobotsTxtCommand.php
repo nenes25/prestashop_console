@@ -33,10 +33,7 @@ use Tools;
  */
 class RobotsTxtCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('parameters:generate:robots')
@@ -49,10 +46,7 @@ class RobotsTxtCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $input->getOption('executeHook') ? $executeHook = true : $executeHook = false;
 

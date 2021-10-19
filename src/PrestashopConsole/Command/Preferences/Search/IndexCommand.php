@@ -35,10 +35,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class IndexCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('preferences:search:index')
@@ -50,10 +47,7 @@ class IndexCommand extends Command
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $type = $input->getArgument('type');
 

@@ -45,10 +45,7 @@ class ModuleCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:generate:module')
@@ -67,10 +64,7 @@ class ModuleCommand extends Command
             ->addOption('templates', 't', InputOption::VALUE_OPTIONAL, 'Generate hook templates');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $moduleName = $input->getArgument('name');
         $this->_moduleName = $moduleName;
@@ -181,7 +175,7 @@ class ModuleCommand extends Command
      *
      * @return string
      */
-    protected function _getDefaultContent()
+    protected function _getDefaultContent(): string
     {
         return
 '<?php
@@ -236,9 +230,9 @@ public function install()
      *
      * @param string $defaultContent
      *
-     * @return mixed
+     * @return string
      */
-    protected function _replaceWidgetContent($defaultContent)
+    protected function _replaceWidgetContent($defaultContent): string
     {
         return str_replace(
             [

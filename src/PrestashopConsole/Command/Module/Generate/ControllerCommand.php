@@ -51,10 +51,7 @@ class ControllerCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('module:generate:controller')
@@ -65,10 +62,7 @@ class ControllerCommand extends Command
             ->addOption('template', 't', InputArgument::OPTIONAL, 'generate template', true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->_moduleName = $input->getArgument('moduleName');
         $this->_controllerName = $input->getArgument('controllerName');
@@ -136,7 +130,7 @@ class ControllerCommand extends Command
      *
      * @return void
      */
-    protected function _createDirectories()
+    protected function _createDirectories(): void
     {
         if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin')) {
             $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin', 0775);
@@ -163,7 +157,7 @@ class ControllerCommand extends Command
      *
      * @return string
      */
-    protected function _getAdminControllerContent()
+    protected function _getAdminControllerContent(): string
     {
         return
             '<?php
@@ -179,7 +173,7 @@ class {controllerClass}Controller extends ModuleAdminController {
      *
      * @return string
      */
-    protected function _getFrontControllerContent()
+    protected function _getFrontControllerContent(): string
     {
         $controllerContent =
             '<?php
@@ -219,7 +213,7 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
      *
      * @return void
      */
-    protected function _generateTemplate()
+    protected function _generateTemplate(): void
     {
         $defaultTemplateContent =
             '{extends file=\'page.tpl\'}

@@ -43,10 +43,7 @@ class DevModeCommand extends Command
     /** @var string */
     private $debug_file_name = 'debug_mode.php';
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('dev:mode')
@@ -59,13 +56,7 @@ class DevModeCommand extends Command
             );
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @throws \Exception
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             // filter requested mode
@@ -121,7 +112,7 @@ class DevModeCommand extends Command
     /**
      * @return string
      */
-    final private function getWarningText()
+    final private function getWarningText(): string
     {
         return 'Be sure to include "include(__DIR__. \'/' . $this->debug_file_name . '\');" in config/defines.inc.php for this feature to run.';
     }
@@ -129,7 +120,7 @@ class DevModeCommand extends Command
     /**
      * @return string
      */
-    protected function getDebugFilePath()
+    protected function getDebugFilePath(): string
     {
         return getcwd() . '/config/' . $this->debug_file_name;
     }

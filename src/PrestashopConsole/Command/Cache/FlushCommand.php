@@ -32,20 +32,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FlushCommand extends Command
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
                 ->setName('cache:flush')
                 ->setDescription('Flush cache');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $cache = Cache::getInstance();
         $cache->flush();
