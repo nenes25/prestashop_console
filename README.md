@@ -22,15 +22,7 @@ Compatibility
 | 1.5.x | :x: |
 | 1.6.x | :x: |
 | 1.6.1.x | :heavy_check_mark: (some commands are not available)|
-| 1.7.0.x | :heavy_check_mark: |
-| 1.7.1.x | :heavy_check_mark: |
-| 1.7.2.x | :heavy_check_mark: |
-| 1.7.3.x | :heavy_check_mark: |
-| 1.7.4.x | :heavy_check_mark: |
-| 1.7.5.x | :heavy_check_mark: |
-| 1.7.6.x | :heavy_check_mark: |
-| 1.7.7.x | :heavy_check_mark: |
-| 1.7.8.x | :interrobang: Not yet tested |
+| 1.7.0 to 1.7.8.x | :heavy_check_mark: |
 
 | Php Version | Compatible |
 | ------ | -----------|
@@ -39,7 +31,7 @@ Compatibility
 | 7.1 | :heavy_check_mark: |
 | 7.2 | :heavy_check_mark: |
 | 7.3| :heavy_check_mark: |
-| 7.4 | :interrobang: Not yet tested |
+| 7.4 | :heavy_check_mark: |
 | 8.0 | :interrobang: Not yet tested |
 
 How to use it
