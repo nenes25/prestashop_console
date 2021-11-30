@@ -24,6 +24,7 @@ use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Console\Helper\Table;
 
 /**
  * Commande qui permet de lister les overrides en place sur le site
@@ -39,23 +40,44 @@ class ListOverridesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $outputString = '';
         try {
             $finder = new Finder();
-            $finder->files()->in(_PS_OVERRIDE_DIR_)->name('*.php')->notName('index.php');
+            $table = new Table($output);
+            $table->setHeaders(
+                [
+                    'type',
+                    'file',
+                ]
+            );
 
-            foreach ($finder as $file) {
-                $outputString .= $file->getRelativePathname() . "\n";
+            $finder->files()->in(_PS_OVERRIDE_DIR_)->name('*.php')->notName('index.php');
+            if ($finder->count()) {
+                foreach ($finder as $file) {
+
+                    $pathName = $file->getRelativePathname();
+                    if (preg_match('#^controllers#', $pathName)) {
+                        $type = 'controller';
+                    } elseif (preg_match('#^classes#', $pathName)) {
+                        $type = 'classes';
+
+                    } elseif (preg_match('#^modules#', $pathName)) {
+                        $type = 'modules';
+                    } else {
+                        $type = "Unknown";
+                    }
+                    $table->addRow([
+                        $type,
+                        $pathName
+                    ]);
+                }
+                $table->render();
+            } else {
+                $output->writeln('<info>No class overrides in this project</info>');
             }
         } catch (\Exception $e) {
             $output->writeln('<info>ERROR:' . $e->getMessage() . '</info>');
-
             return self::RESPONSE_ERROR;
         }
-        if ($outputString == '') {
-            $outputString = 'No class or controllers overrides on this project';
-        }
-        $output->writeln('<info>' . $outputString . '</info>');
 
         return self::RESPONSE_SUCCESS;
     }
