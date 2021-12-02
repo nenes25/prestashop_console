@@ -3820,7 +3820,17 @@ Generate module controller file
 
 * `module:generate:controller [-t|--template TEMPLATE] [-m|--model MODEL] [--] <moduleName> <controllerName> <controllerType>`
 
-Generate module controller file
+This command generate controller for the given module 
+
+You can create front controller 
+module:generate:controller samplemodule controllerName front : 
+By default a smarty template will be automatically created for this controller.
+
+Or you can create admin controller : 
+module:generate:controller samplemodule controllerName admin : 
+Experimental feature
+You can provide an ObjectModel to generate the grid automatically with option --model=ObjectModelClass
+This class should exists in the directory "class" of your module
 
 ### Arguments
 
@@ -3842,7 +3852,7 @@ controller name
 
 #### `controllerType`
 
-controller type
+controller type (front|admin)
 
 * Is required: yes
 * Is array: no
@@ -4028,13 +4038,13 @@ Do not ask any interactive question
 `module:generate:module`
 ------------------------
 
-Generate module default file
+Generate module main file
 
 ### Usage
 
 * `module:generate:module [-i|--interactive [INTERACTIVE]] [-a|--author [AUTHOR]] [-dn|--displayName [DISPLAYNAME]] [-d|--description [DESCRIPTION]] [-l|--hookList [HOOKLIST]] [-w|--widget [WIDGET]] [-t|--templates [TEMPLATES]] [--] <name>`
 
-Generate module default file
+Generate module main file
 
 ### Arguments
 
@@ -4183,7 +4193,12 @@ Generate module upgrade file
 
 * `module:generate:upgrade <moduleName> <moduleVersion>`
 
-Generate module upgrade file
+This command generate an upgrade file in the directory "upgrade" of the given module 
+In the following format upgrade-moduleVersion.php 
+Example : 
+./prestashopConsole.phar generate:module:upgrade samplemodule 0.2.0 : 
+will generate a file in modules/samplemodule/upgrade/upgrade-0.2.0.php
+
 
 ### Arguments
 
