@@ -21,13 +21,13 @@
 namespace PrestashopConsole\Command\Dev;
 
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Helper\Table;
 
 /**
- * Commande qui permet de lister les overrides en place sur le site
+ * This commands list all files other than index.php present in the "override" directory of prestashop
  */
 class ListOverridesCommand extends Command
 {
@@ -53,32 +53,45 @@ class ListOverridesCommand extends Command
             $finder->files()->in(_PS_OVERRIDE_DIR_)->name('*.php')->notName('index.php');
             if ($finder->count()) {
                 foreach ($finder as $file) {
-
                     $pathName = $file->getRelativePathname();
-                    if (preg_match('#^controllers#', $pathName)) {
-                        $type = 'controller';
-                    } elseif (preg_match('#^classes#', $pathName)) {
-                        $type = 'classes';
-
-                    } elseif (preg_match('#^modules#', $pathName)) {
-                        $type = 'modules';
-                    } else {
-                        $type = "Unknown";
-                    }
+                    $pathType = $this->getPathType($pathName);
                     $table->addRow([
-                        $type,
-                        $pathName
+                        $pathType,
+                        $pathName,
                     ]);
                 }
                 $table->render();
             } else {
-                $output->writeln('<info>No class overrides in this project</info>');
+                $output->writeln('<info>No overrides in this project</info>');
             }
         } catch (\Exception $e) {
             $output->writeln('<info>ERROR:' . $e->getMessage() . '</info>');
+
             return self::RESPONSE_ERROR;
         }
 
         return self::RESPONSE_SUCCESS;
+    }
+
+    /**
+     * Get path type
+     *
+     * @param string $pathName
+     *
+     * @return string
+     */
+    protected function getPathType(string $pathName): string
+    {
+        if (preg_match('#^controllers#', $pathName)) {
+            $type = 'controller';
+        } elseif (preg_match('#^classes#', $pathName)) {
+            $type = 'classes';
+        } elseif (preg_match('#^modules#', $pathName)) {
+            $type = 'modules';
+        } else {
+            $type = 'Unknown';
+        }
+
+        return $type;
     }
 }
