@@ -28,6 +28,7 @@
                         #218 New Command admin:profiles:list
                         #227 New Command analyze:carriers
                         #228 New Command analyze:payments
+                        #240 Remove commands preferences:cmscategory and preferences:cmspage
                         Update min php version to php7.2 +
                         Update compatibility only for ps 1.7 +
                         Add tests for commands
