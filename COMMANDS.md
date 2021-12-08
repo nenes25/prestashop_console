@@ -1,4 +1,4 @@
-PrestashopConsole 1.6.2
+PrestashopConsole 1.6.3
 =======================
 
 * [`help`](#help)
@@ -9,6 +9,11 @@ PrestashopConsole 1.6.2
 * [`admin:user:change-password`](#adminuserchange-password)
 * [`admin:user:create`](#adminusercreate)
 * [`admin:user:list`](#adminuserlist)
+
+**analyze:**
+
+* [`analyze:carriers`](#analyzecarriers)
+* [`analyze:payments`](#analyzepayments)
 
 **cache:**
 
@@ -471,6 +476,167 @@ List admin users
 * `admin:user:list`
 
 List admin users registered in employee table
+
+### Options
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`analyze:carriers`
+------------------
+
+List all payments module on the website
+
+### Usage
+
+* `analyze:carriers [--active]`
+
+List all payments module on the website
+
+### Options
+
+#### `--active`
+
+List only active carriers
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`analyze:payments`
+------------------
+
+List all payments modules on the website
+
+### Usage
+
+* `analyze:payments`
+
+List all payments modules on the website
 
 ### Options
 
@@ -3654,7 +3820,17 @@ Generate module controller file
 
 * `module:generate:controller [-t|--template TEMPLATE] [-m|--model MODEL] [--] <moduleName> <controllerName> <controllerType>`
 
-Generate module controller file
+This command generate controller for the given module 
+
+You can create front controller 
+module:generate:controller samplemodule controllerName front : 
+By default a smarty template will be automatically created for this controller.
+
+Or you can create admin controller : 
+module:generate:controller samplemodule controllerName admin : 
+Experimental feature
+You can provide an ObjectModel to generate the grid automatically with option --model=ObjectModelClass
+This class should exists in the directory "class" of your module
 
 ### Arguments
 
@@ -3676,7 +3852,7 @@ controller name
 
 #### `controllerType`
 
-controller type
+controller type (front|admin)
 
 * Is required: yes
 * Is array: no
@@ -3862,13 +4038,13 @@ Do not ask any interactive question
 `module:generate:module`
 ------------------------
 
-Generate module default file
+Generate module main file
 
 ### Usage
 
 * `module:generate:module [-i|--interactive [INTERACTIVE]] [-a|--author [AUTHOR]] [-dn|--displayName [DISPLAYNAME]] [-d|--description [DESCRIPTION]] [-l|--hookList [HOOKLIST]] [-w|--widget [WIDGET]] [-t|--templates [TEMPLATES]] [--] <name>`
 
-Generate module default file
+Generate module main file
 
 ### Arguments
 
@@ -4017,7 +4193,12 @@ Generate module upgrade file
 
 * `module:generate:upgrade <moduleName> <moduleVersion>`
 
-Generate module upgrade file
+This command generate an upgrade file in the directory "upgrade" of the given module 
+In the following format upgrade-moduleVersion.php 
+Example : 
+./prestashopConsole.phar generate:module:upgrade samplemodule 0.2.0 : 
+will generate a file in modules/samplemodule/upgrade/upgrade-0.2.0.php
+
 
 ### Arguments
 

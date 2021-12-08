@@ -35,12 +35,23 @@ class UpgradeCommand extends Command
 
     /** @var Filesystem */
     protected $_fileSystem;
+    /**
+     * @var OutputInterface
+     */
+    protected $_output;
 
     protected function configure()
     {
         $this
             ->setName('module:generate:upgrade')
             ->setDescription('Generate module upgrade file')
+            ->setHelp(
+                'This command generate an upgrade file in the directory "upgrade" of the given module ' . PHP_EOL
+                . 'In the following format upgrade-<comment>moduleVersion</comment>.php ' . PHP_EOL
+                . 'Example : ' . PHP_EOL
+                . './prestashopConsole.phar generate:module:upgrade <comment>samplemodule 0.2.0</comment> : ' . PHP_EOL
+                . 'will generate a file in modules/<comment>samplemodule</comment>/upgrade/<comment>upgrade-0.2.0</comment>.php' . PHP_EOL
+            )
             ->addArgument('moduleName', InputArgument::REQUIRED, 'module name')
             ->addArgument('moduleVersion', InputArgument::REQUIRED, 'module version');
     }
@@ -51,6 +62,7 @@ class UpgradeCommand extends Command
         $moduleVersion = $input->getArgument('moduleVersion');
         $this->_fileSystem = new Filesystem();
         $this->_moduleName = $moduleName;
+        $this->_output = $output;
 
         if (!$this->_isValidModuleVersion($moduleVersion)) {
             $output->writeln('<error>Module version is not valid</error>');
@@ -74,16 +86,19 @@ class UpgradeCommand extends Command
         $defaultContent = str_replace('{version}', $convertedVersion, $defaultContent);
 
         try {
+            $upgradeFile = _PS_MODULE_DIR_ . $moduleName . '/upgrade/upgrade-' . $moduleVersion . '.php';
             $this->_fileSystem->dumpFile(
-                _PS_MODULE_DIR_ . $moduleName . '/upgrade/upgrade-' . $moduleVersion . '.php',
+                $upgradeFile,
                 $defaultContent
             );
+            $output->writeln('<comment>Create or update file ' . $upgradeFile . '</comment>');
         } catch (IOException $e) {
-            $output->writeln('<error>Unable to creat upgrade file</error>');
+            $output->writeln('<error>Unable to create upgrade file</error>');
             return 1;
         }
 
         $output->writeln('<info>Update file generated</info>');
+        return 0;
     }
 
     /**
@@ -128,8 +143,10 @@ function upgrade_module_{version}($module)
      */
     protected function _createDirectories()
     {
-        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade')) {
-            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/upgrade', 0775);
+        $upgradeDir = _PS_MODULE_DIR_ . $this->_moduleName . '/upgrade';
+        if (!$this->_fileSystem->exists($upgradeDir)) {
+            $this->_fileSystem->mkdir($upgradeDir, 0775);
+            $this->_output->writeln('<comment>Create directory ' . $upgradeDir . '</comment>');
         }
     }
 }

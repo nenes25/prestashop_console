@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2019 Hennes Hervé
+ * 2007-2021 Hennes Hervé
  *
  * NOTICE OF LICENSE
  *
@@ -20,7 +20,6 @@
 
 namespace Hhennes\PrestashopConsole\Command\Module\Generate;
 
-use http\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,8 +28,11 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Question\Question;
-use \ObjectModel;
-use \Validate;
+use RuntimeException;
+use ObjectModel;
+use Validate;
+use ReflectionClass;
+use ReflectionException;
 
 class ObjectModelCommand extends Command
 {
@@ -71,7 +73,7 @@ class ObjectModelCommand extends Command
             $objectQuestion = new Question('<question>Model Class :</question>');
             $objectQuestion->setValidator(function ($answer) {
                 if (!Validate::isFileName($answer)) {
-                    throw new \RuntimeException('The className is not valid');
+                    throw new RuntimeException('The className is not valid');
                 }
                 return $answer;
             });
@@ -282,14 +284,13 @@ class {object} extends ObjectModel
                 $hasLang = true;
                 $defStr .= "'lang' => true,";
             }
-            $defStr .= "]\n";
-            if ( $hasLang) {
-                $defStr .= ",'multilang' => true \n";
-            }
+            $defStr .= "],\n";
         }
-        $defStr = rtrim($defStr, ',');
-        $defStr .= ']
-        ];';
+        $defStr .= '],'."\n";
+        if ($hasLang) {
+            $defStr .= " 'multilang' => true \n";
+        }
+        $defStr.='];';
         return $defStr;
     }
 
@@ -309,29 +310,29 @@ class {object} extends ObjectModel
          * Model Sql installation
          * Add it in your module installation if necessary
          */ 
-        public static function installSql(){'."\n";
+        public static function installSql(){' . "\n";
 
         foreach ($sqlQueries as $query) {
             if ($query != '') {
-                $installStr .= "\n".' Db::getInstance()->execute(
-                "'.$query.'"
-                );'."\n";
+                $installStr .= "\n" . ' Db::getInstance()->execute(
+                "' . $query . '"
+                );' . "\n";
             }
         }
         $installStr .= '}';
 
         return $installStr;
     }
+
     /**
      * @param array $params
      * @return array
      */
     protected function _generateSql(array $params)
     {
-
         $hasLang = false;
         $sqlQueryString = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . $params['table_name'] . '`(' . "\n";
-        $sqlQueryString .= '`' . $params['primary'] . '` int(10) unsigned NOT NULL AUTO_INCREMENT,';
+        $sqlQueryString .= '`' . $params['primary'] . '` int(10) unsigned NOT NULL AUTO_INCREMENT,' . "\n";
 
         $sqlQueryStringLang = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . $params['table_name'] . '_lang`(' . "\n";
         $sqlQueryStringLang .= '`' . $params['primary'] . '` int(10) unsigned NOT NULL AUTO_INCREMENT,' . "\n";
@@ -375,14 +376,16 @@ class {object} extends ObjectModel
 
             if ($field['lang'] !== false) {
                 $hasLang = true;
-                $sqlQueryStringLang .= $fieldString . "\n";
+                $sqlQueryStringLang .= $fieldString . ",\n";
             } else {
-                $sqlQueryString .= $fieldString . "\n";
+                $sqlQueryString .= $fieldString . ",\n";
             }
         }
         $sqlQueryString .= 'PRIMARY KEY (`' . $params['primary'] . '`)
+        )
         ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
-        $sqlQueryStringLang .= 'PRIMARY KEY (`' . $params['primary'] . '`,`id_lang`)
+        $sqlQueryStringLang .= ' PRIMARY KEY (`' . $params['primary'] . '`,`id_lang`)
+        )
         ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
 
         return [
@@ -421,11 +424,11 @@ class {object} extends ObjectModel
     {
         $functions = [];
         try {
-            $validation = new \ReflectionClass(Validate::class);
+            $validation = new ReflectionClass(Validate::class);
             foreach ($validation->getMethods() as $method) {
                 $functions[] = $method->name;
             }
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
         }
         return $functions;
     }

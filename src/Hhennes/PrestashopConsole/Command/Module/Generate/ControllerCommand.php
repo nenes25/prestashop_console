@@ -21,11 +21,14 @@
 namespace Hhennes\PrestashopConsole\Command\Module\Generate;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class ControllerCommand
@@ -34,9 +37,14 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ControllerCommand extends Command
 {
+    /** @var string Controller Type Admin */
+    const CONTROLLER_TYPE_ADMIN = 'admin';
+
+    /** @var string Controller Type Front */
+    const CONTROLLER_TYPE_FRONT = 'front';
 
     /** @var array Allowed Controllers Types */
-    protected $_allowedControllerTypes = array('front', 'admin');
+    const ALLOWED_CONTROLLER_TYPES = [self::CONTROLLER_TYPE_FRONT, self::CONTROLLER_TYPE_ADMIN];
 
     /** @var string Module Name */
     protected $_moduleName;
@@ -56,15 +64,31 @@ class ControllerCommand extends Command
     /** @var Filesystem */
     protected $_fileSystem;
 
+    /** @var OutputInterface */
+    protected $_output;
+
 
     protected function configure()
     {
         $this
             ->setName('module:generate:controller')
             ->setDescription('Generate module controller file')
+            ->setHelp(
+                'This command generate controller for the given module '.PHP_EOL
+                .PHP_EOL
+                .'You can create front controller '.PHP_EOL
+                .'module:generate:controller <comment>samplemodule</comment> <comment>controllerName</comment> <info>front</info> : '.PHP_EOL
+                . 'By default a smarty template will be automatically created for this controller.'.PHP_EOL
+                .PHP_EOL
+                .'Or you can create admin controller : '.PHP_EOL
+                .'module:generate:controller <comment>samplemodule</comment> <comment>controllerName</comment> <info>admin</info> : '.PHP_EOL
+                .'<info>Experimental feature</info>'.PHP_EOL.
+                'You can provide an ObjectModel to generate the grid automatically with option --model=<comment>ObjectModelClass</comment>'.PHP_EOL
+                .'This class should exists in the directory "class" of your module'
+            )
             ->addArgument('moduleName', InputArgument::REQUIRED, 'module name')
             ->addArgument('controllerName', InputArgument::REQUIRED, 'controller name')
-            ->addArgument('controllerType', InputArgument::REQUIRED, 'controller type')
+            ->addArgument('controllerType', InputArgument::REQUIRED, 'controller type (front|admin)')
             ->addOption('template', 't', InputArgument::OPTIONAL, 'generate template', true)
             ->addOption('model', 'm', InputArgument::OPTIONAL, 'Model for admin controller');
     }
@@ -72,7 +96,7 @@ class ControllerCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return bool|int|void|null
+     * @return int
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -83,14 +107,20 @@ class ControllerCommand extends Command
         $this->_template = $input->getOption('template');
         $this->_model = $input->getOption('model');
         $this->_fileSystem = new Filesystem();
+        $this->_output = $output;
 
         if (!is_dir(_PS_MODULE_DIR_ . $this->_moduleName)) {
             $output->writeln('<error>Module not exists</error>');
             return 1;
         }
 
-        if (!in_array($this->_controllerType, $this->_allowedControllerTypes)) {
-            $output->writeln('<error>Unknown controller type</error>');
+        if (!in_array($this->_controllerType, self::ALLOWED_CONTROLLER_TYPES)) {
+            $output->writeln(
+                sprintf(
+                    '<error>Unknown controller type , allowed types are : %s </error>',
+                    implode(',', self::ALLOWED_CONTROLLER_TYPES)
+                )
+            );
             return 1;
         }
 
@@ -98,7 +128,7 @@ class ControllerCommand extends Command
         try {
             $this->_createDirectories();
         } catch (IOException $e) {
-            $output->writeln('<error>Unable to creat controller directories</error>');
+            $output->writeln('<error>Unable to create controller directories</error>');
             return 1;
         }
         $controllerClass = ucfirst($this->_moduleName) . ucfirst($this->_controllerName);
@@ -106,37 +136,42 @@ class ControllerCommand extends Command
             $controllerClass = $this->_controllerName;
             $defaultContent = $this->_getAdminControllerContent();
             if ($this->_template === true) {
-                $output->writeln('<info>Template cannot be generated for admin controllers</info>');
+                $output->writeln('<comment>Template cannot be generated for admin controllers</comment>');
             }
             if ($this->_model !== null) {
                 $modelContent = $this->_getAdminModelContent();
-                $include = 'include_once _PS_MODULE_DIR_."'.$this->_moduleName.'/classes/'.$this->_model.'.php";';
+                $include = 'include_once _PS_MODULE_DIR_."' . $this->_moduleName . '/classes/' . $this->_model . '.php";';
             } else {
                 $modelContent = '';
                 $include = '';
             }
-            $defaultContent = str_replace(['{modelContent}','{include}'], [$modelContent,$include], $defaultContent);
+            $defaultContent = str_replace(['{modelContent}', '{include}'], [$modelContent, $include], $defaultContent);
         } else {
             $controllerClass = ucfirst($this->_moduleName) . ucfirst($this->_controllerName);
             $defaultContent = $this->_getFrontControllerContent();
+
             if ($this->_template === true) {
                 $this->_generateTemplate();
             }
         }
 
-        $defaultContent = str_replace('{controllerClass}', $controllerClass, $defaultContent);
 
         try {
+            $controllerFile = _PS_MODULE_DIR_ . $this->_moduleName . '/controllers/' . $this->_controllerType . '/' . strtolower($this->_controllerName) . '.php';
+            $defaultContent = str_replace('{controllerClass}', $controllerClass, $defaultContent);
             $this->_fileSystem->dumpFile(
-                _PS_MODULE_DIR_ . $this->_moduleName . '/controllers/' . $this->_controllerType . '/' . strtolower($this->_controllerName) . '.php',
+                $controllerFile,
                 $defaultContent
             );
+            $output->writeln('<comment>Create or update controller file ' . $controllerFile . '</comment>');
         } catch (IOException $e) {
-            $output->writeln('<error>Unable to creat controller directories</error>');
+            $output->writeln('<error>Unable to create controller file</error>');
             return 1;
         }
 
-        echo $output->writeln('<info>Controller ' . $this->_controllerName . ' created with sucess');
+        $output->writeln('<info>Controller ' . $this->_controllerName . ' created with success</info>');
+
+        return 0;
     }
 
 
@@ -147,24 +182,54 @@ class ControllerCommand extends Command
      */
     protected function _createDirectories()
     {
-        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin')) {
-            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin', 0775);
+        $adminControllerDir = _PS_MODULE_DIR_ . $this->_moduleName . '/controllers/admin';
+        $frontControllerDir = _PS_MODULE_DIR_ . $this->_moduleName . '/controllers/front';
+        $frontControllerTemplateDir = _PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front';
+        $needIndexFiles = false;
+
+        if (
+            $this->_controllerType == self::CONTROLLER_TYPE_ADMIN
+            && $this->_fileSystem->exists($adminControllerDir)
+        ) {
+            $this->_fileSystem->mkdir($adminControllerDir, 0775);
+            $this->_output->writeln('<comment>Create directory : ' . $adminControllerDir . '</comment>');
+            $needIndexFiles = true;
         }
 
-        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/front')) {
-            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/controllers/front', 0775);
+        if ($this->_controllerType == self::CONTROLLER_TYPE_FRONT) {
+            if (!$this->_fileSystem->exists($frontControllerDir)) {
+                $this->_fileSystem->mkdir($frontControllerDir, 0775);
+                $this->_output->writeln('<comment>Create directory : ' . $frontControllerDir . '</comment>');
+            }
+
+            if (!$this->_fileSystem->exists($frontControllerTemplateDir)) {
+                $this->_fileSystem->mkdir($frontControllerTemplateDir, 0775);
+                $this->_output->writeln('<comment>Create directory : ' . $frontControllerTemplateDir . '</comment>');
+                $needIndexFiles = true;
+            }
         }
 
-        if (!$this->_fileSystem->exists(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front')) {
-            $this->_fileSystem->mkdir(_PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front', 0775);
+        if (true === $needIndexFiles) {
+            try {
+                $this->_addIndexFiles();
+            } catch (\Exception $e) {
+                $this->_output->writeln('<warning>Unable to run command dev:add-index-files to automatically add index files</warning>');
+            }
         }
+    }
 
-        /*$indexCommand = $this->getApplication()->find('dev:add-index-files');
+    /**
+     * Add missing index.php files in the module content
+     * @throws \Symfony\Component\Console\Exception\ExceptionInterface
+     */
+    protected function _addIndexFiles()
+    {
+        $indexCommand = $this->getApplication()->find('dev:add-index-files');
         $arguments = [
             'command' => 'dev:add-index-files',
-            'dir' => _PS_MODULE_DIR_ . $this->_moduleName,
+            'dir' => 'modules/' . $this->_moduleName,
         ];
-        $indexCommand->run(new ArrayInput([$arguments]),new NullOutput());*/
+        $content = $indexCommand->run(new ArrayInput($arguments), $this->_output);
     }
 
     /**
@@ -222,7 +287,7 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
     {
         $breadcrumb = parent::getBreadcrumbLinks();
         $breadcrumb[\'links\'][] = [
-            \'title\' => \''.$this->_controllerName.'\',
+            \'title\' => \'' . $this->_controllerName . '\',
             \'url\' => \'#\'
         ];
         return $breadcrumb;
@@ -259,10 +324,9 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
 <p>Controller template generated by PrestashopConsole to edit</p>
 {/block}
 ';
-        $this->_fileSystem->dumpFile(
-            _PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front/' . $this->_controllerName . '.tpl',
-            $defaultTemplateContent
-        );
+        $templateFile = _PS_MODULE_DIR_ . $this->_moduleName . '/views/templates/front/' . $this->_controllerName . '.tpl';
+        $this->_fileSystem->dumpFile($templateFile, $defaultTemplateContent);
+        $this->_output->writeln('<comment>Create or update template file ' . $templateFile . '</comment>');
     }
 
     /**
@@ -270,8 +334,16 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
      */
     protected function _getAdminModelContent()
     {
-        if ( is_file(_PS_MODULE_DIR_.$this->_moduleName.'/classes/'.$this->_model.'.php')){
-            include_once _PS_MODULE_DIR_.$this->_moduleName.'/classes/'.$this->_model.'.php';
+        if (is_file(_PS_MODULE_DIR_ . $this->_moduleName . '/classes/' . $this->_model . '.php')) {
+            include_once _PS_MODULE_DIR_ . $this->_moduleName . '/classes/' . $this->_model . '.php';
+
+            $reflexionClass = new ReflectionClass($this->_model);
+            try {
+                $definition = $reflexionClass->getStaticPropertyValue('definition');
+                $fields = $definition['fields'];
+            } catch (ReflectionException $e) {
+                return '';
+            }
         } else {
             return '';
         }
@@ -280,9 +352,9 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         public function __construct(){
         
             $this->bootstrap  = true;
-            $this->table      = "'.$this->_model::$definition['table'].'";
-            $this->identifier = "'.$this->_model::$definition['primary'].'";
-            $this->className  = "'.$this->_model.'";
+            $this->table      = ' . $this->_model . '::$definition[\'table\'];
+            $this->identifier = ' . $this->_model . '::$definition[\'primary\'];
+            $this->className  = "' . $this->_model . '::class";
             $this->lang       = true; //@Todo Gerer ce param
             $this->context = Context::getContext();
             $this->addRowAction(\'edit\');
@@ -290,11 +362,11 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         
             $this->fields_list = [';
 
-        foreach ( $this->_model::$definition['fields'] as $key => $params){
-            ( isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
-            $content .= ' "'.$key.'"=> [
-                "title" => $this->l("'.$key.'"),
-                "lang" => '.$lang.',
+        foreach ($fields as $key => $params) {
+            (isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
+            $content .= ' "' . $key . '"=> [
+                "title" => $this->l("' . $key . '"),
+                "lang" => ' . $lang . ',
                 ],
                 ';
         }
@@ -306,30 +378,31 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         
         /**
          * Display Object Form
+         * @return string
          */
         public function renderForm(){
         
             $this->fields_form = [
              "legend" => [
-                 "title" => $this->l("Edit '.$this->_model.'"),
+                 "title" => $this->l("Edit ' . $this->_model . '"),
                  "icon" => "icon-cog"
              ],
              //@Todo : Automaticaly detect types
              "input" => [';
-        foreach ( $this->_model::$definition['fields'] as $key => $params){
-            ( isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
-            ( isset($params['required']) && $params['required'] === true) ? $required = 'true' : $required = 'false';
+        foreach ($fields as $key => $params) {
+            (isset($params['lang']) && $params['lang'] === true) ? $lang = 'true' : $lang = 'false';
+            (isset($params['required']) && $params['required'] === true) ? $required = 'true' : $required = 'false';
             $content .= '
                [
                     "type" => "text",
-                    "label" => $this->l("'.$key.'"),
-                    "name" => "'.$key.'",
-                    "lang" => '.$lang.',
-                    "required" => '.$required.',
+                    "label" => $this->l("' . $key . '"),
+                    "name" => "' . $key . '",
+                    "lang" => ' . $lang . ',
+                    "required" => ' . $required . ',
                 ],
                 ';
         }
-        $content .='    ],
+        $content .= '    ],
              "submit" => [
                 "title" => $this->l("Save"),
              ]
@@ -341,11 +414,12 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         
         /**
          * Add button in Toolbar
+         * @return void
          */
         public function initPageHeaderToolbar()
         {
             $this->page_header_toolbar_btn[\'new_object\'] = array(
-                \'href\' => self::$currentIndex.\'&add'.strtolower($this->_model).'&token=\'.$this->token,
+                \'href\' => self::$currentIndex.\'&add' . strtolower($this->_model) . '&token=\'.$this->token,
                 \'desc\' => $this->l(\'Add new object\'),
                 \'icon\' => \'process-icon-new\'
             );
@@ -354,11 +428,11 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         
         /**
          * Translation Override
-         * @param type $string
-         * @param type $class
-         * @param type $addslashes
-         * @param type $htmlentities
-         * @return type
+         * @param string $string
+         * @param string $class
+         * @param bool $addslashes
+         * @param bool $htmlentities
+         * @return string
          */
         protected function l($string, $class = null, $addslashes = false, $htmlentities = true)
         {
@@ -371,6 +445,5 @@ class {controllerClass}ModuleFrontController extends ModuleFrontController {
         ';
 
         return $content;
-
     }
 }
