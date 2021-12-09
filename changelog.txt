@@ -52,8 +52,8 @@
                        New command to list admin users
                        Add pre-commit hook to automatically build phar and update documentation
                        New commands to manage module admin tabs
-2019-05-10 - V 1.4.2 : Module generation improvments ( objectmodel )
-2019-04-16 - V 1.4.1 : Module generation improvments
+2019-05-10 - V 1.4.2 : Module generation improvement ( objectmodel )
+2019-04-16 - V 1.4.1 : Module generation improvement
 2019-03-11 - V 1.4.0 : New commands to generate module files ( declaration, controllers , upgrade )
 2019-02-11 - V 1.3.0 : Automatically detect commands
 2019-01-12 - V 1.2.4 : Fix wrong exception message in Module Commands
@@ -71,10 +71,10 @@
 2017-05-06 - V 0.7.1 : Now works with prestashop 1.7
 2016-03-27 - V 0.7.0 : New command for mass configuration object changes
 2016-01-12 - V 0.6.0 : New command to add index.php files in directories
-2016-01-11 - V 0.5.1 : Improvment for creating admin user
+2016-01-11 - V 0.5.1 : Improvement for creating admin user
 2016-12-23 - V 0.5.0 : New commands to create admin user and to change admin password
 2016-11-03 - V 0.4.0 : New command to get all configurations
-2016-10-10 - V 0.3.0 : New functionnaly : install prestashop from command line
+2016-10-10 - V 0.3.0 : New functionality : install prestashop from command line
 2016-10-07 - V 0.2.3 : Fix media command
 2016-09-23 - V 0.2.2 : Cache management improvements, add media cache
 2016-09-22 - V 0.2.1 : Replace configuration file in yml by file in php to optimize phar generation
