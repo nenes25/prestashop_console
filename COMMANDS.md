@@ -4650,7 +4650,7 @@ Get modules list
 
 ### Usage
 
-* `module:list [--active] [--no-active] [--installed] [--no-installed] [--native] [--no-native] [--trusted] [--no-trusted]`
+* `module:list [--active] [--no-active] [--installed] [--no-installed] [--native] [--no-native] [--trusted] [--no-trusted] [-1|--with-id]`
 
 Get modules list
 
@@ -4722,6 +4722,15 @@ List only trusted modules
 #### `--no-trusted`
 
 List only not trusted modules
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--with-id|-1`
+
+Display module ids in list
 
 * Accept value: no
 * Is value required: no

@@ -47,7 +47,7 @@ class ListCommand extends Command
         $this
             ->setName('module:list')
             ->setDescription('Get modules list');
-        // Add all filters as 2 different options : 
+        // Add all filters as 2 different options :
         // One to filter only the modules with the filter attribute (named as the filter)
         // One to filter only the modules with the filter attribute as false (named as the 'no-filter')
         foreach (ListCommand::AVAILABLE_FILTERS as $filter) {
@@ -57,18 +57,20 @@ class ListCommand extends Command
                 InputOption::VALUE_NONE,
                 sprintf('List only %s modules', $filter)
             )
-            ->addOption(
-                'no-' . $filter,
-                null,
-                InputOption::VALUE_NONE,
-                sprintf('List only not %s modules', $filter)
-            );
+                ->addOption(
+                    'no-' . $filter,
+                    null,
+                    InputOption::VALUE_NONE,
+                    sprintf('List only not %s modules', $filter)
+                );
         };
+        $this->addOption('with-id', InputOption::VALUE_NONE, null, 'Display module ids in list');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $modules = Module::getModulesOnDisk();
+        $withIds = $input->getOption('with-id');
         //module stdClass definition
         /*
             [id] => 36
@@ -101,13 +103,13 @@ class ListCommand extends Command
         // Apply filters for each found option
         foreach (ListCommand::AVAILABLE_FILTERS as $filter) {
             if ($input->getOption($filter)) {
-                $modules = array_filter($modules, function ($module) use($filter) {
+                $modules = array_filter($modules, function ($module) use ($filter) {
                     return (bool)$module->{$filter};
                 });
             }
             if ($input->getOption("no-" . $filter)) {
-                $modules = array_filter($modules, function ($module) use($filter) {
-                    return ! (bool)$module->{$filter};
+                $modules = array_filter($modules, function ($module) use ($filter) {
+                    return !(bool)$module->{$filter};
                 });
             }
         }
@@ -118,14 +120,23 @@ class ListCommand extends Command
 
         $nr = 0;
         $table = new Table($output);
-        $table->setHeaders(['Name', 'Version', 'Installed', 'Active']);
+        $header = ['Name', 'Version', 'Installed', 'Active'];
+        if (false !== $withIds) {
+            $header[] = 'id_module';
+        }
+        $table->setHeaders($header);
         foreach ($modules as $module) {
-            $table->addRow([
+            $rowData = [
                 $module->name,
                 $module->version,
                 ((bool)($module->installed) ? 'true' : 'false'),
                 ((bool)($module->active) ? 'true' : 'false')
-            ]);
+            ];
+            if (false !== $withIds) {
+                ($module->installed) ? $id = $module->id : $id = 0;
+                $rowData[] = $id;
+            }
+            $table->addRow($rowData);
             $nr++;
         }
 
