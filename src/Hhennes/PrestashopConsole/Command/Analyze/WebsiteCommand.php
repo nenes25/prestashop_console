@@ -39,7 +39,14 @@ class WebsiteCommand extends Command
     {
         $this
             ->setName('analyze:website')
-            ->setDescription('Get website statistics');
+            ->setDescription('Get website statistics')
+            ->setHelp(
+                'This command show useful statistics about the website' . PHP_EOL
+                . "- Prestashop Version " . PHP_EOL
+                . "- Installation date " . PHP_EOL
+                . "- Customer and orders count and average since installation " . PHP_EOL
+                . "- Products and category count " . PHP_EOL
+            );
     }
 
     /**
@@ -53,16 +60,16 @@ class WebsiteCommand extends Command
         $nbProducts = $this->getCatalogProductsCount();
         $nbCategories = $this->getCatalogCategoryCount();
         $multipleShop = $this->hasMultipleShops();
-        $output->writeln('<info>Prestashop version: '._PS_VERSION_.'</info>');
+        $output->writeln('<info>Prestashop version: ' . _PS_VERSION_ . '</info>');
         if (true === $multipleShop) {
             $output->writeln('<info>This website has multiple shops</info>');
         }
-        $output->writeln('<info>Used theme name: '._THEME_NAME_.'</info>');
-        $output->writeln('<info>This website is installed since: '._PS_CREATION_DATE_. ' ('.$daysFromCreation.' days)</info>');
-        $output->writeln('<info>Number of customers: '.$nbCustomers.' ('.round($nbCustomers/$daysFromCreation, 2).'/day)</info>');
-        $output->writeln('<info>Number of orders: '.$nbOrders.' ('.round($nbOrders/$daysFromCreation, 2).'/day)</info>');
-        $output->writeln('<info>Number of products: '.$nbProducts.'</info>');
-        $output->writeln('<info>Number of categories: '.$nbCategories.'</info>');
+        $output->writeln('<info>Used theme name: ' . _THEME_NAME_ . '</info>');
+        $output->writeln('<info>This website is installed since: ' . _PS_CREATION_DATE_ . ' (' . $daysFromCreation . ' days)</info>');
+        $output->writeln('<info>Number of customers: ' . $nbCustomers . ' (' . round($nbCustomers / $daysFromCreation, 2) . '/day)</info>');
+        $output->writeln('<info>Number of orders: ' . $nbOrders . ' (' . round($nbOrders / $daysFromCreation, 2) . '/day)</info>');
+        $output->writeln('<info>Number of products: ' . $nbProducts . '</info>');
+        $output->writeln('<info>Number of categories: ' . $nbCategories . '</info>');
 
         return 0;
     }
@@ -137,6 +144,6 @@ class WebsiteCommand extends Command
     protected function getCount($table, $where = '')
     {
         $whereCondition = ($where != '') ? ' WHERE ' . $where : '';
-        return Db::getInstance()->getValue("SELECT COUNT(*) FROM " . _DB_PREFIX_ . $table .$whereCondition);
+        return Db::getInstance()->getValue("SELECT COUNT(*) FROM " . _DB_PREFIX_ . $table . $whereCondition);
     }
 }

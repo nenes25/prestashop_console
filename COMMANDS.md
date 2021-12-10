@@ -638,7 +638,14 @@ Run a global analysis on the website
 
 * `analyze:global`
 
-Run a global analysis on the website
+This command is a "meta command" which run successively the following commands:
+- analyze:website (website statistics)
+- module:list --active (List all active modules)
+- module:list --active --no-native (List all active and non prestashop modules)
+- analyze:payments (List installed payments modules)
+- analyze:carriers --active (List active carriers modules)
+- dev:list-overrides (List overrides of the project)
+
 
 ### Options
 
@@ -790,7 +797,12 @@ Get website statistics
 
 * `analyze:website`
 
-Get website statistics
+This command show useful statistics about the website
+- Prestashop Version 
+- Installation date 
+- Customer and orders count and average since installation 
+- Products and category count 
+
 
 ### Options
 

@@ -33,7 +33,16 @@ class GlobalCommand extends Command
     {
         $this
             ->setName('analyze:global')
-            ->setDescription('Run a global analysis on the website');
+            ->setDescription('Run a global analysis on the website')
+            ->setHelp(
+                'This command is a "meta command" which run successively the following commands:'.PHP_EOL
+                .'- analyze:website (website statistics)'.PHP_EOL
+                .'- module:list --active (List all active modules)'.PHP_EOL
+                .'- module:list --active --no-native (List all active and non prestashop modules)'.PHP_EOL
+                .'- analyze:payments (List installed payments modules)'.PHP_EOL
+                .'- analyze:carriers --active (List active carriers modules)'.PHP_EOL
+                .'- dev:list-overrides (List overrides of the project)'.PHP_EOL
+            );
     }
 
     /**
