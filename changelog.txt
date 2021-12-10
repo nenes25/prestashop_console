@@ -22,7 +22,7 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  http://www.h-hennes.fr/blog/
 */
-2021-xx-xx  - V 1.6.3 : #194 Check compatibility from php5.6 to php7.2
+2021-12-10  - V 1.6.3 : #194 Check compatibility from php5.6 to php7.2
                         #227 New Command analyze:carriers
                         #228 New Command analyze:payments
                         #232 Enhancement module:generate:controller
