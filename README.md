@@ -71,3 +71,21 @@ prestashopConsole
 You can check the list of commands here : [commands](COMMANDS.md)  
 
 If you want to contribute please see : [contribute](CONTRIBUTE.md)
+
+Browser version
+---
+
+If no cli is available on your hosting, and if the php **exec** and **shel_exec** functions are enabled.  
+You can use and download the file prestashopConsoleWrapper.php as a wrapper to run some commands directly from the browser.  
+This wrapper is limited and cannot interact with the console.
+All parameters should be passed through the url
+
+Here are some examples :
+```
+Show help of the command admin:user:list
+prestashopConsoleWrapper.php?command=admin:user:list&options[]=help
+List only active modules
+prestashopConsoleWrapper.php?command=module:list&options[]=active
+List only active modules not from prestashop
+prestashopConsoleWrapper.php?command=module:list&options[]=active&options[]=no-native
+```
