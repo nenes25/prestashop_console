@@ -24,7 +24,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Db;
 
 class ExportCommand extends Command
@@ -49,6 +48,8 @@ class ExportCommand extends Command
             ->addOption('type', 't', InputOption::VALUE_OPTIONAL, 'allowed values all|customers|orders|catalog', 'all')
             ->addOption('gzip', 'g', InputOption::VALUE_OPTIONAL, 'compress export in gzip')
             ->addOption('filename', 'f', InputOption::VALUE_OPTIONAL, 'custom file name for export')
+            ->addOption('single-transaction', null, InputOption::VALUE_NONE, 'include option --single-transaction to mysqldump')
+            ->addOption('no-tablespaces', null, InputOption::VALUE_NONE, 'include option --no-tablespaces to mysqldump')
             ->setHelp('This command will export current prestashop database using mysqldump shell command');
     }
 
@@ -68,14 +69,32 @@ class ExportCommand extends Command
         $type = $input->getOption('type');
         $gzip = $input->getOption('gzip');
         $fileName = $input->getOption('filename');
+        $singleTransaction = "";
+        $noTableSpaces = "";
+        if (null != $input->getOption('single-transaction')) {
+            $singleTransaction = '--single-transaction';
+        }
+        if (null != $input->getOption('no-tablespaces')) {
+            $noTableSpaces = '--no-tablespaces';
+        }
 
         if (!in_array($type, $this->_allowedTypes)) {
-            $output->writeln('<error>Unknow type option for export</error>');
+            $output->writeln('<error>Unknown type option for export</error>');
             return 1;
         }
 
         $output->writeln('<info>Export started</info>');
-        $command = "mysqldump -h " . _DB_SERVER_ . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' ';
+
+        //Manage the case if the server use a custom port
+        if (false !== strpos(_DB_SERVER_, ':')) {
+            $parts = explode(':', _DB_SERVER_);
+            $server = $parts[0]. ' -P '.$parts[1].' ';
+        } else {
+            $server = _DB_SERVER_;
+        }
+
+        $dumpOptions = $singleTransaction.' '.$noTableSpaces;
+        $command = "mysqldump ".$dumpOptions." -h " . $server . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' ';
 
         //Export type management
         if ($type !== 'all') {
@@ -107,7 +126,6 @@ class ExportCommand extends Command
         $export = shell_exec($command);
         $output->writeln('<info>' . $export . '</info>');
         $output->writeln('<info>Export ended</info>');
-
     }
 
 

@@ -1939,7 +1939,7 @@ Create db export
 
 ### Usage
 
-* `db:export [-t|--type [TYPE]] [-g|--gzip [GZIP]] [-f|--filename [FILENAME]]`
+* `db:export [-t|--type [TYPE]] [-g|--gzip [GZIP]] [-f|--filename [FILENAME]] [--single-transaction] [--no-tablespaces]`
 
 This command will export current prestashop database using mysqldump shell command
 
@@ -1971,6 +1971,24 @@ custom file name for export
 * Is value required: no
 * Is multiple: no
 * Default: `NULL`
+
+#### `--single-transaction`
+
+include option --single-transaction to mysqldump
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-tablespaces`
+
+include option --no-tablespaces to mysqldump
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
 
 #### `--help|-h`
 
