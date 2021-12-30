@@ -1,0 +1,65 @@
+name:  New Command request
+title: New Command CommandName
+description: Request the creation of a new command
+assignees: nenes25
+labels: ['enhancement']
+body:
+- type: markdown
+  attributes:
+  value: |
+  Ask for the creation of a new command in the tools.
+- type: dropdown
+  id: psconsoleversion
+  attributes:
+    label: PrestashopConsole
+    description: Targeted prestashopConsole version
+    multiple: false
+    options:
+    - 1.6.x
+    - 2.0.x
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: Command name
+    placeholder: sample:action
+  validations:
+    required: true
+- type: dropdown
+  id: command_category
+  attributes:
+    label: Command category
+    description: the command category
+    multiple: false
+    options:
+      - admin
+      - analyze
+      - cache
+      - configuration
+      - console
+      - db
+      - dev
+      - hook
+      - images
+      - module
+      - other
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Command arguments
+    placeholder: List the command arguments
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Command options
+    placeholder: List the command options <br > --optionName _optionDescription_ (none / required / optional / is_array)
+- type: textarea
+  attributes:
+    label: Command return
+    placeholder: "List what the command will return <br > success : _what command retrun in success_ <br /> error : _what command return in error_ <br> void if nothing"
+- type: textarea
+  attributes:
+    label: Possible impacts?
+    placeholder: Define possible impacts on current codebase.
