@@ -9,14 +9,16 @@ body:
         Thank you for using the module and reporting an issue  
         In order to allow us to help you, please fill the following fields
   - type: dropdown
-      id: psconsoleversion
-      attributes:
-        label: PrestashopConsole
-        description: Your prestashopConsole version
-        multiple: false
-        options:
-          - 1.6.x
-          - 2.0.x
+    id: psconsoleversion
+    attributes:
+      label: PrestashopConsole
+      description: Your prestashopConsole version
+      multiple: false
+      options:
+        - 1.6.x
+        - 2.0.x
+    validations:
+      required: true
   - type: dropdown
     id: prestashop_version
     attributes:
