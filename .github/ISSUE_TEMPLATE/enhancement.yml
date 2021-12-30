@@ -1,0 +1,38 @@
+name: Enhancement
+description: Ask for an enhancement on a command or to the project
+assignees: nenes25
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for using the module and reporting an issue  
+        In order to allow us to help you, please fill the following fields
+  - type: dropdown
+    id: psconsoleversion
+    attributes:
+      label: PrestashopConsole
+      description: Your prestashopConsole version
+      multiple: false
+      options:
+        - 1.6.x
+        - 2.0.x
+    validations:
+      required: true
+  - type: dropdown
+    id: command_or_global
+    attributes:
+      label: Related to command or global ?
+      description: describe if your enhancement is related to a specific command or global
+      multiple: false
+      options:
+        - command
+        - global
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Enhancement description
+      placeholder:  Describe the enhancement suggestion
+    validations:
+      required: true
