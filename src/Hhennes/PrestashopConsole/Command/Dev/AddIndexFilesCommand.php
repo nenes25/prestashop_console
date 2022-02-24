@@ -58,10 +58,17 @@ class AddIndexFilesCommand extends Command
                 throw new \Exception('directory doesn\'t exists');
             }
 
+            //Create index file in the root directory if it not exists
+            if ( !is_file(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir.'/index.php')){
+                $fp = fopen(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir.'/index.php', 'w+');
+                fputs($fp, $this->_getIndexContent());
+                fclose($fp);
+            }
+
             $finder = new Finder();
 
             //List all directories
-            $directories = $finder->directories()->in(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir);
+            $directories = $finder->directories()->in(_PS_ROOT_DIR_.DIRECTORY_SEPARATOR.$dir)->exclude('vendor');
 
             $i = 0;
             foreach ($directories as $directory) {
