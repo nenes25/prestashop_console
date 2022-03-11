@@ -22,6 +22,10 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  http://www.h-hennes.fr/blog/
 */
+2022-       - V 1.6.4 : #241 Unable to use db:export with custom mysql port
+                        #242 New Command analyze:tables:size
+                        #243 dev:add-index should not add index.php files in composer directory
+                        #244 Add configuration form when creating module
 2021-12-10  - V 1.6.3 : #194 Check compatibility from php5.6 to php7.2
                         #227 New Command analyze:carriers
                         #228 New Command analyze:payments

@@ -4226,7 +4226,7 @@ Generate module main file
 
 ### Usage
 
-* `module:generate:module [-i|--interactive [INTERACTIVE]] [-a|--author [AUTHOR]] [-dn|--displayName [DISPLAYNAME]] [-d|--description [DESCRIPTION]] [-l|--hookList [HOOKLIST]] [-w|--widget [WIDGET]] [-t|--templates [TEMPLATES]] [--] <name>`
+* `module:generate:module [-i|--interactive [INTERACTIVE]] [-a|--author [AUTHOR]] [-dn|--displayName [DISPLAYNAME]] [-d|--description [DESCRIPTION]] [-l|--hookList [HOOKLIST]] [-w|--widget [WIDGET]] [-t|--templates [TEMPLATES]] [--with-configuration] [--] <name>`
 
 Generate module main file
 
@@ -4304,6 +4304,15 @@ Generate hook templates
 * Is value required: no
 * Is multiple: no
 * Default: `NULL`
+
+#### `--with-configuration`
+
+Add a configuration sample form
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
 
 #### `--help|-h`
 

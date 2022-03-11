@@ -47,7 +47,8 @@ class ModuleCommand extends Command
             ->addOption('description', 'd', InputOption::VALUE_OPTIONAL, 'Description', 'Your module description')
             ->addOption('hookList', 'l', InputOption::VALUE_OPTIONAL, 'Comma separated hook List')
             ->addOption('widget', 'w', InputOption::VALUE_OPTIONAL, 'Implement widget interface')
-            ->addOption('templates', 't', InputOption::VALUE_OPTIONAL, 'Generate hook templates');
+            ->addOption('templates', 't', InputOption::VALUE_OPTIONAL, 'Generate hook templates')
+            ->addOption('with-configuration', null, InputOption::VALUE_NONE, 'Add a configuration sample form');
     }
 
     /**
@@ -111,6 +112,7 @@ class ModuleCommand extends Command
             } else {
                 $templates = null;
             }
+            $configuration = null;
         } else {
             $author = $input->getOption('author');
             $displayName = $input->getOption('displayName');
@@ -118,6 +120,7 @@ class ModuleCommand extends Command
             $hookList = $input->getOption('hookList');
             $widget = $input->getOption('widget');
             $templates = $input->getOption('templates');
+            $configuration = $input->getOption('with-configuration');
         }
 
         $defaultContent = $this->_getDefaultContent();
@@ -148,10 +151,18 @@ class ModuleCommand extends Command
             $defaultContent = str_replace(array('{useWidget}', '{widgetImplement}', '{widgetFuctions}'), '', $defaultContent);
         }
 
+        //Hooks management
         if ($hookList) {
             $defaultContent = $this->_replaceHookContent($defaultContent, $hookList, $templates);
         } else {
             $defaultContent = str_replace(array('{registerHooks}', '{hookfunctions}'), '', $defaultContent);
+        }
+
+        //Configuration management
+        if ($configuration) {
+            $defaultContent = $this->_replaceConfigurationContent($defaultContent);
+        } else {
+            $defaultContent = str_replace(['{configForm}','{configPrefix}'], '', $defaultContent);
         }
 
         $moduleFile = _PS_MODULE_DIR_ . $moduleName . '/' . $moduleName . '.php';
@@ -190,6 +201,7 @@ public function __construct()
 
     $this->displayName = $this->l(\'{moduleDisplayName}\');
     $this->description = $this->l(\'{moduleDescription}\');
+    {configPrefix}
 }
 
 /**
@@ -207,6 +219,8 @@ public function install()
 
     return true;
 }
+
+{configForm}
 
 {hookfunctions}
 
@@ -285,6 +299,110 @@ public function hook' . ucfirst($hook) . '($params){
             );
         }
         return $defaultContent;
+    }
+
+    /**
+     * Add a sample configuration content
+     * @param string $defaultContent
+     * @return string
+     */
+    protected function _replaceConfigurationContent($defaultContent)
+    {
+        return str_replace(
+            ['{configForm}','{configPrefix}'],
+            [
+            '
+            /**
+     * Configuration du module
+     * @return string
+     */
+    public function getContent()
+    {
+        $html = \'\';
+        $html .= $this->postProcess();
+        $html .= $this->renderForm();
+
+        return $html;
+    }
+
+    /**
+     * Gestion de l\'affichage du formulaire
+    * @return string
+        */
+    public function renderForm(): string
+    {
+        $fields_form = [
+            \'form\' => [
+                \'legend\' => [
+                    \'title\' => $this->l(\'Module Configuration\'),
+                    \'icon\' => \'icon-cogs\',
+                ],
+                \'input\' => [
+                    [
+                        \'type\' => \'text\',
+                        \'label\' => $this->l(\'Config value 1\'),
+                        \'name\' => $this->configPrefix . \'CONFIG_VALUE_1\',
+                        \'required\' => true,
+                        \'hint\' => $this->l(\'Config value 1 hint\'),
+                        \'empty_message\' => $this->l(\'Config value 1 empty message\'),
+                    ],
+                ],
+                \'submit\' => [
+                    \'title\' => $this->l(\'Save\'),
+                    \'class\' => \'button btn btn-default pull-right\',
+                ],
+            ],
+        ];
+
+        $helper = new HelperForm();
+        $helper->show_toolbar = false;
+        $lang = new Language((int)Configuration::get(\'PS_LANG_DEFAULT\'));
+        $helper->default_form_language = $lang->id;
+        $helper->allow_employee_form_lang = Configuration::get(\'PS_BO_ALLOW_EMPLOYEE_FORM_LANG\') ?
+            Configuration::get(\'PS_BO_ALLOW_EMPLOYEE_FORM_LANG\') : 0;
+        $helper->id = $this->name;
+        $helper->submit_action = \'SubmitModuleConfiguration\';
+        $helper->currentIndex = $this->context->link->getAdminLink(\'AdminModules\', false)
+            . \'&configure=\' . $this->name . \'&tab_module=\' . $this->tab . \'&module_name=\' . $this->name;
+        $helper->token = Tools::getAdminTokenLite(\'AdminModules\');
+        $helper->tpl_vars = [
+            \'fields_value\' => $this->getConfigFieldsValues(),
+            \'languages\' => $this->context->controller->getLanguages(),
+            \'id_language\' => $this->context->language->id,
+        ];
+
+        return $helper->generateForm([$fields_form]);
+
+    }
+
+    /**
+     * Traitement du formulaire
+     * @return string|void
+     */
+    public function postProcess()
+    {
+        if (Tools::isSubmit(\'SubmitModuleConfiguration\')) {
+            Configuration::updateValue($this->configPrefix . \'CONFIG_VALUE_1\', Tools::getValue($this->configPrefix . \'CONFIG_VALUE_1\'));
+            return $this->displayConfirmation($this->l(\'Settings updated\'));
+        }
+
+    }
+
+    /**
+     * Récupération des valeurs de configuration du formulaire
+     * @return array
+     */
+    public function getConfigFieldsValues(): array
+    {
+        return [
+            $this->configPrefix . \'CONFIG_VALUE_1\' => Tools::getValue($this->configPrefix . \'CONFIG_VALUE_1\', Configuration::get($this->configPrefix . \'CONFIG_VALUE_1\')),
+        ];
+    }
+            ',
+                '$this->configPrefix = strtoupper($this->name).\'_\';',
+            ],
+            $defaultContent
+        );
     }
 
     /**
