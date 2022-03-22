@@ -69,6 +69,7 @@ class GlobalCommand extends Command
                         $e->getMessage()
                     )
                 );
+                return 1;
             }
         }
 
