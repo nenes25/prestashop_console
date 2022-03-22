@@ -21,7 +21,7 @@
 namespace PrestashopConsole\Command\Analyze;
 
 use PaymentModule;
-use Symfony\Component\Console\Command\Command;
+use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -61,6 +61,6 @@ class ListPaymentsCommand extends Command
             $output->writeln('No payments modules installed');
         }
 
-        return 0;
+        return self::RESPONSE_SUCCESS;
     }
 }
