@@ -58,8 +58,8 @@ class AddIndexFilesCommand extends Command
             }
 
             //Create index file in the root directory if it not exists
-            if ( !is_file(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir.'/index.php')){
-                $fp = fopen(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir.'/index.php', 'w+');
+            if (!is_file(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir . '/index.php')) {
+                $fp = fopen(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir . '/index.php', 'w+');
                 fputs($fp, $this->_getIndexContent());
                 fclose($fp);
             }
@@ -78,7 +78,7 @@ class AddIndexFilesCommand extends Command
                 $indexFile = ${$i}->files()->in((string) $directory)->depth('==0')->name('index.php');
                 //Create if if not
                 if (!sizeof($indexFile)) {
-                   $fp = fopen($directory . DIRECTORY_SEPARATOR . 'index.php', 'w+');
+                    $fp = fopen($directory . DIRECTORY_SEPARATOR . 'index.php', 'w+');
                     fputs($fp, $this->_getIndexContent());
                     fclose($fp);
                 }
