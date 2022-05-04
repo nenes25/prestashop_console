@@ -53,7 +53,7 @@ class PrestashopConsoleWrapper
     private $options = "";
 
     /**
-     * @param array $arguments
+     * @param array $params
      * @throws Exception
      */
     public function __construct(array $params)
