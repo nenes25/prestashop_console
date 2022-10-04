@@ -1,3 +1,76 @@
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.1714    5937592   3. ShopCore::initialize() /home/herve/www/prestashop/versions/176/config/config.inc.php:119
+    0.2088    6863840   4. ShopCore->__construct($id = 1, $id_lang = ???, $id_shop = ???) /home/herve/www/prestashop/versions/176/classes/shop/Shop.php:393
+    0.2088    6863840   5. ObjectModelCore->__construct($id = 1, $id_lang = NULL, $id_shop = NULL, $translator = ???) /home/herve/www/prestashop/versions/176/classes/shop/Shop.php:128
+    0.2126    7015496   6. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = 1, $id_lang = NULL, $entity = class Shop { public $id_shop_group = NULL; public $id_category = NULL; public $theme_name = NULL; public $name = NULL; public $active = TRUE; public $deleted = NULL; public $physical_uri = NULL; public $virtual_uri = NULL; public $domain = NULL; public $domain_ssl = NULL; protected $group = NULL; protected $webserviceParameters = ['fields' => [...]]; public $theme = NULL; public $id = 1; protected $id_lang = NULL; protected $id_shop = NULL; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'shop'; protected $identifier = 'id_shop'; protected $fieldsRequired = [0 => 'name', 1 => 'id_category', 2 => 'id_shop_group']; protected $fieldsSize = ['name' => 64]; protected $fieldsValidate = ['active' => 'isBool', 'deleted' => 'isBool', 'name' => 'isGenericName', 'theme_name' => 'isThemeName']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'shop', 'primary' => 'id_shop', 'fields' => [...], 'classname' => 'Shop']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'shop', 'primary' => 'id_shop', 'fields' => ['active' => [...], 'deleted' => [...], 'name' => [...], 'id_category' => [...], 'theme_name' => [...], 'id_shop_group' => [...]], 'classname' => 'Shop'], $id_shop = NULL, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2141    6953848   7. array_key_exists($key = 'id_shop', $search = class Shop { public $id_shop_group = NULL; public $id_category = NULL; public $theme_name = NULL; public $name = NULL; public $active = TRUE; public $deleted = NULL; public $physical_uri = NULL; public $virtual_uri = NULL; public $domain = NULL; public $domain_ssl = NULL; protected $group = NULL; protected $webserviceParameters = ['fields' => [...]]; public $theme = NULL; public $id = 1; protected $id_lang = NULL; protected $id_shop = NULL; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'shop'; protected $identifier = 'id_shop'; protected $fieldsRequired = [0 => 'name', 1 => 'id_category', 2 => 'id_shop_group']; protected $fieldsSize = ['name' => 64]; protected $fieldsValidate = ['active' => 'isBool', 'deleted' => 'isBool', 'name' => 'isGenericName', 'theme_name' => 'isThemeName']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'shop', 'primary' => 'id_shop', 'fields' => [...], 'classname' => 'Shop']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.2485    7508648   3. ObjectModelCore->__construct($id = '8', $id_lang = '1', $id_shop = ???, $translator = ???) /home/herve/www/prestashop/versions/176/config/config.inc.php:141
+    0.2541    7593184   4. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = '8', $id_lang = '1', $entity = class Country { public $id = 8; public $id_zone = NULL; public $id_currency = NULL; public $iso_code = NULL; public $call_prefix = NULL; public $name = NULL; public $contains_states = NULL; public $need_identification_number = NULL; public $need_zip_code = NULL; public $zip_code_format = NULL; public $display_tax_label = TRUE; public $active = TRUE; protected $webserviceParameters = ['objectsNodeName' => 'countries', 'fields' => [...]]; protected $id_lang = '1'; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'country'; protected $identifier = 'id_country'; protected $fieldsRequired = [0 => 'id_zone', 1 => 'iso_code', 2 => 'contains_states', 3 => 'need_identification_number', 4 => 'display_tax_label']; protected $fieldsSize = ['iso_code' => 3]; protected $fieldsValidate = ['id_zone' => 'isUnsignedId', 'id_currency' => 'isUnsignedId', 'call_prefix' => 'isInt', 'iso_code' => 'isLanguageIsoCode', 'active' => 'isBool', 'contains_states' => 'isBool', 'need_identification_number' => 'isBool', 'need_zip_code' => 'isBool', 'zip_code_format' => 'isZipCodeFormat', 'display_tax_label' => 'isBool']; protected $fieldsRequiredLang = [0 => 'name']; protected $fieldsSizeLang = ['name' => 64]; protected $fieldsValidateLang = ['name' => 'isGenericName']; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => [...], 'associations' => [...], 'classname' => 'Country']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => ['id_zone' => [...], 'id_currency' => [...], 'call_prefix' => [...], 'iso_code' => [...], 'active' => [...], 'contains_states' => [...], 'need_identification_number' => [...], 'need_zip_code' => [...], 'zip_code_format' => [...], 'display_tax_label' => [...], 'name' => [...]], 'associations' => ['zone' => [...], 'currency' => [...], 'l' => [...]], 'classname' => 'Country'], $id_shop = 1, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2606    7598024   5. array_key_exists($key = 'id_country', $search = class Country { public $id = 8; public $id_zone = NULL; public $id_currency = NULL; public $iso_code = NULL; public $call_prefix = NULL; public $name = NULL; public $contains_states = NULL; public $need_identification_number = NULL; public $need_zip_code = NULL; public $zip_code_format = NULL; public $display_tax_label = TRUE; public $active = TRUE; protected $webserviceParameters = ['objectsNodeName' => 'countries', 'fields' => [...]]; protected $id_lang = '1'; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'country'; protected $identifier = 'id_country'; protected $fieldsRequired = [0 => 'id_zone', 1 => 'iso_code', 2 => 'contains_states', 3 => 'need_identification_number', 4 => 'display_tax_label']; protected $fieldsSize = ['iso_code' => 3]; protected $fieldsValidate = ['id_zone' => 'isUnsignedId', 'id_currency' => 'isUnsignedId', 'call_prefix' => 'isInt', 'iso_code' => 'isLanguageIsoCode', 'active' => 'isBool', 'contains_states' => 'isBool', 'need_identification_number' => 'isBool', 'need_zip_code' => 'isBool', 'zip_code_format' => 'isZipCodeFormat', 'display_tax_label' => 'isBool']; protected $fieldsRequiredLang = [0 => 'name']; protected $fieldsSizeLang = ['name' => 64]; protected $fieldsValidateLang = ['name' => 'isGenericName']; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => [...], 'associations' => [...], 'classname' => 'Country']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.2485    7508648   3. ObjectModelCore->__construct($id = '8', $id_lang = '1', $id_shop = ???, $translator = ???) /home/herve/www/prestashop/versions/176/config/config.inc.php:141
+    0.2541    7593184   4. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = '8', $id_lang = '1', $entity = class Country { public $id = 8; public $id_zone = '1'; public $id_currency = '0'; public $iso_code = 'FR'; public $call_prefix = '33'; public $name = NULL; public $contains_states = '0'; public $need_identification_number = '0'; public $need_zip_code = '1'; public $zip_code_format = 'NNNNN'; public $display_tax_label = '1'; public $active = '1'; protected $webserviceParameters = ['objectsNodeName' => 'countries', 'fields' => [...]]; protected $id_lang = '1'; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'country'; protected $identifier = 'id_country'; protected $fieldsRequired = [0 => 'id_zone', 1 => 'iso_code', 2 => 'contains_states', 3 => 'need_identification_number', 4 => 'display_tax_label']; protected $fieldsSize = ['iso_code' => 3]; protected $fieldsValidate = ['id_zone' => 'isUnsignedId', 'id_currency' => 'isUnsignedId', 'call_prefix' => 'isInt', 'iso_code' => 'isLanguageIsoCode', 'active' => 'isBool', 'contains_states' => 'isBool', 'need_identification_number' => 'isBool', 'need_zip_code' => 'isBool', 'zip_code_format' => 'isZipCodeFormat', 'display_tax_label' => 'isBool']; protected $fieldsRequiredLang = [0 => 'name']; protected $fieldsSizeLang = ['name' => 64]; protected $fieldsValidateLang = ['name' => 'isGenericName']; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => [...], 'associations' => [...], 'classname' => 'Country']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => ['id_zone' => [...], 'id_currency' => [...], 'call_prefix' => [...], 'iso_code' => [...], 'active' => [...], 'contains_states' => [...], 'need_identification_number' => [...], 'need_zip_code' => [...], 'zip_code_format' => [...], 'display_tax_label' => [...], 'name' => [...]], 'associations' => ['zone' => [...], 'currency' => [...], 'l' => [...]], 'classname' => 'Country'], $id_shop = 1, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2610    7598720   5. array_key_exists($key = 'id_lang', $search = class Country { public $id = 8; public $id_zone = '1'; public $id_currency = '0'; public $iso_code = 'FR'; public $call_prefix = '33'; public $name = NULL; public $contains_states = '0'; public $need_identification_number = '0'; public $need_zip_code = '1'; public $zip_code_format = 'NNNNN'; public $display_tax_label = '1'; public $active = '1'; protected $webserviceParameters = ['objectsNodeName' => 'countries', 'fields' => [...]]; protected $id_lang = '1'; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'country'; protected $identifier = 'id_country'; protected $fieldsRequired = [0 => 'id_zone', 1 => 'iso_code', 2 => 'contains_states', 3 => 'need_identification_number', 4 => 'display_tax_label']; protected $fieldsSize = ['iso_code' => 3]; protected $fieldsValidate = ['id_zone' => 'isUnsignedId', 'id_currency' => 'isUnsignedId', 'call_prefix' => 'isInt', 'iso_code' => 'isLanguageIsoCode', 'active' => 'isBool', 'contains_states' => 'isBool', 'need_identification_number' => 'isBool', 'need_zip_code' => 'isBool', 'zip_code_format' => 'isZipCodeFormat', 'display_tax_label' => 'isBool']; protected $fieldsRequiredLang = [0 => 'name']; protected $fieldsSizeLang = ['name' => 64]; protected $fieldsValidateLang = ['name' => 'isGenericName']; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => [...], 'associations' => [...], 'classname' => 'Country']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.2485    7508648   3. ObjectModelCore->__construct($id = '8', $id_lang = '1', $id_shop = ???, $translator = ???) /home/herve/www/prestashop/versions/176/config/config.inc.php:141
+    0.2541    7593184   4. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = '8', $id_lang = '1', $entity = class Country { public $id = 8; public $id_zone = '1'; public $id_currency = '0'; public $iso_code = 'FR'; public $call_prefix = '33'; public $name = 'France'; public $contains_states = '0'; public $need_identification_number = '0'; public $need_zip_code = '1'; public $zip_code_format = 'NNNNN'; public $display_tax_label = '1'; public $active = '1'; protected $webserviceParameters = ['objectsNodeName' => 'countries', 'fields' => [...]]; protected $id_lang = '1'; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'country'; protected $identifier = 'id_country'; protected $fieldsRequired = [0 => 'id_zone', 1 => 'iso_code', 2 => 'contains_states', 3 => 'need_identification_number', 4 => 'display_tax_label']; protected $fieldsSize = ['iso_code' => 3]; protected $fieldsValidate = ['id_zone' => 'isUnsignedId', 'id_currency' => 'isUnsignedId', 'call_prefix' => 'isInt', 'iso_code' => 'isLanguageIsoCode', 'active' => 'isBool', 'contains_states' => 'isBool', 'need_identification_number' => 'isBool', 'need_zip_code' => 'isBool', 'zip_code_format' => 'isZipCodeFormat', 'display_tax_label' => 'isBool']; protected $fieldsRequiredLang = [0 => 'name']; protected $fieldsSizeLang = ['name' => 64]; protected $fieldsValidateLang = ['name' => 'isGenericName']; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => [...], 'associations' => [...], 'classname' => 'Country']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => ['id_zone' => [...], 'id_currency' => [...], 'call_prefix' => [...], 'iso_code' => [...], 'active' => [...], 'contains_states' => [...], 'need_identification_number' => [...], 'need_zip_code' => [...], 'zip_code_format' => [...], 'display_tax_label' => [...], 'name' => [...]], 'associations' => ['zone' => [...], 'currency' => [...], 'l' => [...]], 'classname' => 'Country'], $id_shop = 1, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2613    7598720   5. array_key_exists($key = 'id_shop', $search = class Country { public $id = 8; public $id_zone = '1'; public $id_currency = '0'; public $iso_code = 'FR'; public $call_prefix = '33'; public $name = 'France'; public $contains_states = '0'; public $need_identification_number = '0'; public $need_zip_code = '1'; public $zip_code_format = 'NNNNN'; public $display_tax_label = '1'; public $active = '1'; protected $webserviceParameters = ['objectsNodeName' => 'countries', 'fields' => [...]]; protected $id_lang = '1'; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'country'; protected $identifier = 'id_country'; protected $fieldsRequired = [0 => 'id_zone', 1 => 'iso_code', 2 => 'contains_states', 3 => 'need_identification_number', 4 => 'display_tax_label']; protected $fieldsSize = ['iso_code' => 3]; protected $fieldsValidate = ['id_zone' => 'isUnsignedId', 'id_currency' => 'isUnsignedId', 'call_prefix' => 'isInt', 'iso_code' => 'isLanguageIsoCode', 'active' => 'isBool', 'contains_states' => 'isBool', 'need_identification_number' => 'isBool', 'need_zip_code' => 'isBool', 'zip_code_format' => 'isZipCodeFormat', 'display_tax_label' => 'isBool']; protected $fieldsRequiredLang = [0 => 'name']; protected $fieldsSizeLang = ['name' => 64]; protected $fieldsValidateLang = ['name' => 'isGenericName']; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'country', 'primary' => 'id_country', 'multilang' => TRUE, 'fields' => [...], 'associations' => [...], 'classname' => 'Country']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.2671    7595784   3. ShopCore->getGroup() /home/herve/www/prestashop/versions/176/config/config.inc.php:165
+    0.2682    7631056   4. ObjectModelCore->__construct($id = '1', $id_lang = ???, $id_shop = ???, $translator = ???) /home/herve/www/prestashop/versions/176/classes/shop/Shop.php:551
+    0.2685    7636128   5. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = '1', $id_lang = NULL, $entity = class ShopGroup { public $name = NULL; public $active = TRUE; public $share_customer = NULL; public $share_stock = NULL; public $share_order = NULL; public $deleted = NULL; public $id = 1; protected $id_lang = NULL; protected $id_shop = NULL; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'shop_group'; protected $identifier = 'id_shop_group'; protected $fieldsRequired = [0 => 'name']; protected $fieldsSize = ['name' => 64]; protected $fieldsValidate = ['name' => 'isGenericName', 'share_customer' => 'isBool', 'share_order' => 'isBool', 'share_stock' => 'isBool', 'active' => 'isBool', 'deleted' => 'isBool']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $webserviceParameters = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'shop_group', 'primary' => 'id_shop_group', 'fields' => [...], 'classname' => 'ShopGroup']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'shop_group', 'primary' => 'id_shop_group', 'fields' => ['name' => [...], 'share_customer' => [...], 'share_order' => [...], 'share_stock' => [...], 'active' => [...], 'deleted' => [...]], 'classname' => 'ShopGroup'], $id_shop = NULL, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2692    7637304   6. array_key_exists($key = 'id_shop_group', $search = class ShopGroup { public $name = NULL; public $active = TRUE; public $share_customer = NULL; public $share_stock = NULL; public $share_order = NULL; public $deleted = NULL; public $id = 1; protected $id_lang = NULL; protected $id_shop = NULL; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'shop_group'; protected $identifier = 'id_shop_group'; protected $fieldsRequired = [0 => 'name']; protected $fieldsSize = ['name' => 64]; protected $fieldsValidate = ['name' => 'isGenericName', 'share_customer' => 'isBool', 'share_order' => 'isBool', 'share_stock' => 'isBool', 'active' => 'isBool', 'deleted' => 'isBool']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $webserviceParameters = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'shop_group', 'primary' => 'id_shop_group', 'fields' => [...], 'classname' => 'ShopGroup']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.2821    7793464   3. ObjectModelCore->__construct($id = '1', $id_lang = ???, $id_shop = ???, $translator = ???) /home/herve/www/prestashop/versions/176/config/config.inc.php:194
+    0.2822    7798504   4. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = '1', $id_lang = NULL, $entity = class Language { public $id = 1; public $name = NULL; public $iso_code = NULL; public $locale = NULL; public $language_code = NULL; public $date_format_lite = 'Y-m-d'; public $date_format_full = 'Y-m-d H:i:s'; public $is_rtl = FALSE; public $active = TRUE; protected $webserviceParameters = ['objectNodeName' => 'language', 'objectsNodeName' => 'languages']; protected $translationsFilesAndVars = ['fields' => '_FIELDS', 'errors' => '_ERRORS', 'admin' => '_LANGADM', 'pdf' => '_LANGPDF', 'tabs' => 'tabs']; protected $id_lang = NULL; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'lang'; protected $identifier = 'id_lang'; protected $fieldsRequired = [0 => 'name', 1 => 'iso_code', 2 => 'date_format_lite', 3 => 'date_format_full']; protected $fieldsSize = ['name' => 32, 'iso_code' => 2, 'locale' => 5, 'language_code' => 5, 'date_format_lite' => 32, 'date_format_full' => 32]; protected $fieldsValidate = ['name' => 'isGenericName', 'iso_code' => 'isLanguageIsoCode', 'locale' => 'isLocale', 'language_code' => 'isLanguageCode', 'active' => 'isBool', 'is_rtl' => 'isBool', 'date_format_lite' => 'isPhpDateFormat', 'date_format_full' => 'isPhpDateFormat']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'lang', 'primary' => 'id_lang', 'fields' => [...], 'classname' => 'Language']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'lang', 'primary' => 'id_lang', 'fields' => ['name' => [...], 'iso_code' => [...], 'locale' => [...], 'language_code' => [...], 'active' => [...], 'is_rtl' => [...], 'date_format_lite' => [...], 'date_format_full' => [...]], 'classname' => 'Language'], $id_shop = 1, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2831    7802664   5. array_key_exists($key = 'id_lang', $search = class Language { public $id = 1; public $name = NULL; public $iso_code = NULL; public $locale = NULL; public $language_code = NULL; public $date_format_lite = 'Y-m-d'; public $date_format_full = 'Y-m-d H:i:s'; public $is_rtl = FALSE; public $active = TRUE; protected $webserviceParameters = ['objectNodeName' => 'language', 'objectsNodeName' => 'languages']; protected $translationsFilesAndVars = ['fields' => '_FIELDS', 'errors' => '_ERRORS', 'admin' => '_LANGADM', 'pdf' => '_LANGPDF', 'tabs' => 'tabs']; protected $id_lang = NULL; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'lang'; protected $identifier = 'id_lang'; protected $fieldsRequired = [0 => 'name', 1 => 'iso_code', 2 => 'date_format_lite', 3 => 'date_format_full']; protected $fieldsSize = ['name' => 32, 'iso_code' => 2, 'locale' => 5, 'language_code' => 5, 'date_format_lite' => 32, 'date_format_full' => 32]; protected $fieldsValidate = ['name' => 'isGenericName', 'iso_code' => 'isLanguageIsoCode', 'locale' => 'isLocale', 'language_code' => 'isLanguageCode', 'active' => 'isBool', 'is_rtl' => 'isBool', 'date_format_lite' => 'isPhpDateFormat', 'date_format_full' => 'isPhpDateFormat']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'lang', 'primary' => 'id_lang', 'fields' => [...], 'classname' => 'Language']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
+
+Deprecated: array_key_exists(): Using array_key_exists() on objects is deprecated. Use isset() or property_exists() instead in /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php on line 99
+
+Call Stack:
+    0.0001     401960   1. {main}() /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:0
+    0.0032     856840   2. include_once('/home/herve/www/prestashop/versions/176/config/config.inc.php') /home/herve/www/prestashop/modules/prestashop_console/console_dev.php:35
+    0.2821    7793464   3. ObjectModelCore->__construct($id = '1', $id_lang = ???, $id_shop = ???, $translator = ???) /home/herve/www/prestashop/versions/176/config/config.inc.php:194
+    0.2822    7798504   4. PrestaShop\PrestaShop\Adapter\EntityMapper->load($id = '1', $id_lang = NULL, $entity = class Language { public $id = 1; public $name = 'Français (French)'; public $iso_code = 'fr'; public $locale = 'fr-FR'; public $language_code = 'fr'; public $date_format_lite = 'd/m/Y'; public $date_format_full = 'd/m/Y H:i:s'; public $is_rtl = '0'; public $active = '1'; protected $webserviceParameters = ['objectNodeName' => 'language', 'objectsNodeName' => 'languages']; protected $translationsFilesAndVars = ['fields' => '_FIELDS', 'errors' => '_ERRORS', 'admin' => '_LANGADM', 'pdf' => '_LANGPDF', 'tabs' => 'tabs']; protected $id_lang = NULL; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'lang'; protected $identifier = 'id_lang'; protected $fieldsRequired = [0 => 'name', 1 => 'iso_code', 2 => 'date_format_lite', 3 => 'date_format_full']; protected $fieldsSize = ['name' => 32, 'iso_code' => 2, 'locale' => 5, 'language_code' => 5, 'date_format_lite' => 32, 'date_format_full' => 32]; protected $fieldsValidate = ['name' => 'isGenericName', 'iso_code' => 'isLanguageIsoCode', 'locale' => 'isLocale', 'language_code' => 'isLanguageCode', 'active' => 'isBool', 'is_rtl' => 'isBool', 'date_format_lite' => 'isPhpDateFormat', 'date_format_full' => 'isPhpDateFormat']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'lang', 'primary' => 'id_lang', 'fields' => [...], 'classname' => 'Language']; protected $update_fields = NULL; public $force_id = FALSE }, $entity_defs = ['table' => 'lang', 'primary' => 'id_lang', 'fields' => ['name' => [...], 'iso_code' => [...], 'locale' => [...], 'language_code' => [...], 'active' => [...], 'is_rtl' => [...], 'date_format_lite' => [...], 'date_format_full' => [...]], 'classname' => 'Language'], $id_shop = 1, $should_cache_objects = TRUE) /home/herve/www/prestashop/versions/176/classes/ObjectModel.php:264
+    0.2834    7803360   5. array_key_exists($key = 'id_shop', $search = class Language { public $id = 1; public $name = 'Français (French)'; public $iso_code = 'fr'; public $locale = 'fr-FR'; public $language_code = 'fr'; public $date_format_lite = 'd/m/Y'; public $date_format_full = 'd/m/Y H:i:s'; public $is_rtl = '0'; public $active = '1'; protected $webserviceParameters = ['objectNodeName' => 'language', 'objectsNodeName' => 'languages']; protected $translationsFilesAndVars = ['fields' => '_FIELDS', 'errors' => '_ERRORS', 'admin' => '_LANGADM', 'pdf' => '_LANGPDF', 'tabs' => 'tabs']; protected $id_lang = NULL; protected $id_shop = 1; public $id_shop_list = []; protected $get_shop_from_context = TRUE; protected $table = 'lang'; protected $identifier = 'id_lang'; protected $fieldsRequired = [0 => 'name', 1 => 'iso_code', 2 => 'date_format_lite', 3 => 'date_format_full']; protected $fieldsSize = ['name' => 32, 'iso_code' => 2, 'locale' => 5, 'language_code' => 5, 'date_format_lite' => 32, 'date_format_full' => 32]; protected $fieldsValidate = ['name' => 'isGenericName', 'iso_code' => 'isLanguageIsoCode', 'locale' => 'isLocale', 'language_code' => 'isLanguageCode', 'active' => 'isBool', 'is_rtl' => 'isBool', 'date_format_lite' => 'isPhpDateFormat', 'date_format_full' => 'isPhpDateFormat']; protected $fieldsRequiredLang = []; protected $fieldsSizeLang = []; protected $fieldsValidateLang = []; protected $tables = []; protected $image_dir = NULL; protected $image_format = 'jpg'; protected $translator = NULL; protected $def = ['table' => 'lang', 'primary' => 'id_lang', 'fields' => [...], 'classname' => 'Language']; protected $update_fields = NULL; public $force_id = FALSE }) /home/herve/www/prestashop/versions/176/src/Adapter/EntityMapper.php:99
+
 PrestashopConsole 1.6.3
 =======================
 
@@ -50,6 +123,7 @@ PrestashopConsole 1.6.3
 
 * [`dev:add-index-files`](#devadd-index-files)
 * [`dev:anonymize:customer`](#devanonymizecustomer)
+* [`dev:change-domain`](#devchange-domain)
 * [`dev:clean`](#devclean)
 * [`dev:cron:list`](#devcronlist)
 * [`dev:cron:run`](#devcronrun)
@@ -1875,7 +1949,8 @@ Create a new command skeleton
 
 * `console:create:command`
 
-Create a new command skeleton
+This command will allow to create a new command through interactives questions
+It works only php mode
 
 ### Options
 
@@ -2434,6 +2509,119 @@ emails to exclude separated by commas
 #### `--names`
 
 anonymize names (default no ) use only for customers
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--help|-h`
+
+Display this help message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--quiet|-q`
+
+Do not output any message
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--verbose|-v|-vv|-vvv`
+
+Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--version|-V`
+
+Display this application version
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--ansi`
+
+Force ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-ansi`
+
+Disable ANSI output
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+#### `--no-interaction|-n`
+
+Do not ask any interactive question
+
+* Accept value: no
+* Is value required: no
+* Is multiple: no
+* Default: `false`
+
+`dev:change-domain`
+-------------------
+
+Change the domain of the website
+
+### Usage
+
+* `dev:change-domain [--physical_uri [PHYSICAL_URI]] [--virtual_uri [VIRTUAL_URI]] [--id_shop [ID_SHOP]] [--] <domain>`
+
+This command allow to change the domain , physical_uri and virtual_uri of registered shops
+
+### Arguments
+
+#### `domain`
+
+New shop domain
+
+* Is required: yes
+* Is array: no
+* Default: `NULL`
+
+### Options
+
+#### `--physical_uri`
+
+Physical uri
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--virtual_uri`
+
+Virtual uri
+
+* Accept value: yes
+* Is value required: no
+* Is multiple: no
+* Default: `NULL`
+
+#### `--id_shop`
+
+affected id_shop
 
 * Accept value: yes
 * Is value required: no

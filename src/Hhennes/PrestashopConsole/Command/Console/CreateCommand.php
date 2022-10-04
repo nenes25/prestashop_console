@@ -1,7 +1,5 @@
 <?php
 /**
- * 2007-2019 Hennes Hervé
- *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
@@ -13,9 +11,11 @@
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
  * @author    Hennes Hervé <contact@h-hennes.fr>
- * @copyright 2007-2019 Hennes Hervé
+ * @copyright since 2016 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * http://www.h-hennes.fr/blog/
+ *
+ * https://github.com/nenes25/prestashop_console
+ * https://www.h-hennes.fr/blog/
  */
 
 namespace Hhennes\PrestashopConsole\Command\Console;
@@ -41,7 +41,11 @@ class CreateCommand extends Command
     {
         $this
             ->setName('console:create:command')
-            ->setDescription('Create a new command skeleton');
+            ->setDescription('Create a new command skeleton')
+            ->setHelp(
+                'This command will allow to create a new command through interactives questions'.PHP_EOL.
+                'It works only php mode'
+            );
     }
 
     /**
@@ -144,7 +148,7 @@ class CreateCommand extends Command
             return $anwser ? trim($anwser) : null;
         });
         $question->setValidator(function ($answer) {
-            if ($answer === null || !preg_match('#^[a-z]+:[a-z]+(?::[a-z]+)?$#', $answer)) {
+            if ($answer === null || !preg_match('#^[a-z-]+:[a-z-]+(?::[a-z-]+)?$#', $answer)) {
                 throw new RuntimeException('The command name is not valid, it must use a format like domain:action or domain:subdomain:action');
             }
             return $answer;
