@@ -14,7 +14,12 @@
             "in":"."
         }
     ],
-    "main": "bin/phar/consolePhar.php",
-    "output": "bin/prestashopConsole.phar",
-    "stub": true
+    "main": "phar/consolePhar.php",
+    "output": "phar/prestashopConsole.phar",
+    "stub": true,
+    "banner" : [
+        "PrestashopConsole Project",
+        "@link https://github.com/nenes25/prestashop_console"
+    ],
+    "compression" : "GZ"
 }

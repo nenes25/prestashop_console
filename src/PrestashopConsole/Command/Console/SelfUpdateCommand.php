@@ -38,11 +38,15 @@ class SelfUpdateCommand extends Command
     {
         $this
                 ->setName('console:self-upgrade')
-                ->setDescription('Upgrade console to last version (phar only)');
+                ->setDescription('Upgrade console to last version (phar only)')
+                ->setHidden(true);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('<error>This command does not works yet</error>');
+        return self::RESPONSE_ERROR;
+
         if ($this->getApplication()->getRunAs() == 'php') {
             $output->writeln('<error>This commande can only be run in phar mode</error>');
 

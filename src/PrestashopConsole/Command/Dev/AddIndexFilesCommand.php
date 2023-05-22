@@ -47,7 +47,7 @@ class AddIndexFilesCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @throws \Exception
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -55,6 +55,8 @@ class AddIndexFilesCommand extends Command
         try {
             if (!is_dir(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $dir)) {
                 throw new \Exception('directory doesn\'t exists');
+
+                return self::RESPONSE_ERROR;
             }
 
             //Create index file in the root directory if it not exists

@@ -28,7 +28,7 @@ require_once 'src/vendor/autoload.php';
 require_once 'config.php';
 $app = new PrestashopConsoleApplication($configuration['application']['name'], $configuration['application']['version']);
 // This script is contained in bin/phar directory so we need to get 2 level upper for the root directory
-$app->initializeForPharExecution(dirname(dirname(__DIR__)));
+$app->initializeForPharExecution(__DIR__);
 
 //Autoload Prestashop
 if ( is_file('config/config.inc.php')) {

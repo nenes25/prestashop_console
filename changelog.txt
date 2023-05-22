@@ -1,48 +1,55 @@
 ﻿/**
-* 2007-2020 PrestaShop
-*
-* NOTICE OF LICENSE
-*
-* This source file is subject to the Academic Free License (AFL 3.0)
-* that is bundled with this package in the file LICENSE.txt.
-* It is also available through the world-wide-web at this URL:
-* http://opensource.org/licenses/afl-3.0.php
-* If you did not receive a copy of the license and are unable to
-* obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author    Hennes Hervé <contact@h-hennes.fr>
-*  @copyright 2013-2020 Hennes Hervé
-*  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  http://www.h-hennes.fr/blog/
-*/
-2021-xx-xx  - V 2.0.0 : #117 Change commands domain
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://opensource.org/licenses/OSL-3.0
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to contact@h-hennes.fr so we can send you a copy immediately.
+ *
+ * @author    Hennes Hervé <contact@h-hennes.fr>
+ * @copyright since 2016 Hennes Hervé
+ * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
+ * https://github.com/nenes25/prestashop_console
+ * https://www.h-hennes.fr/blog/
+ */
+2023-05-22  - V 2.0.0-alpha1 :
+                        Publish a first alpha version to works on prestashop 8+
+                        Update box.phar to last version
+                        #117 Change commands domain
                         #203 Remove Install commands
                         #217 admin:user:create validate customer data
                         #218 New Command admin:profiles:list
                         #227 New Command analyze:carriers
                         #228 New Command analyze:payments
                         #240 Remove commands preferences:cmscategory and preferences:cmspage
-                        Update min php version to php7.2 +
-                        Update compatibility only for ps 1.7 +
+                        #238 Update command console:self-upgrade
+                        Update min php version to php8.1 +
+                        Update compatibility only for ps 8+
                         Add tests for commands
                         Remove commands:
                          - IdeClassNamesCommand
                          - InfoCommand
                          - InstallCommand
-
+2022-03-22  - V 1.6.4 : #241 Unable to use db:export with custom mysql port
+                        #242 New Command analyze:tables:size
+                        #243 dev:add-index should not add index.php files in composer directory
+                        #244 Add configuration form when creating module
+2021-12-10  - V 1.6.3 : #194 Check compatibility from php5.6 to php7.2
+                        #227 New Command analyze:carriers
+                        #228 New Command analyze:payments
+                        #232 Enhancement module:generate:controller
+                        #233 Provide verbose information when module controller is created
+                        #92  Improve module list ( add option to show id )
+                        #229 New Command analyse:website
 2020-12-29  - V 1.6.2 : #142 Error when try to start by prestashopConsole command
                         #170 Create Webservice key command
                         #173 Change link in readme
                         Disable the install command which will be refactored in next version
                         Branch 1.6 is the last branch which deals with Prestashop 1.6 and Php < 7.2
-
 2020-06-25  - V 1.6.1 : #106 Error in generate Images commands
                         #107 Improve module:hook:list command
                         #108 Update licence header for generated code

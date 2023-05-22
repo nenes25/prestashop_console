@@ -112,7 +112,7 @@ class DevModeCommand extends Command
     /**
      * @return string
      */
-    final private function getWarningText(): string
+    private function getWarningText(): string
     {
         return 'Be sure to include "include(__DIR__. \'/' . $this->debug_file_name . '\');" in config/defines.inc.php for this feature to run.';
     }

@@ -79,7 +79,7 @@ class PrestashopConsoleApplication extends BaseApplication
             throw new \Exception('The given phar archive location is not a phar archive path (It must start with phar://) : ' . $archiveLocation);
         }
         $this->_runAs = PrestashopConsoleApplication::EXECUTION_MODE_PHAR;
-        $this->_pharArchiveRootLocation = $archiveLocation;
+        $this->_pharArchiveRootLocation = $archiveLocation.'/../../';
     }
 
     /**

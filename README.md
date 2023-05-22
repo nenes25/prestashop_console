@@ -16,29 +16,14 @@ You can download all the versions of the console (since 1.5 ) from the release p
 # Compatibility
 
 | Prestashop Version | Compatible |
-| ------------------ | -----------|
-| 1.5.x | :x: |
-| 1.6.x | :x: |
-| 1.6.1.x | :x: |
-| 1.7.0.x | :heavy_check_mark: |
-| 1.7.1.x | :heavy_check_mark: |
-| 1.7.2.x | :heavy_check_mark: |
-| 1.7.3.x | :heavy_check_mark: |
-| 1.7.4.x | :heavy_check_mark: |
-| 1.7.5.x | :heavy_check_mark: |
-| 1.7.6.x | :heavy_check_mark: |
-| 1.7.7.x | :heavy_check_mark: |
-| 1.7.8.x | :interrobang: Not yet tested |
+|--------------------| -----------|
+| 1.5.x to 1.8.x     | :x: |
+| 8.x                | :heavy_check_mark: |
 
 | Php Version | Compatible |
-| ------ | -----------|
-| 5.6 | :x: No more compatible see v 1.x|
-| 7.0 | :x: No more compatible see v 1.x |
-| 7.1 | :x: No more compatible see v 1.x |
-| 7.2 | :heavy_check_mark: |
-| 7.3 | :heavy_check_mark: |
-| 7.4 | :heavy_check_mark: |
-| 8.0 | :interrobang: Not yet tested |
+|-------------| -----------|
+| 7.4         | :heavy_check_mark: |
+| 8.1         | :heavy_check_mark:  |
 
 # How to use it
 

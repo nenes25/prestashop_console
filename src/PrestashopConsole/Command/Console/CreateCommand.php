@@ -38,7 +38,8 @@ class CreateCommand extends Command
     {
         $this
             ->setName('console:create:command')
-            ->setDescription('Create a new command skeleton');
+            ->setDescription('Create a new command skeleton')
+            ->setHidden(true);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
