@@ -18,21 +18,22 @@ Compatibility
 ---
 
 | PrestaShop Version | Compatible |
-| ------------------ | -----------|
-| 1.5.x | :x: |
-| 1.6.x | :x: |
-| 1.6.1.x | :heavy_check_mark: (some commands are not available)|
-| 1.7.0 to 1.7.8.x | :heavy_check_mark: |
+|--------------------| -----------|
+| 1.6.x  and under   | :x: |
+| 1.6.1.x            | :heavy_check_mark: (some commands are not available)|
+| 1.7.0 to 1.7.8.x   | :heavy_check_mark: |
+| 8+                 | :interrobang: Not yet tested |
 
-| Php Version | Compatible |
-| ------ | -----------|
-| 5.6 | :heavy_check_mark:|
-| 7.0 | :heavy_check_mark: |
-| 7.1 | :heavy_check_mark: |
-| 7.2 | :heavy_check_mark: |
-| 7.3| :heavy_check_mark: |
-| 7.4 | :heavy_check_mark: |
-| 8.0 | :interrobang: Not yet tested |
+| Php Version | Compatible                   |
+|-------------|------------------------------|
+| 5.6         | :heavy_check_mark:           |
+| 7.0         | :heavy_check_mark:           |
+| 7.1         | :heavy_check_mark:           |
+| 7.2         | :heavy_check_mark:           |
+| 7.3         | :heavy_check_mark:           |
+| 7.4         | :heavy_check_mark:           |
+| 8.0         | :interrobang: Not yet tested |
+| 8.1         | :interrobang: Not yet tested |
 
 How to use it
 ---
