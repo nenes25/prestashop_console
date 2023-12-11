@@ -22,6 +22,7 @@
 *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  http://www.h-hennes.fr/blog/
 */
+2023-12-11  - V 1.6.6 : Fix compatibility with php < 7.1
 2023-08-12  - V 1.6.5 : #245 New Command ChangeUrl
                         #248 Harmonize Licence Headers
 2022-03-22  - V 1.6.4 : #241 Unable to use db:export with custom mysql port
