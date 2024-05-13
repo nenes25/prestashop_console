@@ -22,7 +22,7 @@ Compatibility
 | 1.6.x  and under   | :x: |
 | 1.6.1.x            | :heavy_check_mark: (some commands are not available)|
 | 1.7.0 to 1.7.8.x   | :heavy_check_mark: |
-| 8+                 | :interrobang: Not yet tested |
+| 8+                 | :heavy_check_mark: with php7.4 max |
 
 | Php Version | Compatible                   |
 |-------------|------------------------------|
