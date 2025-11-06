@@ -22,6 +22,7 @@ namespace PrestashopConsole\Command\Admin\User;
 
 use Configuration;
 use Employee;
+use PrestaShop\PrestaShop\Core\Crypto\Hashing;
 use PrestashopConsole\Command\PrestashopConsoleAbstractCmd as Command;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -60,7 +61,7 @@ class CreateCommand extends Command
             $email = $helper->ask($input, $output, $this->getEmailQuestion());
         }
 
-        if (!Validate::isPasswdAdmin($password)) {
+        if (!$this->isValidPassword($password)) {
             $password = $helper->ask($input, $output, $this->getPasswordQuestion());
         }
 
@@ -83,21 +84,39 @@ class CreateCommand extends Command
             $employee = new Employee();
             $employee->active = 1;
             $employee->email = $email;
-            $employee->passwd = Tools::encrypt($password);
+
+            // Use PS9 Hashing class if available, fallback to Tools::encrypt for older versions
+            if (class_exists('PrestaShop\PrestaShop\Core\Crypto\Hashing')) {
+                $crypto = new Hashing();
+                $employee->passwd = $crypto->hash($password);
+            } elseif (method_exists('Tools', 'encrypt')) {
+                $employee->passwd = Tools::encrypt($password);
+            } else {
+                $employee->passwd = password_hash($password, PASSWORD_DEFAULT);
+            }
+
             $employee->firstname = $firstname;
             $employee->lastname = $lastname;
             $employee->id_lang = Configuration::get('PS_LANG_DEFAULT');
             $employee->id_profile = _PS_ADMIN_PROFILE_;
             $employee->default_tab = 1;
             $employee->bo_theme = 'default';
-            $employee->save();
+
+            if (!$employee->save()) {
+                $output->writeln('<error>Failed to create admin user</error>');
+
+                return self::RESPONSE_ERROR;
+            }
+
+            $output->writeln('<info>Admin user created successfully!</info>');
+            $output->writeln(sprintf('<info>Email: %s</info>', $employee->email));
+            $output->writeln(sprintf('<info>ID: %s</info>', $employee->id));
+            $output->writeln(sprintf('<info>Name: %s %s</info>', $employee->firstname, $employee->lastname));
         } catch (\Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
 
             return self::RESPONSE_ERROR;
         }
-
-        $output->writeln('<info>New user ' . $email . ' created</info>');
 
         return self::RESPONSE_SUCCESS;
     }
@@ -131,7 +150,7 @@ class CreateCommand extends Command
         $question = new Question('admin password :', 'admin123456');
         $question->setHidden(true);
         $question->setValidator(function ($answer) {
-            if (!Validate::isPasswdAdmin($answer)) {
+            if (!$this->isValidPassword($answer)) {
                 throw new RuntimeException('Your password is not valid');
             }
 
@@ -139,6 +158,29 @@ class CreateCommand extends Command
         });
 
         return $question;
+    }
+
+    /**
+     * Validate password (compatible with PS9)
+     *
+     * @param string $password
+     *
+     * @return bool
+     */
+    protected function isValidPassword($password): bool
+    {
+        // Try PS9 method first
+        if (method_exists('Validate', 'isAcceptablePasswordLength')) {
+            return Validate::isAcceptablePasswordLength($password);
+        }
+
+        // Fallback to old method for older PS versions
+        if (method_exists('Validate', 'isPasswdAdmin')) {
+            return Validate::isPasswdAdmin($password);
+        }
+
+        // Basic validation if neither exists
+        return strlen($password) >= 8;
     }
 
     /**

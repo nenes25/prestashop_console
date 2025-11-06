@@ -64,15 +64,20 @@ class CreateCommand extends Command
         if (null === $email || !Validate::isEmail($email)) {
             $email = $questionHelper->ask($input, $output, $this->_getEmailQuestion());
         }
-        if (null === $password || empty($password) || !Validate::isPlaintextPassword($password)) {
+
+        // Ask for password if not provided or invalid
+        if (null === $password || empty($password) || !$this->isValidPassword($password)) {
             $password = $questionHelper->ask($input, $output, $this->_getPasswordQuestion());
-            if (version_compare(_PS_VERSION_, '1.7', '<')) {
-                $password = Tools::encrypt($password);
-            } else {
-                $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
-                $password = $hashing->hash($password);
-            }
         }
+
+        // Hash password for storage
+        if (version_compare(_PS_VERSION_, '1.7', '<')) {
+            $hashedPassword = Tools::encrypt($password);
+        } else {
+            $hashing = new \PrestaShop\PrestaShop\Core\Crypto\Hashing();
+            $hashedPassword = $hashing->hash($password);
+        }
+
         if (null === $firstname || !$this->validateCustomerName($firstname)) {
             $firstname = $questionHelper->ask($input, $output, $this->_getFirstnameQuestion());
         }
@@ -87,18 +92,26 @@ class CreateCommand extends Command
         try {
             $customer = new Customer();
             $customer->email = $email;
-            $customer->passwd = $password;
+            $customer->passwd = $hashedPassword;
             $customer->firstname = $firstname;
             $customer->lastname = $lastname;
             $customer->id_shop = $id_shop;
-            $customer->save();
+
+            if (!$customer->save()) {
+                $output->writeln('<error>Failed to create customer</error>');
+
+                return self::RESPONSE_ERROR;
+            }
+
+            $output->writeln('<info>Customer created successfully!</info>');
+            $output->writeln(sprintf('<info>Email: %s</info>', $customer->email));
+            $output->writeln(sprintf('<info>ID: %s</info>', $customer->id));
+            $output->writeln(sprintf('<info>Name: %s %s</info>', $customer->firstname, $customer->lastname));
         } catch (PrestaShopException $e) {
-            $output->writeln('<error>Unable to create customer');
+            $output->writeln('<error>Unable to create customer: ' . $e->getMessage() . '</error>');
 
             return self::RESPONSE_ERROR;
         }
-
-        $output->writeln('<info>new customer ' . $email . ' created with success</info>');
 
         return self::RESPONSE_SUCCESS;
     }
@@ -132,7 +145,7 @@ class CreateCommand extends Command
         $question = new Question('<question>customer password :</question>');
         $question->setHidden(true);
         $question->setValidator(function ($answer) {
-            if (null === $answer || !Validate::isPlaintextPassword($answer)) {
+            if (null === $answer || !$this->isValidPassword($answer)) {
                 throw new RuntimeException('Invalid password');
             }
 
@@ -140,6 +153,29 @@ class CreateCommand extends Command
         });
 
         return $question;
+    }
+
+    /**
+     * Validate password (compatible with PS9)
+     *
+     * @param string $password
+     *
+     * @return bool
+     */
+    protected function isValidPassword($password): bool
+    {
+        // Try PS9 method first
+        if (method_exists('Validate', 'isAcceptablePasswordLength')) {
+            return Validate::isAcceptablePasswordLength($password);
+        }
+
+        // Fallback to old method for older PS versions
+        if (method_exists('Validate', 'isPlaintextPassword')) {
+            return Validate::isPlaintextPassword($password);
+        }
+
+        // Basic validation if neither exists
+        return strlen($password) >= 8;
     }
 
     /**
