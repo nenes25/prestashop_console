@@ -78,7 +78,7 @@ class ObjectModelCommand extends Command
          'id_authorization_role' => array('type' => self::TYPE_INT, 'validate' => 'isNullOrUnsignedId', 'copy_post' => false),
          ),*/
 
-        //Table name
+        // Table name
         $tableName = $helper->ask($input, $output, new Question('<question>Table name :</question>', 'sample'));
         $primary = $helper->ask($input, $output, new Question('<question>Primary key :</question>', 'id_sample'));
 
@@ -87,14 +87,14 @@ class ObjectModelCommand extends Command
 
         $fields = [];
         do {
-            //Liste des champs
-            //Nom du champ
+            // Liste des champs
+            // Nom du champ
             $name = $helper->ask($input, $output, new Question('<question>Field name :</question>', 'name'));
 
-            //Is field Required
+            // Is field Required
             $required = $helper->ask($input, $output, new ConfirmationQuestion('<question>Required field (y/n) default n :</question>', false, '/^(y|j)/i'));
 
-            //Field Type
+            // Field Type
             $fieldTypes = $this->_getFieldTypes();
             $fieldQuestion = new Question('<question>Field type :</question>', 'string');
             $fieldQuestion->setAutocompleterValues($fieldTypes);
@@ -107,10 +107,10 @@ class ObjectModelCommand extends Command
             });
             $type = $helper->ask($input, $output, $fieldQuestion);
 
-            //Field lang
+            // Field lang
             $lang = $helper->ask($input, $output, new ConfirmationQuestion('<question>Lang field (y/n) default n:</question>', false, '/^(y|j)/i'));
 
-            //Field Validate rule
+            // Field Validate rule
             $validationFunctions = $this->_getValidationFunctions();
             $validationQuestion = new Question('<question>Field validation :</question>');
             $validationQuestion->setAutocompleterValues($validationFunctions);
@@ -123,7 +123,7 @@ class ObjectModelCommand extends Command
             });
             $validation = $helper->ask($input, $output, $validationQuestion);
 
-            //Field Length
+            // Field Length
             $length = $helper->ask($input, $output, new Question('<question>Field length :</question>'));
 
             $fields[] = [
@@ -135,7 +135,7 @@ class ObjectModelCommand extends Command
                 'length' => $length,
             ];
 
-            //Ask for create a new field
+            // Ask for create a new field
             $newField = $helper->ask(
                 $input,
                 $output,
@@ -145,7 +145,7 @@ class ObjectModelCommand extends Command
 
         $params['fields'] = $fields;
 
-        //Ask if sql generation is needed
+        // Ask if sql generation is needed
         $sql = $helper->ask(
             $input,
             $output,
@@ -352,7 +352,7 @@ class {object} extends ObjectModel
         $sqlQueryStringLang .= '`id_lang` int(10) unsigned NOT NULL ,' . "\n";
 
         foreach ($params['fields'] as $field) {
-            //Required fields must be NOT NULL in database
+            // Required fields must be NOT NULL in database
             ($field['required'] !== false) ? $required = 'NOT NULL' : $required = '';
 
             $fieldString = '`' . $field['name'] . '`';
@@ -363,7 +363,7 @@ class {object} extends ObjectModel
                     $fieldString .= ' INT(' . $fieldLength . ') ' . $required . ' unsigned';
                     break;
                 case 'bool':
-                    //Bool type is required with default value
+                    // Bool type is required with default value
                     $fieldString .= ' TINYINT(1) NOT NULL unsigned DEFAULT 0';
                     break;
                 case 'string':
@@ -379,7 +379,7 @@ class {object} extends ObjectModel
                     $fieldString .= ' text';
                     break;
 
-                //I don't know what to do with this fields type
+                    // I don't know what to do with this fields type
                 case 'nothing':
                 case 'sql':
                     $fieldString = '';

@@ -44,10 +44,10 @@ class GetAllCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //Load All Configurations
+        // Load All Configurations
         Configuration::loadConfiguration();
 
-        //Get All Configuration names (except xml configuration)
+        // Get All Configuration names (except xml configuration)
         $configurationNames = Db::getInstance()->executeS('SELECT name FROM ' . _DB_PREFIX_ . "configuration WHERE name <> 'PS_INSTALL_XML_LOADERS_ID'");
 
         $table = new Table($output);

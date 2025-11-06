@@ -49,7 +49,7 @@ class ListModuleHooksCommand extends Command
         $moduleName = $input->getArgument('name');
 
         if ($module = Module::getInstanceByName($moduleName)) {
-            //Possible hook list
+            // Possible hook list
             $possibleHooksList = $module->getPossibleHooksList();
             $moduleHooks = [];
 

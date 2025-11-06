@@ -54,7 +54,7 @@ class DeleteKeyCommand extends Command
     {
         $apiKey = $input->getArgument(self::ARGUMENT_KEY);
 
-        if ((empty($apiKey) || !$this->_validateWebserviceKey($apiKey))) {
+        if (empty($apiKey) || !$this->_validateWebserviceKey($apiKey)) {
             $output->writeln('<error>The api key is invalid ( 32 characters required)</error>');
 
             return self::RESPONSE_ERROR;

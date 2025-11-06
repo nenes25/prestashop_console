@@ -50,7 +50,7 @@ class QueryCommand extends Command
 
         $query = trim($query);
 
-        //Only allow select queries
+        // Only allow select queries
         if (preg_match('#^SELECT#i', $query)) {
             try {
                 $results = Db::getInstance()->executeS($query);

@@ -44,7 +44,7 @@ class CreateCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        //This command can only be launched in php mode
+        // This command can only be launched in php mode
         if ($this->getApplication()->getRunAs() == 'phar') {
             $output->writeln('<error>This command can only be run in php mode</error>');
 
@@ -209,7 +209,7 @@ class CreateCommand extends Command
             if (null === $cleanAnswer) {
                 return $cleanAnswer;
             }
-            //If command Class end with Command we remove it
+            // If command Class end with Command we remove it
             if (preg_match('#Command$#', $cleanAnswer)) {
                 $cleanAnswer = str_ireplace('Command', '', $cleanAnswer);
             }

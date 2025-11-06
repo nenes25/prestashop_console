@@ -42,18 +42,18 @@ class ListCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        //Get Hooks list
+        // Get Hooks list
         $hooks = Hook::getHooks();
 
-        //Extract only hooks name
+        // Extract only hooks name
         $hooks = array_map(function ($row) {
             return $row['name'];
         }, $hooks);
 
-        //Sort hooks by name
+        // Sort hooks by name
         usort($hooks, [$this, 'cmp']);
 
-        //Init Table
+        // Init Table
         $table = new Table($output);
         $table->setHeaders(['Hook Name']);
 
@@ -61,7 +61,7 @@ class ListCommand extends Command
             $table->addRow([$hook]);
         }
 
-        //Display result
+        // Display result
         $table->render();
 
         return self::RESPONSE_SUCCESS;

@@ -62,8 +62,8 @@ class ExportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //Shell_exec function is required
-        //@Todo make it optionnal and do it also with php ( symfony finder )
+        // Shell_exec function is required
+        // @Todo make it optionnal and do it also with php ( symfony finder )
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
 

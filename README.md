@@ -23,7 +23,10 @@ You can download all the versions of the console (since 1.5 ) from the release p
 | Php Version | Compatible |
 |-------------| -----------|
 | 7.4         | :heavy_check_mark: |
-| 8.1         | :heavy_check_mark:  |
+| 8.0         | :heavy_check_mark: |
+| 8.1         | :heavy_check_mark: |
+| 8.2         | :heavy_check_mark: |
+| 8.3         | :heavy_check_mark: |
 
 # How to use it
 

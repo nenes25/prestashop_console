@@ -33,7 +33,7 @@ class ListPaymentsCommand extends Command
         $this
             ->setName('analyze:payments')
             ->setDescription('List all payments modules on the website');
-        //->addOption('format', null, InputOption::VALUE_OPTIONAL, 'outputFormat', null);
+        // ->addOption('format', null, InputOption::VALUE_OPTIONAL, 'outputFormat', null);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

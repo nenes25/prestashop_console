@@ -68,7 +68,7 @@ class ListCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $modules = Module::getModulesOnDisk();
-        //module stdClass definition
+        // module stdClass definition
         /*
             [id] => 36
             [warning] =>
@@ -122,8 +122,8 @@ class ListCommand extends Command
             $table->addRow([
                 $module->name,
                 $module->version,
-                ((bool) ($module->installed) ? 'true' : 'false'),
-                ((bool) ($module->active) ? 'true' : 'false'),
+                (bool) ($module->installed) ? 'true' : 'false',
+                (bool) ($module->active) ? 'true' : 'false',
             ]);
             ++$nr;
         }

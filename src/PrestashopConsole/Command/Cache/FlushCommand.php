@@ -44,7 +44,7 @@ class FlushCommand extends Command
         $cache = Cache::getInstance();
         $cache->flush();
 
-        //Specific cacheFS
+        // Specific cacheFS
         if (get_class($cache) == 'cacheFs') {
             $cache::deleteCacheDirectory();
             $cache::createCacheDirectories();
