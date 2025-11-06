@@ -72,7 +72,7 @@ class CreateCommand extends Command
             $lastname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
         }
 
-        //Error if employee with same email already exists
+        // Error if employee with same email already exists
         if (Employee::employeeExists($email)) {
             $output->writeln('<error>Employee with this email already exists</error>');
 

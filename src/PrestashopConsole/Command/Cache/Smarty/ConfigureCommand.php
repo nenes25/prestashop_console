@@ -62,7 +62,7 @@ class ConfigureCommand extends Command
 
             return self::RESPONSE_ERROR;
         } else {
-            //Vérification de la valeur
+            // Vérification de la valeur
             if (!in_array($value, $this->_allowedNames[$name]['allowed_values'])) {
                 $output->writeln('<error>Value not allowed for configuration ' . $name . '</error>');
 

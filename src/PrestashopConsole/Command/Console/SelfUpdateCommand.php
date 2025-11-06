@@ -45,6 +45,7 @@ class SelfUpdateCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<error>This command does not works yet</error>');
+
         return self::RESPONSE_ERROR;
 
         if ($this->getApplication()->getRunAs() == 'php') {

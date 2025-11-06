@@ -53,29 +53,29 @@ class MassCommand extends Command
     {
         $yamlFile = $input->getOption('config');
 
-        //check if file exist
+        // check if file exist
         if (file_exists($yamlFile)) {
-            //parse yaml file
+            // parse yaml file
             $definitions = Yaml::parse(file_get_contents($yamlFile));
-            //Get the call object name;
+            // Get the call object name;
             $callObjName = key($definitions);
 
-            //check if object is allowed to call
+            // check if object is allowed to call
             if (in_array($callObjName, array_keys($this->allowedCalls))) {
-                //create instance
+                // create instance
                 $callObject = new $callObjName();
 
                 foreach ($definitions[$callObjName] as $method => $params) {
-                    //check if method of object is allowed to call
+                    // check if method of object is allowed to call
                     if (in_array($method, array_values($this->allowedCalls[$callObjName]))) {
-                        //check if configured method exist
+                        // check if configured method exist
                         if (method_exists($callObject, $method)) {
-                            //if single params for one method convert to indexed array
+                            // if single params for one method convert to indexed array
                             if (isset($params['key'])) {
                                 $params = [$params];
                             }
 
-                            //call the same method with different params
+                            // call the same method with different params
                             foreach ($params as $callParams) {
                                 $firstValue = reset($callParams);
                                 $firstKey = key($callParams);

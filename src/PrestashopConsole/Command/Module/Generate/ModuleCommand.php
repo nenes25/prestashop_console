@@ -82,7 +82,7 @@ class ModuleCommand extends Command
             }
         }
 
-        //Interactive Option : We ask for each cases
+        // Interactive Option : We ask for each cases
         if ($input->getOption('interactive')) {
             $helper = $this->getHelper('question');
             $author = $helper->ask($input, $output, new Question('<question>Module author :</question>'));
@@ -130,7 +130,7 @@ class ModuleCommand extends Command
 
         $defaultContent = $this->_getDefaultContent();
 
-        //General Variables
+        // General Variables
         $defaultContent = str_replace(
             [
                 '{moduleName}',
@@ -149,7 +149,7 @@ class ModuleCommand extends Command
             $defaultContent
         );
 
-        //Widget Management
+        // Widget Management
         if ($widget) {
             $defaultContent = $this->_replaceWidgetContent($defaultContent);
         } else {

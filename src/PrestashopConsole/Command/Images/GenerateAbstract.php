@@ -134,7 +134,7 @@ abstract class GenerateAbstract extends Command
                 continue;
             }
 
-            //Display which type currently processing
+            // Display which type currently processing
             $this->output->writeln(
                 'Processing ' . $proc['type'],
                 OutputInterface::VERBOSITY_VERBOSE
@@ -166,9 +166,9 @@ abstract class GenerateAbstract extends Command
             }
 
             if ($deleteOldImages) {
-                $this->deleteOldImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false));
+                $this->deleteOldImages($proc['dir'], $formats, $proc['type'] == 'products' ? true : false);
             }
-            if (($return = $this->regenerateNewImages($proc['dir'], $formats, ($proc['type'] == 'products' ? true : false))) === true) {
+            if (($return = $this->regenerateNewImages($proc['dir'], $formats, $proc['type'] == 'products' ? true : false)) === true) {
                 if (!count($this->errors)) {
                     $this->errors[] = sprintf('Cannot write images for this type: %s. Please check the %s folder\'s writing permissions.', $proc['type'], $proc['dir']);
                 }

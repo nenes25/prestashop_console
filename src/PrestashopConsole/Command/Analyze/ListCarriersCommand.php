@@ -36,14 +36,14 @@ class ListCarriersCommand extends Command
             ->setName('analyze:carriers')
             ->setDescription('List all payments module on the website')
             ->addOption('active', null, InputOption::VALUE_NONE, 'List only active carriers');
-        //->addOption('format', null, InputOption::VALUE_OPTIONAL, 'outputFormat', null);
+        // ->addOption('format', null, InputOption::VALUE_OPTIONAL, 'outputFormat', null);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $active = (bool) $input->getOption('active');
-        //@todo Manage format when refacto with meta command
-        //$format = $input->getOption('format');
+        // @todo Manage format when refacto with meta command
+        // $format = $input->getOption('format');
 
         $carriers = Carrier::getCarriers(
             (int) Configuration::get('PS_DEFAULT_LANG'),

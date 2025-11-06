@@ -82,7 +82,7 @@ class ControllerCommand extends Command
             return self::RESPONSE_ERROR;
         }
 
-        //Create all module directories
+        // Create all module directories
         try {
             $this->_createDirectories();
         } catch (IOException $e) {

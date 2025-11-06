@@ -52,7 +52,7 @@ class AnonymizeCustomerCommand extends Command
         $type = $input->getOption('type');
         $excludes = $input->getOption('exclude-emails');
 
-        //Interactive mod
+        // Interactive mod
         if (null === $type) {
             $questionHelper = $this->getHelper('question');
             $type = $questionHelper->ask($input, $output, $this->_getTypeQuestion());

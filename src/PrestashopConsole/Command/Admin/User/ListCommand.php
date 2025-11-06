@@ -39,7 +39,7 @@ class ListCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //Function Employee::getEmployees() has not enough information , use db query instead
+        // Function Employee::getEmployees() has not enough information , use db query instead
         $employeesQuery = 'SELECT e.email,e.firstname,e.lastname,e.active,e.last_connection_date,p.name
                            FROM ' . _DB_PREFIX_ . 'employee e
                            LEFT JOIN ' . _DB_PREFIX_ . 'profile_lang p ON ( 

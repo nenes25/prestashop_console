@@ -1,19 +1,36 @@
 name: PHP tests
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 2.x
+      - master
+  pull_request:
+    branches:
+      - 2.x
+      - master
 jobs:
   php-linter:
-    name: PHP Syntax check 7.2|7.3|7.4
+    name: PHP Syntax check 7.4|8.1
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: PHP syntax checker 7.4
         uses: prestashop/github-action-php-lint/7.4@master
-      - name: PHP syntax checker 7.4
-        uses: prestashop/github-action-php-lint/7.4@master
+      - name: PHP syntax checker 8.1
+        uses: prestashop/github-action-php-lint/8.1@master
   php-cs-fixer:
     name: PHP-CS-Fixer
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.0.0
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
       - name: Run PHP-CS-Fixer
-        uses: prestashopcorp/github-action-php-cs-fixer@master
+        run: composer cs-fixer -- --dry-run --diff

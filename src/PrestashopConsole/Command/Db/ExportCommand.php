@@ -50,7 +50,7 @@ class ExportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //Shell_exec function is required
+        // Shell_exec function is required
         if (!function_exists('shell_exec')) {
             $output->writeln('<error>The function shell_exec is not present</error>');
 
@@ -77,7 +77,7 @@ class ExportCommand extends Command
         }
 
         $output->writeln('<info>Export started</info>');
-        //Manage the case if the server use a custom port
+        // Manage the case if the server use a custom port
         if (false !== strpos(_DB_SERVER_, ':')) {
             $parts = explode(':', _DB_SERVER_);
             $server = $parts[0] . ' -P ' . $parts[1] . ' ';
@@ -88,9 +88,9 @@ class ExportCommand extends Command
         $dumpOptions = $singleTransaction . ' ' . $noTableSpaces;
         $command = 'mysqldump ' . $dumpOptions . ' -h ' . $server . ' -u ' . _DB_USER_ . ' -p' . _DB_PASSWD_ . ' ' . _DB_NAME_ . ' ';
 
-        //Export type management
+        // Export type management
         if ($type !== 'all') {
-            //Get table concerned by export
+            // Get table concerned by export
             $getfunction = '_get' . ucfirst($type) . 'Tables';
             $tables = $this->$getfunction();
             $tables = array_map(function ($item) {
@@ -99,7 +99,7 @@ class ExportCommand extends Command
             $command .= implode(' ', $tables);
         }
 
-        //Get export fileName
+        // Get export fileName
         if (null !== $fileName) {
             $fileName = $this->_cleanFileName($fileName);
             if (false === $fileName) {
@@ -108,7 +108,7 @@ class ExportCommand extends Command
                 return self::RESPONSE_ERROR;
             }
         }
-        //Defaut export file name
+        // Defaut export file name
         if (null === $fileName) {
             $fileName = date('YmdHi') . '-dump' . ($type ? '-' . $type : '');
         }

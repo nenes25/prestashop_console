@@ -45,7 +45,7 @@ class PasswordCommand extends Command
         $userQuestion = new Question('user email :', false);
         $email = $helper->ask($input, $output, $userQuestion);
 
-        //Error if no employee exists with email
+        // Error if no employee exists with email
         if (!Employee::employeeExists($email)) {
             $output->writeln('<error>Employee with this email not exists');
 
