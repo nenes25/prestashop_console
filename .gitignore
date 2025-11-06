@@ -9,3 +9,4 @@ console_dev.php
 /tests/bootstrap.php
 /tests/.phpunit.result.cache
 /tests/phpunit.xml
+.php-cs-fixer.cache
