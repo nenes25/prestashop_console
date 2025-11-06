@@ -121,11 +121,11 @@ abstract class GenerateAbstract extends Command
     {
         $languages = Language::getLanguages(false);
         $process = [
-            ['type' => 'categories', 'dir' => _PS_CAT_IMG_DIR_],
-            ['type' => 'manufacturers', 'dir' => _PS_MANU_IMG_DIR_],
-            ['type' => 'suppliers', 'dir' => _PS_SUPP_IMG_DIR_],
-            ['type' => 'products', 'dir' => _PS_PROD_IMG_DIR_],
-            ['type' => 'stores', 'dir' => _PS_STORE_IMG_DIR_],
+            ['type' => 'categories', 'dir' => constant('_PS_CAT_IMG_DIR_')],
+            ['type' => 'manufacturers', 'dir' => constant('_PS_MANU_IMG_DIR_')],
+            ['type' => 'suppliers', 'dir' => constant('_PS_SUPP_IMG_DIR_')],
+            ['type' => 'products', 'dir' => defined('_PS_PROD_IMG_DIR_') ? constant('_PS_PROD_IMG_DIR_') : constant('_PS_PRODUCT_IMG_DIR_')],
+            ['type' => 'stores', 'dir' => constant('_PS_STORE_IMG_DIR_')],
         ];
 
         // Launching generation process
@@ -351,7 +351,7 @@ abstract class GenerateAbstract extends Command
             foreach ($languages as $language) {
                 $file = $dir . $language['iso_code'] . '.jpg';
                 if (!file_exists($file)) {
-                    $file = _PS_PROD_IMG_DIR_ . Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT')) . '.jpg';
+                    $file = (defined('_PS_PROD_IMG_DIR_') ? constant('_PS_PROD_IMG_DIR_') : constant('_PS_PRODUCT_IMG_DIR_')) . Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT')) . '.jpg';
                 }
                 if (!file_exists($dir . $language['iso_code'] . '-default-' . stripslashes($image_type['name']) . '.jpg')) {
                     if (!ImageManager::resize($file, $dir . $language['iso_code'] . '-default-' . stripslashes($image_type['name']) . '.jpg', (int) $image_type['width'], (int) $image_type['height'])) {
