@@ -4,10 +4,20 @@ on:
     branches:
       - 2.x
       - master
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/php.yml'
   pull_request:
     branches:
       - 2.x
       - master
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/php.yml'
 jobs:
   php-linter:
     name: PHP Syntax check 7.4|8.1
