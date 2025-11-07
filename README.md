@@ -19,6 +19,7 @@ You can download all the versions of the console (since 1.5 ) from the release p
 |--------------------| -----------|
 | 1.5.x to 1.8.x     | :x: |
 | 8.x                | :heavy_check_mark: |
+| 9.x                | :heavy_check_mark: |
 
 | Php Version | Compatible |
 |-------------| -----------|
