@@ -1,7 +1,5 @@
 <?php
 /**
- * Since 2016 Hennes Hervé
- *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
@@ -13,32 +11,12 @@
  * to contact@h-hennes.fr so we can send you a copy immediately.
  *
  * @author    Hennes Hervé <contact@h-hennes.fr>
- * @copyright Since 2016 Hennes Hervé
+ * @copyright since 2016 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * http://www.h-hennes.fr/blog/
+ * https://github.com/nenes25/prestashop_console
+ * https://www.h-hennes.fr/blog/
  */
 
-/**
- * Console wrapper in browser
- *
- * With this way you cannot have interaction with the console, every parameters should be provided in url
- *
- * WARNING: Remove this file after your works as been done as it can be a security issue to let it present
- *
- * Upload this file in the root directory of your prestashop
- * Call the page this way
- * http://www.site.com/prestashopConsoleWrapper.php?command=command:name:domain&arguments['argumentKey']=argumentValue&=options['optionkey']=value
- *
- * Several examples :
- *
- * Show help of the command admin:user:list
- * prestashopConsoleWrapper.php?command=admin:user:list&options[]=help
- * List only active modules
- * prestashopConsoleWrapper.php?command=module:list&options[]=active
- * List only active modules not from prestashop
- * prestashopConsoleWrapper.php?command=module:list&options[]=active&options[]=no-native
- *
- */
 class PrestashopConsoleWrapper
 {
     /**
