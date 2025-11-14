@@ -13,7 +13,6 @@
  * @author    Hennes Hervé <contact@h-hennes.fr>
  * @copyright since 2016 Hennes Hervé
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- *
  * https://github.com/nenes25/prestashop_console
  * https://www.h-hennes.fr/blog/
  */
