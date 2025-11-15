@@ -43,6 +43,7 @@ class UpgradeCommand extends Command
         $this
             ->setName('module:generate:upgrade')
             ->setDescription('Generate module upgrade file')
+            ->setHelp('Create .prestashopConsole/licence.txt at PrestaShop root to customize generated file headers')
             ->addArgument('moduleName', InputArgument::REQUIRED, 'module name')
             ->addArgument('moduleVersion', InputArgument::REQUIRED, 'module version');
     }

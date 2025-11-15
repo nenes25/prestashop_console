@@ -22,9 +22,28 @@ namespace PrestashopConsole\Command\Module\Generate;
 class ModuleHeader
 {
     /**
+     * Get file header for generated modules
+     * If .prestashopConsole/licence.txt exists, use it, otherwise use default header
+     *
      * @return string
      */
     public static function getHeader()
+    {
+        $customLicencePath = _PS_ROOT_DIR_ . '/.prestashopConsole/licence.txt';
+
+        if (file_exists($customLicencePath)) {
+            return file_get_contents($customLicencePath);
+        }
+
+        return self::getDefaultHeader();
+    }
+
+    /**
+     * Get default header template
+     *
+     * @return string
+     */
+    private static function getDefaultHeader()
     {
         return
 '/**

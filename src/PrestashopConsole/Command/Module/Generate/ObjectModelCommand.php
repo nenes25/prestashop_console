@@ -43,6 +43,7 @@ class ObjectModelCommand extends Command
         $this
             ->setName('module:generate:model')
             ->setDescription('Generate module model object')
+            ->setHelp('Create .prestashopConsole/licence.txt at PrestaShop root to customize generated file headers')
             ->addArgument('moduleName', InputArgument::REQUIRED, 'module name')
             ->addArgument('objectClass', InputArgument::OPTIONAL, 'object class');
     }
