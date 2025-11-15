@@ -16,6 +16,16 @@
  * https://github.com/nenes25/prestashop_console
  * https://www.h-hennes.fr/blog/
  */
+2025-11-15  - V 2.0.0-alpha2 :
+                        Pre-release to test new features and self-upgrade system
+                        #217 Add comprehensive data validation for admin:user:create command
+                        #247 Allow configurable file headers for generated modules via .prestashopConsole/licence.txt
+                        #96 Remove obsolete dev:mode command (native command available in PrestaShop 8+)
+                        #238 Modernize console:self-upgrade with GitHub Releases and automated PHAR builds
+                        Remove PHAR from git versioning
+                        Add GitHub Actions workflow for automated releases
+                        Improve build.php with SHA256 checksum generation
+
 2023-05-22  - V 2.0.0-alpha1 :
                         Publish a first alpha version to works on prestashop 8+
                         Update box.phar to last version
