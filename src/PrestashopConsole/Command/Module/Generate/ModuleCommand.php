@@ -48,6 +48,7 @@ class ModuleCommand extends Command
         $this
             ->setName('module:generate:module')
             ->setDescription('Generate module default file')
+            ->setHelp('Create .prestashopConsole/licence.txt at PrestaShop root to customize generated file headers')
             ->addArgument(
                 'name',
                 InputArgument::REQUIRED,

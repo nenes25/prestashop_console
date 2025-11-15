@@ -61,6 +61,7 @@ class ControllerCommand extends Command
         $this
             ->setName('module:generate:controller')
             ->setDescription('Generate module controller file')
+            ->setHelp('Create .prestashopConsole/licence.txt at PrestaShop root to customize generated file headers')
             ->addArgument('moduleName', InputArgument::REQUIRED, 'module name')
             ->addArgument('controllerName', InputArgument::REQUIRED, 'controller name')
             ->addArgument('controllerType', InputArgument::REQUIRED, 'controller type')
