@@ -25,7 +25,7 @@ $configuration = [];
  */
 $configuration['application'] = [
     'name' => 'PrestashopConsole',
-    'version' => '2.0.0-alpha-1',
+    'version' => '2.0.0-alpha-2',
     'author' => 'hhennes <contact@h-hennes.fr>',
     'contributors' => [
         'okom3pom',
