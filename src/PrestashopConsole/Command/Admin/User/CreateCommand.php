@@ -65,14 +65,13 @@ class CreateCommand extends Command
         }
 
         if (!Validate::isName($firstname)) {
-            $firstname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
+            $firstname = $helper->ask($input, $output, $this->getCustomerQuestion('firstname'));
         }
 
         if (!Validate::isName($lastname)) {
             $lastname = $helper->ask($input, $output, $this->getCustomerQuestion('lastname'));
         }
 
-        // Error if employee with same email already exists
         if (Employee::employeeExists($email)) {
             $output->writeln('<error>Employee with this email already exists</error>');
 
@@ -100,6 +99,10 @@ class CreateCommand extends Command
             $employee->id_profile = _PS_ADMIN_PROFILE_;
             $employee->default_tab = 1;
             $employee->bo_theme = 'default';
+
+            if (!$this->validateEmployeeData($employee, $output)) {
+                return self::RESPONSE_ERROR;
+            }
 
             if (!$employee->save()) {
                 $output->writeln('<error>Failed to create admin user</error>');
@@ -172,13 +175,10 @@ class CreateCommand extends Command
         if (method_exists('Validate', 'isAcceptablePasswordLength')) {
             return Validate::isAcceptablePasswordLength($password);
         }
-
-        // Fallback to old method for older PS versions
         if (method_exists('Validate', 'isPasswdAdmin')) {
             return Validate::isPasswdAdmin($password);
         }
 
-        // Basic validation if neither exists
         return strlen($password) >= 8;
     }
 
@@ -201,5 +201,53 @@ class CreateCommand extends Command
         });
 
         return $question;
+    }
+
+    /**
+     * Validate employee data before saving
+     *
+     * @param Employee $employee
+     * @param OutputInterface $output
+     *
+     * @return bool
+     */
+    protected function validateEmployeeData(Employee $employee, OutputInterface $output): bool
+    {
+        $errors = [];
+
+        if (empty($employee->email) || !Validate::isEmail($employee->email)) {
+            $errors[] = 'Invalid email format';
+        }
+
+        if (empty($employee->firstname) || !Validate::isName($employee->firstname)) {
+            $errors[] = 'Invalid firstname format';
+        }
+
+        if (empty($employee->lastname) || !Validate::isName($employee->lastname)) {
+            $errors[] = 'Invalid lastname format';
+        }
+
+        if (empty($employee->passwd)) {
+            $errors[] = 'Password is required';
+        }
+
+        if (!Validate::isUnsignedId($employee->id_lang)) {
+            $errors[] = 'Invalid language ID';
+        }
+
+        if (!Validate::isUnsignedId($employee->id_profile)) {
+            $errors[] = 'Invalid profile ID';
+        }
+
+        if (!empty($errors)) {
+            $output->writeln('<error>Validation errors:</error>');
+            foreach ($errors as $error) {
+                $output->writeln('<error>  - ' . $error . '</error>');
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }
