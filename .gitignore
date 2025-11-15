@@ -10,3 +10,7 @@ console_dev.php
 /tests/.phpunit.result.cache
 /tests/phpunit.xml
 .php-cs-fixer.cache
+
+# PHAR builds (generated locally or by CI)
+/phar/prestashopConsole.phar
+/phar/prestashopConsole.phar.sha256

@@ -1,0 +1,65 @@
+name: Build and Release PHAR
+
+on:
+  push:
+    tags:
+      - 'v2.*.*'
+
+jobs:
+  build-phar:
+    name: Build and Release PHAR
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          extensions: zlib
+      
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader --prefer-dist
+      
+      - name: Build PHAR
+        run: php build.php
+      
+      - name: Verify PHAR
+        run: |
+          php phar/prestashopConsole.phar --version
+          ls -lh phar/prestashopConsole.phar*
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            phar/prestashopConsole.phar
+            phar/prestashopConsole.phar.sha256
+          body: |
+            ## PrestashopConsole ${{ github.ref_name }}
+            
+            ### 📦 Download
+            - [prestashopConsole.phar](https://github.com/nenes25/prestashop_console/releases/download/${{ github.ref_name }}/prestashopConsole.phar)
+            - [prestashopConsole.phar.sha256](https://github.com/nenes25/prestashop_console/releases/download/${{ github.ref_name }}/prestashopConsole.phar.sha256)
+            
+            ### 📥 Installation
+            ```bash
+            wget https://github.com/nenes25/prestashop_console/releases/download/${{ github.ref_name }}/prestashopConsole.phar
+            chmod +x prestashopConsole.phar
+            ./prestashopConsole.phar --version
+            ```
+            
+            ### 🔄 Upgrade
+            If you already have the phar installed:
+            ```bash
+            ./prestashopConsole.phar console:self-upgrade
+            ```
+            
+            ### 🔐 Verify SHA256
+            ```bash
+            wget https://github.com/nenes25/prestashop_console/releases/download/${{ github.ref_name }}/prestashopConsole.phar.sha256
+            sha256sum -c prestashopConsole.phar.sha256
+            ```
